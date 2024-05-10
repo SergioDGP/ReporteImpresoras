@@ -213,7 +213,6 @@ namespace ReporteImpresoras
 
 
 
-
                 fstream.Close();
             }
             catch (Exception)
