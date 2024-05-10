@@ -93,7 +93,7 @@ namespace ReporteImpresoras
 
                     Row row = sheet1.Cells.Rows[0];
 
-                    foreach (Aspose.Cells.Cell c in sheet1.Cells.Rows[0])
+                    foreach (Cell c in sheet1.Cells.Rows[0])
                     {
                         //int rows = sheet1.Cells.MaxDataColumn;
                         int columnIndex = c.Column;
@@ -209,7 +209,23 @@ namespace ReporteImpresoras
                 //Abrimos el archivo de excel que se genero desde la impresora b&n
                 FileStream fstream = new FileStream(rutaExcelByN, FileMode.Open);
                 Workbook wb = new Workbook(fstream);
-                Worksheet ws = wb.Worksheets[0];
+                Worksheet ws = wb.Worksheets[0];//worksheet.Cells[i, j].Value
+
+                int rows = ws.Cells.MaxDataRow;
+                int cols = ws.Cells.MaxDataColumn;
+                int contCols = 0;
+
+                for (int i = 0; i < rows; i++)
+                {
+                    if (i == 0)
+                    {
+                        foreach(Cell c in ws.Cells.Rows[i])
+                        {
+                            contCols++;
+                        }
+                    }
+                }
+
 
 
 

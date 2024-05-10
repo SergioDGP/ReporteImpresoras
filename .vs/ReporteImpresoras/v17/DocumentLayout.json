@@ -23,14 +23,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Form1.cs [Design]",
+              "Title": "Form1.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs [Design]",
-              "RelativeToolTip": "Form1.cs [Design]",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs [Dise\u00F1o]",
+              "RelativeToolTip": "Form1.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-02T22:11:21.19Z",
-              "EditorCaption": " [Design]"
+              "EditorCaption": " [Dise\u00F1o]"
             },
             {
               "$type": "Document",
@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAAH8AAAAAAAAAAAAiwMIAAAANAAAA",
+              "ViewState": "AQIAAMQAAAAAAAAAAAAlwN4AAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-24T17:21:15.824Z",
               "EditorCaption": ""
