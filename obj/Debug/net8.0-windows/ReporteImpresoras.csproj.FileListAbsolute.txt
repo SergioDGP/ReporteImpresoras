@@ -36,3 +36,4 @@ C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\runtime
 C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\runtimes\win-x64\native\k5sprt64.dll
 C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
 C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
+C:\Users\sgarcia\source\repos\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.sourcelink.json
