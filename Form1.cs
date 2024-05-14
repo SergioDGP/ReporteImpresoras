@@ -27,7 +27,8 @@ namespace ReporteImpresoras
         {
             InitializeComponent();
             cargaAnioMes();
-            Resultados_Load();
+            //Resultados_Load();
+            leerExcel();
         }
 
         private void cargaAnioMes()
@@ -134,8 +135,7 @@ namespace ReporteImpresoras
                 }
                 txtRutaBN.Text = rutaExcelByN;
 
-
-
+                leerExcel();
             }
         }
 
@@ -203,11 +203,12 @@ namespace ReporteImpresoras
 
         public DataTable leerExcel()
         {
+            string rutaprueba = @"C:\Conversiones ReportesImp\ReporteImpB&N_20240513_1750.xlsx";
             DataTable dt = new DataTable();
             try
             {
                 //Abrimos el archivo de excel que se genero desde la impresora b&n
-                FileStream fstream = new FileStream(rutaExcelByN, FileMode.Open);
+                FileStream fstream = new FileStream(rutaprueba, FileMode.Open);
                 Workbook wb = new Workbook(fstream);
                 Worksheet ws = wb.Worksheets[0];//worksheet.Cells[i, j].Value
 
@@ -215,20 +216,46 @@ namespace ReporteImpresoras
                 int cols = ws.Cells.MaxDataColumn;
                 int contCols = 0;
 
+                //var 
+                DataRow row;
+                DataColumn column;
+
                 for (int i = 0; i < rows; i++)
                 {
                     if (i == 0)
                     {
-                        foreach(Cell c in ws.Cells.Rows[i])
+                        //row = dt.NewRow();
+                        contCols = 0;
+                        foreach (Cell c in ws.Cells.Rows[i])
                         {
+                            //row[contCols] = c.Value;
+                            column = new DataColumn();
+                            column.DataType = Type.GetType("System.String");
+                            column.ColumnName = (string)c.Value;
+                            dt.Columns.Add(column);
+
                             contCols++;
+                        }
+                        //dt.Rows.Add(row);
+                    }
+                    else 
+                    {
+                        if (ws.Cells[i, 0].Value.ToString() == "Copiar")
+                        {
+                            row = dt.NewRow();
+                            contCols = 0;
+                            foreach (Cell c in ws.Cells.Rows[i])
+                            {
+                                row[contCols] = c.Value;
+                                //row["ParentItem"] = "ParentItem " + i;
+                                contCols++;
+                            }
+                            dt.Rows.Add(row);
+
                         }
                     }
                 }
-
-
-
-
+                dataGridView1.DataSource = dt;  
                 fstream.Close();
             }
             catch (Exception)
