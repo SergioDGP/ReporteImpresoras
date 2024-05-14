@@ -6000,24 +6000,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sgarcia\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\USER\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\ReporteImpresoras.csproj",
+      "projectUniqueName": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\ReporteImpresoras.csproj",
       "projectName": "ReporteImpresoras",
-      "projectPath": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\ReporteImpresoras.csproj",
-      "packagesPath": "C:\\Users\\sgarcia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\obj\\",
+      "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\ReporteImpresoras.csproj",
+      "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\sgarcia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

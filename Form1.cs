@@ -9,6 +9,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.VariantTypes;
 using DocumentFormat.OpenXml.Wordprocessing;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Math;
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -135,7 +136,7 @@ namespace ReporteImpresoras
                 }
                 txtRutaBN.Text = rutaExcelByN;
 
-                leerExcel();
+                //leerExcel();
             }
         }
 
@@ -203,7 +204,7 @@ namespace ReporteImpresoras
 
         public DataTable leerExcel()
         {
-            string rutaprueba = @"C:\Conversiones ReportesImp\ReporteImpB&N_20240513_1750.xlsx";
+            string rutaprueba = @"C:\Conversiones ReportesImp\ReporteImpB&N_20240514_0039.xlsx";//ReporteImpB&N_20240513_1750.xlsx";
             DataTable dt = new DataTable();
             try
             {
@@ -238,8 +239,12 @@ namespace ReporteImpresoras
                         }
                         //dt.Rows.Add(row);
                     }
-                    else 
+                    else
                     {
+                        string strFecha = ws.Cells[i, 2].Value.ToString();
+                        //int primeroLugar = strFecha.IndexOf(1);
+                        //int segundoLugar = s.IndexOf(Segundo);
+                        //string entre = s.Substring(primeroLugar, segundoLugar - primeroLugar);
                         if (ws.Cells[i, 0].Value.ToString() == "Copiar")
                         {
                             row = dt.NewRow();
