@@ -29,7 +29,7 @@ namespace ReporteImpresoras
             InitializeComponent();
             cargaAnioMes();
             //Resultados_Load();
-            leerExcel();
+            dataGridView1.DataSource = leerExcel();
         }
 
         private void cargaAnioMes()
@@ -112,7 +112,6 @@ namespace ReporteImpresoras
 
                             contadorColumnas++;
                         }
-
 
                     }
                     sheet1.Cells.DeleteColumns(5, cols, true);
@@ -204,7 +203,7 @@ namespace ReporteImpresoras
 
         public DataTable leerExcel()
         {
-            string rutaprueba = @"C:\Conversiones ReportesImp\ReporteImpB&N_20240514_0039.xlsx";//ReporteImpB&N_20240513_1750.xlsx";
+            string rutaprueba = @"C:\Conversiones ReportesImp\ReporteImpB&N_20240513_1750.xlsx";//ReporteImpB&N_20240513_1750.xlsx";
             DataTable dt = new DataTable();
             try
             {
@@ -220,7 +219,9 @@ namespace ReporteImpresoras
                 //var 
                 DataRow row;
                 DataColumn column;
-
+                MySqlConnection sqlConexion;
+                sqlConexion = getConection();
+                
                 for (int i = 0; i < rows; i++)
                 {
                     if (i == 0)
@@ -237,16 +238,48 @@ namespace ReporteImpresoras
 
                             contCols++;
                         }
+                        column = new DataColumn();
+                        column.DataType = Type.GetType("System.String");
+                        column.ColumnName = "Direccion";
+                        dt.Columns.Add(column);
                         //dt.Rows.Add(row);
                     }
                     else
                     {
+                        //Obtenemos la celda de hojas imprimidas
+                        int ConTotal = Convert.ToInt32(ws.Cells[i, 3].Value);
+
+                        //Obtenemos el año y mes de cada fila recorrida
                         string strFecha = ws.Cells[i, 2].Value.ToString();
-                        //int primeroLugar = strFecha.IndexOf(1);
-                        //int segundoLugar = s.IndexOf(Segundo);
-                        //string entre = s.Substring(primeroLugar, segundoLugar - primeroLugar);
-                        if (ws.Cells[i, 0].Value.ToString() == "Copiar")
+                        string año = strFecha.Substring(0, 4);
+                        int mes = Convert.ToInt32(strFecha.Substring(5, 2));
+                        int hora = Convert.ToInt32(strFecha.Substring(11, 2));
+
+                        //obtenemos el valor del mes y año seleccionados
+                        int mesSelec = (cmbMeses.SelectedIndex) + 1;//Se suma 1 ya que el index empieza a partir de 0
+                        int proir = cmbAnios.SelectedIndex;
+                        string anioSelec = Convert.ToString(cmbAnios.SelectedItem);
+                        
+                        //filtramos solo las celdas con el mes y año especificado
+                        if (ws.Cells[i, 0].Value.ToString() != "Escanear a E-mail" && mesSelec == mes && anioSelec == año  && ConTotal != 0)//&& ws.Cells[i, 1].Value.ToString() == "raguilar"
                         {
+                            //Hacemos cunsulta del area de cada usuario para añadirlo a la tabla
+                            string nombreUsuario = ws.Cells[i, 1].Value.ToString();
+                            sqlConexion.Open();
+                            string sqlCon = "select a.nombre from empleado e, area a where e.Area_idArea = a.idArea and e.correo like '" + nombreUsuario + "%';";
+                            MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);
+                            var reader = com.ExecuteReader();
+                            string area = "";
+                            while (reader.Read())
+                            {
+                                area = reader["nombre"].ToString();
+                            }//
+
+                            /*if (area == null || area == "")
+                            {
+                                MessageBox.Show("User: " + nombreUsuario);
+                            }*/
+
                             row = dt.NewRow();
                             contCols = 0;
                             foreach (Cell c in ws.Cells.Rows[i])
@@ -255,13 +288,17 @@ namespace ReporteImpresoras
                                 //row["ParentItem"] = "ParentItem " + i;
                                 contCols++;
                             }
+                            row[5] = area;
                             dt.Rows.Add(row);
-
+                            sqlConexion.Close();//Se cierra la conexion a mysql
                         }
+                        
                     }
+                    
+                    
                 }
-                dataGridView1.DataSource = dt;  
                 fstream.Close();
+
             }
             catch (Exception)
             {
@@ -279,13 +316,22 @@ namespace ReporteImpresoras
             {
                 string GetMes = cmbMeses.Text;
                 int GetAnio = Convert.ToInt32(cmbAnios.Text);
+                DataTable dt = leerExcel();
 
+                ImportTableOptions importOptions = new ImportTableOptions();//Opciones para importar la tabla al excel
                 var libro1 = new Workbook();//Creamos un nuevo libro de excel
+                Worksheet hojaGeneral = libro1.Worksheets[0];//Se agrega primera hoja(General)
+                hojaGeneral.Name = "General";
 
-                int index = libro1.Worksheets.Add();
-                Worksheet hoja1 = libro1.Worksheets.Add("General");//Se agrega primera hoja(General)
-                MySqlConnection sqlConexion = getConection(); //Se inicializa la conexion a la base
+                hojaGeneral.Cells.ImportData(dt, 0, 0, importOptions);
+                hojaGeneral.AutoFitColumns();
 
+                libro1.Save(@"C:\\Conversiones ReportesImp\\prueba3.xlsx");
+                //FileStream fstream = new FileStream(rutaprueba, FileMode.Open);
+                //Workbook wb = new Workbook(fstream);
+
+
+                /*MySqlConnection sqlConexion = getConection(); //Se inicializa la conexion a la base
                 try
                 {
                     sqlConexion.Open();
@@ -295,7 +341,7 @@ namespace ReporteImpresoras
                 catch (System.Exception ex)
                 {
                     //conexion.Text = ex.Message;
-                }
+                }*/
             }
             catch (Exception ex)
             {
