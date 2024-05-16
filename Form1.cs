@@ -1,5 +1,6 @@
 using Aspose.Cells;
 using Aspose.Cells.Drawing;
+using Aspose.Cells.Tables;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Office2016.Excel;
 
@@ -16,6 +17,7 @@ using System.Windows.Forms;
 using Cell = Aspose.Cells.Cell;
 using Path = System.IO.Path;
 using Row = Aspose.Cells.Row;
+using TableStyleType = Aspose.Cells.Tables.TableStyleType;
 using Workbook = Aspose.Cells.Workbook;
 using Worksheet = Aspose.Cells.Worksheet;
 
@@ -24,6 +26,68 @@ namespace ReporteImpresoras
     public partial class VentanaPrincipal : Form
     {
         public string rutaExcelByN;
+        int totalBNUsers = 0;
+        DataTable tablaDN1 = null;
+        DataTable tablaDN2 = null;
+        DataTable tablaTI = null;
+        DataTable tablaRH = null;
+        DataTable tablaAuditoria = null;
+        DataTable tablaComercio = null;
+        DataTable tablaContraloria = null;
+        DataTable tablaDirG = null;
+        DataTable tablaLegal = null;
+        DataTable tablaPlaneacion = null;
+        DataTable tablaSOX = null;
+        DataTable totalesBN = null;
+
+        List<string> listaAreas = new List<string>();
+        List<int> listaTotalesBN = new List<int>();
+
+        List<string> listaDN1 = new List<string>();
+        List<int> ListaTotalDN1 = new List<int>();
+
+        List<string> listaDN2 = new List<string>();
+        List<int> listatotalDN2 = new List<int>();
+
+        List<string> listaTI = new List<string>();
+        List<int> listatotalTI = new List<int>();
+
+        List<string> listaRH = new List<string>();
+        List<int> listatotalRH = new List<int>();
+
+        List<string> listaAuditoria = new List<string>();
+        List<int> listatotalAud = new List<int>();
+
+        List<string> listaComercio = new List<string>();
+        List<int> listatotalComer = new List<int>();
+
+        List<string> listaContraloria = new List<string>();
+        List<int> listatotalContra = new List<int>();
+
+        List<string> listaDirG = new List<string>();
+        List<int> listaTotalDirG = new List<int>();
+
+        List<string> listaLegal = new List<string>();
+        List<int> listatotalLegal = new List<int>();
+
+        List<string> listaPlaneacion = new List<string>();
+        List<int> listatotalPlaneacion = new List<int>();
+
+        List<string> listaSOX = new List<string>();
+        List<int> listatotalSOX = new List<int>();
+
+
+        int conDN1 = 0;
+        int conDN2 = 0;
+        int conTI = 0;
+        int conRH = 0;
+        int conAudit = 0;
+        int conComer = 0;
+        int conContra = 0;
+        int conDir = 0;
+        int conLegal = 0;
+        int conPlanea = 0;
+        int conSOX = 0;
         public VentanaPrincipal()
         {
             InitializeComponent();
@@ -221,7 +285,33 @@ namespace ReporteImpresoras
                 DataColumn column;
                 MySqlConnection sqlConexion;
                 sqlConexion = getConection();
-                
+                totalBNUsers = 0;   
+                totalesBN = new DataTable();//Se inicializa la tabla totalBN
+
+                tablaDN1 = new DataTable();
+                tablaDN2 = new DataTable();
+                tablaTI = new DataTable();
+                tablaRH = new DataTable();
+                tablaAuditoria = new DataTable();
+                tablaComercio = new DataTable();
+                tablaContraloria = new DataTable();
+                tablaDirG = new DataTable();
+                tablaLegal = new DataTable();
+                tablaPlaneacion = new DataTable();
+                tablaSOX = new DataTable();
+
+                int totalDN1 = 0;
+                int totalDN2 = 0;
+                int totalTI = 0;
+                int totalRH = 0;
+                int totalAuditoria = 0;
+                int totalComercio = 0;
+                int totalContraloria = 0;
+                int totalDirG = 0;
+                int totalLegal = 0;
+                int totalPlaneacion = 0;
+                int totalSOX = 0;
+
                 for (int i = 0; i < rows; i++)
                 {
                     if (i == 0)
@@ -230,11 +320,17 @@ namespace ReporteImpresoras
                         contCols = 0;
                         foreach (Cell c in ws.Cells.Rows[i])
                         {
-                            //row[contCols] = c.Value;
-                            column = new DataColumn();
-                            column.DataType = Type.GetType("System.String");
-                            column.ColumnName = (string)c.Value;
-                            dt.Columns.Add(column);
+                            //Se añade las nuevas columnas con los titulos del excel leido
+                            String ColumnName = (string)c.Value;
+                            if (contCols != 3)
+                            {
+                                dt.Columns.Add(ColumnName, typeof(String));
+                            }
+                            else
+                            {
+                                dt.Columns.Add(ColumnName, typeof(Int32));
+                            }
+                            
 
                             contCols++;
                         }
@@ -246,12 +342,14 @@ namespace ReporteImpresoras
                     }
                     else
                     {
-                        //Obtenemos la celda de hojas imprimidas
+                        //Obtenemos la celda de hojas imprimidas para validar que no este en 0
                         int ConTotal = Convert.ToInt32(ws.Cells[i, 3].Value);
+                        string nombreUsuario1 = ws.Cells[i, 1].Value.ToString();
 
                         //Obtenemos el año y mes de cada fila recorrida
                         string strFecha = ws.Cells[i, 2].Value.ToString();
                         string año = strFecha.Substring(0, 4);
+                        //el artur estuvo aqui xd
                         int mes = Convert.ToInt32(strFecha.Substring(5, 2));
                         int hora = Convert.ToInt32(strFecha.Substring(11, 2));
 
@@ -275,28 +373,469 @@ namespace ReporteImpresoras
                                 area = reader["nombre"].ToString();
                             }//
 
-                            /*if (area == null || area == "")
-                            {
-                                MessageBox.Show("User: " + nombreUsuario);
-                            }*/
-
+                            //Creacion de fila por cada registro y lo añadimos a la tabla dt
                             row = dt.NewRow();
                             contCols = 0;
+                            //Se añade cada columna a la fila
                             foreach (Cell c in ws.Cells.Rows[i])
                             {
                                 row[contCols] = c.Value;
-                                //row["ParentItem"] = "ParentItem " + i;
                                 contCols++;
                             }
-                            row[5] = area;
+                            row[5] = area;//Se agrega el area del usuario en la columna 5
                             dt.Rows.Add(row);
+                            totalBNUsers++;
                             sqlConexion.Close();//Se cierra la conexion a mysql
+
+
+                            int totalUsuario = 0;
+                            //Se suman los totales de impresiones respecto a cada area para la hoja de totales para la hoja total
+                            if (area == "DN1") 
+                            {
+                                totalDN1 += ConTotal;
+
+                                //agregamos el total de por usuario
+                                if(!listaDN1.Contains(nombreUsuario1))
+                                {
+                                    listaDN1.Add(nombreUsuario1); 
+                                    ListaTotalDN1.Add(ConTotal);
+                                }
+                                else
+                                {
+                                    int index = listaDN1.IndexOf(nombreUsuario1);
+                                    int suma = ListaTotalDN1[index];
+                                    ListaTotalDN1[index] = suma + ConTotal;
+                                }
+                            }
+                            else if (area == "DN2")
+                            {
+                                totalDN2 += ConTotal;
+
+                                //agregamos el total de por usuario
+                                if (!listaDN2.Contains(nombreUsuario1))
+                                {
+                                    listaDN2.Add(nombreUsuario1);
+                                    listatotalDN2.Add(ConTotal);
+                                }
+                                else
+                                {
+                                    int index = listaDN2.IndexOf(nombreUsuario1);
+                                    int suma = listatotalDN2[index];
+                                    listatotalDN2[index] = suma + ConTotal;
+                                }
+                            }
+                            else if (area == "TI")
+                            {
+                                totalTI += ConTotal;
+
+                                //agregamos el total de por usuario
+                                if (!listaTI.Contains(nombreUsuario1))
+                                {
+                                    listaTI.Add(nombreUsuario1);
+                                    listatotalTI.Add(ConTotal);
+                                }
+                                else
+                                {
+                                    int index = listaTI.IndexOf(nombreUsuario1);
+                                    int suma = listatotalTI[index];
+                                    listatotalTI[index] = suma + ConTotal;
+                                }
+                            }
+                            else if (area == "RH")
+                            {
+                                totalRH += ConTotal;
+
+                                //agregamos el total de por usuario
+                                if (!listaRH.Contains(nombreUsuario1))
+                                {
+                                    listaRH.Add(nombreUsuario1);
+                                    listatotalRH.Add(ConTotal);
+                                }
+                                else
+                                {
+                                    int index = listaRH.IndexOf(nombreUsuario1);
+                                    int suma = listatotalRH[index];
+                                    listatotalRH[index] = suma + ConTotal;
+                                }
+                            }
+                            else if (area == "AUDITORIA")
+                            {
+                                totalAuditoria += ConTotal;
+
+                                //agregamos el total de por usuario
+                                if (!listaAuditoria.Contains(nombreUsuario1))
+                                {
+                                    listaAuditoria.Add(nombreUsuario1);
+                                    listatotalAud.Add(ConTotal);
+                                }
+                                else
+                                {
+                                    int index = listaAuditoria.IndexOf(nombreUsuario1);
+                                    int suma = listatotalAud[index];
+                                    listatotalAud[index] = suma + ConTotal;
+                                }
+                            }
+                            else if (area == "COMERCIO")
+                            {
+                                totalComercio += ConTotal;
+
+                                //agregamos el total de por usuario
+                                if (!listaComercio.Contains(nombreUsuario1))
+                                {
+                                    listaComercio.Add(nombreUsuario1);
+                                    listatotalComer.Add(ConTotal);
+                                }
+                                else
+                                {
+                                    int index = listaComercio.IndexOf(nombreUsuario1);
+                                    int suma = listatotalComer[index];
+                                    listatotalComer[index] = suma + ConTotal;
+                                }
+                            }
+                            else if (area == "CONTRALORIA")
+                            {
+                                totalContraloria += ConTotal;
+
+                                //agregamos el total de por usuario
+                                if (!listaContraloria.Contains(nombreUsuario1))
+                                {
+                                    listaContraloria.Add(nombreUsuario1);
+                                    listatotalContra.Add(ConTotal);
+                                }
+                                else
+                                {
+                                    int index = listaContraloria.IndexOf(nombreUsuario1);
+                                    int suma = listatotalContra[index];
+                                    listatotalContra[index] = suma + ConTotal;
+                                }
+                            }
+                            else if (area == "DIR.GRAL.")
+                            {
+                                totalDirG += ConTotal;
+
+                                //agregamos el total de por usuario
+                                if (!listaDirG.Contains(nombreUsuario1))
+                                {
+                                    listaDirG.Add(nombreUsuario1);
+                                    listaTotalDirG.Add(ConTotal);
+                                }
+                                else
+                                {
+                                    int index = listaDirG.IndexOf(nombreUsuario1);
+                                    int suma = listaTotalDirG[index];
+                                    listaTotalDirG[index] = suma + ConTotal;
+                                }
+                            }
+                            else if (area == "LEGAL")
+                            {
+                                totalLegal += ConTotal;
+
+                                //agregamos el total de por usuario
+                                if (!listaLegal.Contains(nombreUsuario1))
+                                {
+                                    listaLegal.Add(nombreUsuario1);
+                                    listatotalLegal.Add(ConTotal);
+                                }
+                                else
+                                {
+                                    int index = listaLegal.IndexOf(nombreUsuario1);
+                                    int suma = listatotalLegal[index];
+                                    listatotalLegal[index] = suma + ConTotal;
+                                }
+                            }
+                            else if (area == "PLANEACION")
+                            {
+                                totalPlaneacion += ConTotal;
+
+                                //agregamos el total de por usuario
+                                if (!listaPlaneacion.Contains(nombreUsuario1))
+                                {
+                                    listaPlaneacion.Add(nombreUsuario1);
+                                    listatotalPlaneacion.Add(ConTotal);
+                                }
+                                else
+                                {
+                                    int index = listaPlaneacion.IndexOf(nombreUsuario1);
+                                    int suma = listatotalPlaneacion[index];
+                                    listatotalPlaneacion[index] = suma + ConTotal;
+                                }
+                            }
+                            else if (area == "SOX")
+                            {
+                                totalSOX += ConTotal;
+
+                                //agregamos el total de por usuario
+                                if (!listaSOX.Contains(nombreUsuario1))
+                                {
+                                    listaSOX.Add(nombreUsuario1);
+                                    listatotalSOX.Add(ConTotal);
+                                }
+                                else
+                                {
+                                    int index = listaSOX.IndexOf(nombreUsuario1);
+                                    int suma = listatotalSOX[index];
+                                    listatotalSOX[index] = suma + ConTotal;
+                                }
+                            }
+
                         }
                         
                     }
                     
                     
                 }
+
+                conDN1 = listaDN1.Count;
+                conDN2 = listaDN2.Count;
+                conTI = listaTI.Count;
+                conRH = listaRH.Count;
+                conAudit = listaAuditoria.Count;
+                conComer = listaComercio.Count;
+                conContra = listaContraloria.Count;
+                conDir = listaDirG.Count;
+                conLegal = listaLegal.Count;
+                conPlanea = listaPlaneacion.Count;
+                conSOX = listaSOX.Count;
+
+                //se agregan los totales a la lista totalesBN
+                listaTotalesBN.Add(totalDN1);
+                listaTotalesBN.Add(totalDN2);
+                listaTotalesBN.Add(totalTI);
+                listaTotalesBN.Add(totalRH);
+                listaTotalesBN.Add(totalAuditoria);
+                listaTotalesBN.Add(totalComercio);
+                listaTotalesBN.Add(totalContraloria);
+                listaTotalesBN.Add(totalDirG);
+                listaTotalesBN.Add(totalLegal);
+                listaTotalesBN.Add(totalPlaneacion);
+                listaTotalesBN.Add(totalSOX);
+
+                //Se agregan las areas a la lista areas
+                listaAreas.Add("DN1");
+                listaAreas.Add("DN2");
+                listaAreas.Add("TI");
+                listaAreas.Add("RH");
+                listaAreas.Add("AUDITORIA");
+                listaAreas.Add("COMERCIO");
+                listaAreas.Add("CONTRALORIA");
+                listaAreas.Add("DIR GRAL");
+                listaAreas.Add("LEGAL");
+                listaAreas.Add("PLANEACION");
+                listaAreas.Add("SOX");
+
+
+                //Llenamos la table de totalesBN
+                //se agregan las columnas
+                totalesBN.Columns.Add("Area", typeof(String));
+                totalesBN.Columns.Add("Total B&N", typeof(Int32));
+
+                tablaDN1.Columns.Add("Usuario", typeof(String));
+                tablaDN1.Columns.Add("Total", typeof(Int32));
+
+                tablaDN2.Columns.Add("Usuario", typeof(String));
+                tablaDN2.Columns.Add("Total", typeof(Int32));
+
+                tablaTI.Columns.Add("Usuario", typeof(String));
+                tablaTI.Columns.Add("Total", typeof(Int32));
+
+                tablaRH.Columns.Add("Usuario", typeof(String));
+                tablaRH.Columns.Add("Total", typeof(Int32));
+
+                tablaAuditoria.Columns.Add("Usuario", typeof(String));
+                tablaAuditoria.Columns.Add("Total", typeof(Int32));
+
+                tablaComercio.Columns.Add("Usuario", typeof(String));
+                tablaComercio.Columns.Add("Total", typeof(Int32));
+
+                tablaContraloria.Columns.Add("Usuario", typeof(String));
+                tablaContraloria.Columns.Add("Total", typeof(Int32));
+
+                tablaDirG.Columns.Add("Usuario", typeof(String));
+                tablaDirG.Columns.Add("Total", typeof(Int32));
+
+                tablaLegal.Columns.Add("Usuario", typeof(String));
+                tablaLegal.Columns.Add("Total", typeof(Int32));
+
+                tablaPlaneacion.Columns.Add("Usuario", typeof(String));
+                tablaPlaneacion.Columns.Add("Total", typeof(Int32));
+
+                tablaSOX.Columns.Add("Usuario", typeof(String));
+                tablaSOX.Columns.Add("Total", typeof(Int32));
+
+
+                DataRow filaTotal;
+                DataRow filadn1;
+                int recorreLista = 0;
+
+                //Se agregan los datos de las filas
+                for (int i = 0; i < 11; i++)
+                {
+                    string area = listaAreas[i];
+                    int total = listaTotalesBN[i];
+
+                    filaTotal = totalesBN.NewRow();
+                    filaTotal[0] = area;
+                    filaTotal[1] = total;
+
+                    totalesBN.Rows.Add(filaTotal);  
+                    //recorreLista++; 
+                }
+
+                //cargar tabla 
+                for (int i = 0; i < conDN1; i++)
+                {
+                    string nombre = listaDN1[i];
+                    int total = ListaTotalDN1[i];
+
+                    filadn1 = tablaDN1.NewRow();
+                    filadn1[0] = nombre;
+                    filadn1[1] = total;
+
+                    tablaDN1.Rows.Add(filadn1);
+                    //recorreLista++; 
+                }
+
+                //cargar tabla 
+                for (int i = 0; i < conDN2; i++)
+                {
+                    string nombre = listaDN2[i];
+                    int total = listatotalDN2[i];
+
+                    filadn1 = tablaDN2.NewRow();
+                    filadn1[0] = nombre;
+                    filadn1[1] = total;
+
+                    tablaDN2.Rows.Add(filadn1);
+                    //recorreLista++; 
+                }
+
+                //cargar tabla 
+                for (int i = 0; i < conTI; i++)
+                {
+                    string nombre = listaTI[i];
+                    int total = listatotalTI[i];
+
+                    filadn1 = tablaTI.NewRow();
+                    filadn1[0] = nombre;
+                    filadn1[1] = total;
+
+                    tablaTI.Rows.Add(filadn1);
+                    //recorreLista++; 
+                }
+
+                //cargar tabla 
+                for (int i = 0; i < conRH; i++)
+                {
+                    string nombre = listaRH[i];
+                    int total = listatotalRH[i];
+
+                    filadn1 = tablaRH.NewRow();
+                    filadn1[0] = nombre;
+                    filadn1[1] = total;
+
+                    tablaRH.Rows.Add(filadn1);
+                    //recorreLista++; 
+                }
+
+                //cargar tabla 
+                for (int i = 0; i < conAudit; i++)
+                {
+                    string nombre = listaAuditoria[i];
+                    int total = listatotalAud[i];
+
+                    filadn1 = tablaAuditoria.NewRow();
+                    filadn1[0] = nombre;
+                    filadn1[1] = total;
+
+                    tablaAuditoria.Rows.Add(filadn1);
+                    //recorreLista++; 
+                }
+
+                //cargar tabla 
+                for (int i = 0; i < conComer; i++)
+                {
+                    string nombre = listaComercio[i];
+                    int total = listatotalComer[i];
+
+                    filadn1 = tablaComercio.NewRow();
+                    filadn1[0] = nombre;
+                    filadn1[1] = total;
+
+                    tablaComercio.Rows.Add(filadn1);
+                    //recorreLista++; 
+                }
+
+                //cargar tabla 
+                for (int i = 0; i < conContra; i++)
+                {
+                    string nombre = listaContraloria[i];
+                    int total = listatotalContra[i];
+
+                    filadn1 = tablaContraloria.NewRow();
+                    filadn1[0] = nombre;
+                    filadn1[1] = total;
+
+                    tablaContraloria.Rows.Add(filadn1);
+                    //recorreLista++; 
+                }
+
+                //cargar tabla 
+                for (int i = 0; i < conDir; i++)
+                {
+                    string nombre = listaDirG[i];
+                    int total = listaTotalDirG[i];
+
+                    filadn1 = tablaDirG.NewRow();
+                    filadn1[0] = nombre;
+                    filadn1[1] = total;
+
+                    tablaDirG.Rows.Add(filadn1);
+                    //recorreLista++; 
+                }
+
+                //cargar tabla 
+                for (int i = 0; i < conLegal; i++)
+                {
+                    string nombre = listaLegal[i];
+                    int total = listatotalLegal[i];
+
+                    filadn1 = tablaLegal.NewRow();
+                    filadn1[0] = nombre;
+                    filadn1[1] = total;
+
+                    tablaLegal.Rows.Add(filadn1);
+                    //recorreLista++; 
+                }
+
+                //cargar tabla 
+                for (int i = 0; i < conPlanea; i++)
+                {
+                    string nombre = listaPlaneacion[i];
+                    int total = listatotalPlaneacion[i];
+
+                    filadn1 = tablaPlaneacion.NewRow();
+                    filadn1[0] = nombre;
+                    filadn1[1] = total;
+
+                    tablaPlaneacion.Rows.Add(filadn1);
+                    //recorreLista++; 
+                }
+
+                //cargar tabla 
+                for (int i = 0; i < conSOX; i++)
+                {
+                    string nombre = listaSOX[i];
+                    int total = listatotalSOX[i];
+
+                    filadn1 = tablaSOX.NewRow();
+                    filadn1[0] = nombre;
+                    filadn1[1] = total;
+
+                    tablaSOX.Rows.Add(filadn1);
+                    //recorreLista++; 
+                }
+
+
                 fstream.Close();
 
             }
@@ -318,17 +857,210 @@ namespace ReporteImpresoras
                 int GetAnio = Convert.ToInt32(cmbAnios.Text);
                 DataTable dt = leerExcel();
 
-                ImportTableOptions importOptions = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions1 = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions2 = new ImportTableOptions();//Opciones para importar la tabla al excel
+
+                ImportTableOptions importOptions3 = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions4 = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions5 = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions6 = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions7 = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions8 = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions9 = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions10 = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions11 = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions12 = new ImportTableOptions();//Opciones para importar la tabla al excel
+                ImportTableOptions importOptions13 = new ImportTableOptions();//Opciones para importar la tabla al excel
+
+
+
+
+
                 var libro1 = new Workbook();//Creamos un nuevo libro de excel
                 Worksheet hojaGeneral = libro1.Worksheets[0];//Se agrega primera hoja(General)
                 hojaGeneral.Name = "General";
 
-                hojaGeneral.Cells.ImportData(dt, 0, 0, importOptions);
-                hojaGeneral.AutoFitColumns();
+                //Creacion de las hojas correspondientes para cada area
+                Worksheet hojaTotal = libro1.Worksheets.Add("Total");
 
-                libro1.Save(@"C:\\Conversiones ReportesImp\\prueba3.xlsx");
-                //FileStream fstream = new FileStream(rutaprueba, FileMode.Open);
-                //Workbook wb = new Workbook(fstream);
+                Worksheet hojaDN1 = libro1.Worksheets.Add("DN1");
+                Worksheet hojaDN2 = libro1.Worksheets.Add("DN2");
+                Worksheet hojaTI = libro1.Worksheets.Add("TI");
+                Worksheet hojaRH = libro1.Worksheets.Add("RH");
+                Worksheet hojaAuditoria = libro1.Worksheets.Add("AUDITORIA");
+                Worksheet hojaComercio = libro1.Worksheets.Add("COMERCIO");
+                Worksheet hojaContraloria = libro1.Worksheets.Add("CONTRALORIA");
+                Worksheet hojaDirG = libro1.Worksheets.Add("DIR. GRAL.");
+                Worksheet hojaLegal = libro1.Worksheets.Add("LEGAL");
+                Worksheet hojaPlaneacion = libro1.Worksheets.Add("PLANEACION");
+                Worksheet hojaSox = libro1.Worksheets.Add("SOX");
+                /*Worksheet hojaDN1 = libro1.Worksheets.Add("DN1");
+                Worksheet hojaDN2 = libro1.Worksheets.Add("DN2");
+                Worksheet hojaTI = libro1.Worksheets.Add("TI");
+                Worksheet hojaRH = libro1.Worksheets.Add("RH");
+                Worksheet hojaAuditoria = libro1.Worksheets.Add("AUDITORIA");
+                Worksheet hojaComercio = libro1.Worksheets.Add("COMERCIO");
+                Worksheet hojaContraloria = libro1.Worksheets.Add("CONTRALORIA");
+                Worksheet hojaDirG = libro1.Worksheets.Add("DIR GRAL");
+                Worksheet hojaLegal = libro1.Worksheets.Add("LEGAL");
+                Worksheet HojaPlaneacion = libro1.Worksheets.Add("PLANECAION");
+                Worksheet hojaSOX = libro1.Worksheets.Add("SOX");*/
+
+                //añadimos los datos a la hoja General
+                hojaGeneral.Cells.ImportData(dt, 0, 0, importOptions1);
+                hojaGeneral.AutoFitColumns();
+                ListObject listObject = hojaGeneral.ListObjects[hojaGeneral.ListObjects.Add(0, 0, totalBNUsers, 5, true)];
+                listObject.TableStyleType = TableStyleType.TableStyleMedium10;
+
+
+
+
+                hojaTotal.Cells.ImportData(totalesBN, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject2 = hojaTotal.ListObjects[hojaTotal.ListObjects.Add(0, 0, 11, 1, true)];
+                listObject2.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaTotal.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex = hojaTotal.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart = hojaTotal.Charts[chartIndex];
+                chart.SetChartDataRange("A1:B11", false);
+
+
+                hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
+                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaDN1.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
+                String rango2 = "A1:B" + conDN1;
+                chart2.SetChartDataRange(rango2, false);
+
+                hojaDN2.Cells.ImportData(tablaDN2, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject4 = hojaDN2.ListObjects[hojaDN2.ListObjects.Add(0, 0, conDN2, 1, true)];
+                listObject4.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaDN2.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex3 = hojaDN2.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart3 = hojaDN2.Charts[chartIndex3];
+                String rango3 = "A1:B" + conDN2;
+                chart3.SetChartDataRange(rango3, false);
+
+                hojaTI.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject5 = hojaTI.ListObjects[hojaTI.ListObjects.Add(0, 0, conTI, 1, true)];
+                listObject5.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaTI.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex5 = hojaTI.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart5 = hojaTI.Charts[chartIndex5];
+                String rango4 = "A1:B" + conTI;
+                chart5.SetChartDataRange(rango2, false);
+
+                hojaRH.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject6 = hojaRH.ListObjects[hojaRH.ListObjects.Add(0, 0, conRH, 1, true)];
+                listObject6.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaRH.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex6 = hojaRH.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart6 = hojaRH.Charts[chartIndex6];
+                String rango6 = "A1:B" + conRH;
+                chart2.SetChartDataRange(rango6, false);
+
+                hojaAuditoria.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject7 = hojaAuditoria.ListObjects[hojaAuditoria.ListObjects.Add(0, 0, conAudit, 1, true)];
+                listObject7.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaAuditoria.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex7 = hojaAuditoria.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart7 = hojaAuditoria.Charts[chartIndex7];
+                String rango7 = "A1:B" + conAudit;
+                chart2.SetChartDataRange(rango7, false);
+
+                /*hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
+                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaDN1.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
+                String rango2 = "A1:B" + conDN1;
+                chart2.SetChartDataRange(rango2, false);
+
+                hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
+                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaDN1.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
+                String rango2 = "A1:B" + conDN1;
+                chart2.SetChartDataRange(rango2, false);
+
+                hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
+                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaDN1.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
+                String rango2 = "A1:B" + conDN1;
+                chart2.SetChartDataRange(rango2, false);
+
+                hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
+                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaDN1.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
+                String rango2 = "A1:B" + conDN1;
+                chart2.SetChartDataRange(rango2, false);
+
+                hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
+                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaDN1.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
+                String rango2 = "A1:B" + conDN1;
+                chart2.SetChartDataRange(rango2, false);
+
+                hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                //dar formato de tabla a los totales
+                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
+                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaDN1.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
+                String rango2 = "A1:B" + conDN1;
+                chart2.SetChartDataRange(rango2, false);*/
+
+
+
+
+                string archivoP = @"C:\\Conversiones ReportesImp\\prueba22.xlsx";
+                libro1.Save(archivoP);
+
+                MessageBox.Show("Archivo Guardado correctamente");
+
+
+                /*FileStream fstream = new FileStream(archivoP, FileMode.Open);
+                Workbook wb = new Workbook(fstream);
+                wb.Worksheets.RemoveAt(1);
+                wb.SaveToStream();
+                fstream.Close();*/
 
 
                 /*MySqlConnection sqlConexion = getConection(); //Se inicializa la conexion a la base
