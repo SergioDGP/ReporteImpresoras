@@ -110,7 +110,7 @@ namespace ReporteImpresoras
             InitializeComponent();
             cargaAnioMes();
             //Resultados_Load();
-            dataGridView1.DataSource = leerExcel();
+            //dataGridView1.DataSource = leerExcel();
         }
 
         private void cargaAnioMes()
@@ -978,141 +978,194 @@ namespace ReporteImpresoras
                 listObject.TableStyleType = TableStyleType.TableStyleMedium10;
 
 
-
-
                 hojaTotal.Cells.ImportData(totalesBN, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject2 = hojaTotal.ListObjects[hojaTotal.ListObjects.Add(0, 0, 12, 1, true)];
                 listObject2.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaTotal.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex = hojaTotal.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);//25, 15
-                Aspose.Cells.Charts.Chart chart = hojaTotal.Charts[chartIndex];
-                chart.SetChartDataRange("A1:B12", false);
-
+                //validamos que haya registros en el área para crear la gráfica de barras en el excel
+                if (totalBNUsers != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex = hojaTotal.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);//25, 15
+                    Aspose.Cells.Charts.Chart chart = hojaTotal.Charts[chartIndex];
+                    chart.SetChartDataRange("A1:B12", false);
+                }
 
                 hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1 + 1, 1, true)];
                 listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaDN1.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 30, 20);
-                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
-                String rango2 = "A1:B" + (conDN1 + 1);
-                chart2.SetChartDataRange(rango2, false);
+                //validamos que haya registros en el área para crear la gráfica de barras en el excel
+                if (conDN1 != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 30, 20);
+                    Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
+                    String rango2 = "A1:B" + (conDN1 + 1);
+                    chart2.SetChartDataRange(rango2, false);
+                }
+                
 
                 hojaDN2.Cells.ImportData(tablaDN2, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject4 = hojaDN2.ListObjects[hojaDN2.ListObjects.Add(0, 0, conDN2 + 1, 1, true)];
                 listObject4.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaDN2.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex3 = hojaDN2.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 30, 20);
-                Aspose.Cells.Charts.Chart chart3 = hojaDN2.Charts[chartIndex3];
-                String rango3 = "A1:B" + (conDN2 + 1);
-                chart3.SetChartDataRange(rango3, false);
+                //validamos que haya registros en el área para crear la gráfica de barras en el excel
+                if (conDN2 != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex3 = hojaDN2.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 30, 20);
+                    Aspose.Cells.Charts.Chart chart3 = hojaDN2.Charts[chartIndex3];
+                    String rango3 = "A1:B" + (conDN2 + 1);
+                    chart3.SetChartDataRange(rango3, false);
+                }
+                
 
                 hojaTI.Cells.ImportData(tablaTI, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject5 = hojaTI.ListObjects[hojaTI.ListObjects.Add(0, 0, conTI + 1, 1, true)];
                 listObject5.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaTI.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex5 = hojaTI.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart5 = hojaTI.Charts[chartIndex5];
-                String rango4 = "A1:B" + (conTI + 1);
-                chart5.SetChartDataRange(rango4, false);
+                //validamos que haya registros en el área para crear la gráfica de barras en el excel
+                if (conTI != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex5 = hojaTI.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
+                    Aspose.Cells.Charts.Chart chart5 = hojaTI.Charts[chartIndex5];
+                    String rango4 = "A1:B" + (conTI + 1);
+                    chart5.SetChartDataRange(rango4, false);
+                }
+                
 
                 hojaRH.Cells.ImportData(tablaRH, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject6 = hojaRH.ListObjects[hojaRH.ListObjects.Add(0, 0, conRH + 1, 1, true)];
                 listObject6.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaRH.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex6 = hojaRH.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart6 = hojaRH.Charts[chartIndex6];
-                String rango6 = "A1:B" + (conRH + 1);
-                chart6.SetChartDataRange(rango6, false);
+                //validamos que haya registros en el área para crear la gráfica de barras en el excel
+                if (conRH != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex6 = hojaRH.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
+                    Aspose.Cells.Charts.Chart chart6 = hojaRH.Charts[chartIndex6];
+                    String rango6 = "A1:B" + (conRH + 1);
+                    chart6.SetChartDataRange(rango6, false);
+                }
+                
 
                 hojaAuditoria.Cells.ImportData(tablaAuditoria, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject7 = hojaAuditoria.ListObjects[hojaAuditoria.ListObjects.Add(0, 0, conAudit + 1, 1, true)];
                 listObject7.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaAuditoria.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex7 = hojaAuditoria.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart7 = hojaAuditoria.Charts[chartIndex7];
-                String rango7 = "A1:B" + (conAudit + 1);
-                chart7.SetChartDataRange(rango7, false);
+                //validamos que haya registros en el área para crear la gráfica de barras en el excel
+                if (conAudit != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex7 = hojaAuditoria.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
+                    Aspose.Cells.Charts.Chart chart7 = hojaAuditoria.Charts[chartIndex7];
+                    String rango7 = "A1:B" + (conAudit + 1);
+                    chart7.SetChartDataRange(rango7, false);
+                }
+                
 
                 hojaComercio.Cells.ImportData(tablaComercio, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject8 = hojaComercio.ListObjects[hojaComercio.ListObjects.Add(0, 0, conComer + 1, 1, true)];
                 listObject8.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaComercio.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex8 = hojaComercio.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart8 = hojaComercio.Charts[chartIndex8];
-                String rango8 = "A1:B" + (conComer + 1);
-                chart8.SetChartDataRange(rango8, false);
+                //validamos que haya registros en el área para crear la gráfica de barras en el excel
+                if (conComer != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex8 = hojaComercio.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
+                    Aspose.Cells.Charts.Chart chart8 = hojaComercio.Charts[chartIndex8];
+                    String rango8 = "A1:B" + (conComer + 1);
+                    chart8.SetChartDataRange(rango8, false);
+                }
+                
 
                 hojaContraloria.Cells.ImportData(tablaContraloria, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject9 = hojaContraloria.ListObjects[hojaContraloria.ListObjects.Add(0, 0, conContra + 1, 1, true)];
                 listObject9.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaContraloria.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex9 = hojaContraloria.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart9 = hojaContraloria.Charts[chartIndex9];
-                String rango9 = "A1:B" + (conContra + 1);
-                chart9.SetChartDataRange(rango9, false);
+                //validamos que haya registros en el área para crear la gráfica de barras en el excel
+                if (conContra != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex9 = hojaContraloria.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
+                    Aspose.Cells.Charts.Chart chart9 = hojaContraloria.Charts[chartIndex9];
+                    String rango9 = "A1:B" + (conContra + 1);
+                    chart9.SetChartDataRange(rango9, false);
+                }
+                
 
                 hojaDirG.Cells.ImportData(tablaDirG, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject10 = hojaDirG.ListObjects[hojaDirG.ListObjects.Add(0, 0, conDir + 1, 1, true)];
                 listObject10.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaDirG.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex10 = hojaDirG.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart10 = hojaDirG.Charts[chartIndex10];
-                String rango10 = "A1:B" + (conDir + 1);
-                chart10.SetChartDataRange(rango10, false);
+                //validamos que haya registros en el área para crear la gráfica de barras en el excel
+                if (conDir != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex10 = hojaDirG.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
+                    Aspose.Cells.Charts.Chart chart10 = hojaDirG.Charts[chartIndex10];
+                    String rango10 = "A1:B" + (conDir + 1);
+                    chart10.SetChartDataRange(rango10, false);
+                }
+                
 
                 hojaLegal.Cells.ImportData(tablaLegal, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject11 = hojaLegal.ListObjects[hojaLegal.ListObjects.Add(0, 0, conLegal + 1, 1, true)];
                 listObject11.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaLegal.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex11 = hojaLegal.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart11 = hojaLegal.Charts[chartIndex11];
-                String rango11 = "A1:B" + (conLegal + 1);
-                chart11.SetChartDataRange(rango11, false);
+                //validamos que haya registros en el área para crear la gráfica de barras en el excel
+                if (conLegal != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex11 = hojaLegal.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
+                    Aspose.Cells.Charts.Chart chart11 = hojaLegal.Charts[chartIndex11];
+                    String rango11 = "A1:B" + (conLegal + 1);
+                    chart11.SetChartDataRange(rango11, false);
+                }
+                
 
                 hojaPlaneacion.Cells.ImportData(tablaPlaneacion, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject12 = hojaPlaneacion.ListObjects[hojaPlaneacion.ListObjects.Add(0, 0, conPlanea + 1, 1, true)];
                 listObject12.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaPlaneacion.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex12 = hojaPlaneacion.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart12 = hojaPlaneacion.Charts[chartIndex12];
-                String rango12 = "A1:B" + (conPlanea + 1);
-                chart12.SetChartDataRange(rango12, false);
+                //validamos que haya registros en el área para crear la gráfica de barras en el excel
+                if (conPlanea != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex12 = hojaPlaneacion.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                    Aspose.Cells.Charts.Chart chart12 = hojaPlaneacion.Charts[chartIndex12];
+                    String rango12 = "A1:B" + (conPlanea + 1);
+                    chart12.SetChartDataRange(rango12, false);
+                }
+
 
                 hojaSox.Cells.ImportData(tablaSOX, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject13 = hojaSox.ListObjects[hojaSox.ListObjects.Add(0, 0, conSOX + 1, 1, true)];
                 listObject13.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaSox.AutoFitColumns();
-                //agregar grafico de barras
-                int chartIndex13 = hojaSox.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart13 = hojaSox.Charts[chartIndex13];
-                String rango13 = "A1:B" + (conSOX + 1);
-                chart13.SetChartDataRange(rango13, false);
-
-
+                //validamos que haya registros el área para crear la gráfica de barras en el excel
+                if (conSOX != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex13 = hojaSox.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                    Aspose.Cells.Charts.Chart chart13 = hojaSox.Charts[chartIndex13];
+                    String rango13 = "A1:B" + (conSOX + 1);
+                    chart13.SetChartDataRange(rango13, false);
+                }
 
 
                 string archivoP = @"C:\\Conversiones ReportesImp\\prueba28.xlsx";
