@@ -8,6 +8,7 @@ using DocumentFormat.OpenXml.Office2016.Excel;
 //using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.VariantTypes;
+using DocumentFormat.OpenXml.Vml;
 using DocumentFormat.OpenXml.Wordprocessing;
 using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Math;
@@ -27,6 +28,8 @@ namespace ReporteImpresoras
     {
         public string rutaExcelByN;
         int totalBNUsers = 0;
+
+        //Tablas que guardan los registros a mostrar en las hojas de excel
         DataTable tablaDN1 = null;
         DataTable tablaDN2 = null;
         DataTable tablaTI = null;
@@ -40,6 +43,7 @@ namespace ReporteImpresoras
         DataTable tablaSOX = null;
         DataTable totalesBN = null;
 
+        //lista de nombres de usuarios y total de impresiones separados por area
         List<string> listaAreas = new List<string>();
         List<int> listaTotalesBN = new List<int>();
 
@@ -76,7 +80,7 @@ namespace ReporteImpresoras
         List<string> listaSOX = new List<string>();
         List<int> listatotalSOX = new List<int>();
 
-
+        //contadores de numero de usuarios encontrados por cada area
         int conDN1 = 0;
         int conDN2 = 0;
         int conTI = 0;
@@ -88,6 +92,19 @@ namespace ReporteImpresoras
         int conLegal = 0;
         int conPlanea = 0;
         int conSOX = 0;
+
+        //Contadores de total de impresiones por cada area
+        int totalDN1 = 0;
+        int totalDN2 = 0;
+        int totalTI = 0;
+        int totalRH = 0;
+        int totalAuditoria = 0;
+        int totalComercio = 0;
+        int totalContraloria = 0;
+        int totalDirG = 0;
+        int totalLegal = 0;
+        int totalPlaneacion = 0;
+        int totalSOX = 0;
         public VentanaPrincipal()
         {
             InitializeComponent();
@@ -300,17 +317,17 @@ namespace ReporteImpresoras
                 tablaPlaneacion = new DataTable();
                 tablaSOX = new DataTable();
 
-                int totalDN1 = 0;
-                int totalDN2 = 0;
-                int totalTI = 0;
-                int totalRH = 0;
-                int totalAuditoria = 0;
-                int totalComercio = 0;
-                int totalContraloria = 0;
-                int totalDirG = 0;
-                int totalLegal = 0;
-                int totalPlaneacion = 0;
-                int totalSOX = 0;
+                totalDN1 = 0;
+                totalDN2 = 0;
+                totalTI = 0;
+                totalRH = 0;
+                totalAuditoria = 0;
+                totalComercio = 0;
+                totalContraloria = 0;
+                totalDirG = 0;
+                totalLegal = 0;
+                totalPlaneacion = 0;
+                totalSOX = 0;
 
                 for (int i = 0; i < rows; i++)
                 {
@@ -667,7 +684,9 @@ namespace ReporteImpresoras
                 DataRow filadn1;
                 int recorreLista = 0;
 
-                //Se agregan los datos de las filas
+                int TotalAreas = 0;
+
+                //Se agregan los datos de las filas para cada una de las tablas
                 for (int i = 0; i < 11; i++)
                 {
                     string area = listaAreas[i];
@@ -676,10 +695,14 @@ namespace ReporteImpresoras
                     filaTotal = totalesBN.NewRow();
                     filaTotal[0] = area;
                     filaTotal[1] = total;
+                    TotalAreas += total;
 
                     totalesBN.Rows.Add(filaTotal);  
-                    //recorreLista++; 
                 }
+                filaTotal = totalesBN.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = TotalAreas;
+                totalesBN.Rows.Add(filaTotal);
 
                 //cargar tabla 
                 for (int i = 0; i < conDN1; i++)
@@ -692,8 +715,11 @@ namespace ReporteImpresoras
                     filadn1[1] = total;
 
                     tablaDN1.Rows.Add(filadn1);
-                    //recorreLista++; 
                 }
+                filaTotal = tablaDN1.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = totalDN1;
+                tablaDN1.Rows.Add(filaTotal);
 
                 //cargar tabla 
                 for (int i = 0; i < conDN2; i++)
@@ -706,8 +732,11 @@ namespace ReporteImpresoras
                     filadn1[1] = total;
 
                     tablaDN2.Rows.Add(filadn1);
-                    //recorreLista++; 
                 }
+                filaTotal = tablaDN2.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = totalDN2;
+                tablaDN2.Rows.Add(filaTotal);
 
                 //cargar tabla 
                 for (int i = 0; i < conTI; i++)
@@ -720,8 +749,11 @@ namespace ReporteImpresoras
                     filadn1[1] = total;
 
                     tablaTI.Rows.Add(filadn1);
-                    //recorreLista++; 
                 }
+                filaTotal = tablaTI.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = totalTI;
+                tablaTI.Rows.Add(filaTotal);
 
                 //cargar tabla 
                 for (int i = 0; i < conRH; i++)
@@ -736,6 +768,10 @@ namespace ReporteImpresoras
                     tablaRH.Rows.Add(filadn1);
                     //recorreLista++; 
                 }
+                filaTotal = tablaRH.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = totalRH;
+                tablaRH.Rows.Add(filaTotal);
 
                 //cargar tabla 
                 for (int i = 0; i < conAudit; i++)
@@ -750,6 +786,10 @@ namespace ReporteImpresoras
                     tablaAuditoria.Rows.Add(filadn1);
                     //recorreLista++; 
                 }
+                filaTotal = tablaAuditoria.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = totalAuditoria;
+                tablaAuditoria.Rows.Add(filaTotal);
 
                 //cargar tabla 
                 for (int i = 0; i < conComer; i++)
@@ -764,6 +804,10 @@ namespace ReporteImpresoras
                     tablaComercio.Rows.Add(filadn1);
                     //recorreLista++; 
                 }
+                filaTotal = tablaComercio.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = totalComercio;
+                tablaComercio.Rows.Add(filaTotal);
 
                 //cargar tabla 
                 for (int i = 0; i < conContra; i++)
@@ -778,6 +822,10 @@ namespace ReporteImpresoras
                     tablaContraloria.Rows.Add(filadn1);
                     //recorreLista++; 
                 }
+                filaTotal = tablaContraloria.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = totalContraloria;
+                tablaContraloria.Rows.Add(filaTotal);
 
                 //cargar tabla 
                 for (int i = 0; i < conDir; i++)
@@ -792,6 +840,10 @@ namespace ReporteImpresoras
                     tablaDirG.Rows.Add(filadn1);
                     //recorreLista++; 
                 }
+                filaTotal = tablaDirG.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = totalDirG;
+                tablaDirG.Rows.Add(filaTotal);
 
                 //cargar tabla 
                 for (int i = 0; i < conLegal; i++)
@@ -806,6 +858,10 @@ namespace ReporteImpresoras
                     tablaLegal.Rows.Add(filadn1);
                     //recorreLista++; 
                 }
+                filaTotal = tablaLegal.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = totalLegal;
+                tablaLegal.Rows.Add(filaTotal);
 
                 //cargar tabla 
                 for (int i = 0; i < conPlanea; i++)
@@ -820,6 +876,10 @@ namespace ReporteImpresoras
                     tablaPlaneacion.Rows.Add(filadn1);
                     //recorreLista++; 
                 }
+                filaTotal = tablaPlaneacion.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = totalPlaneacion;
+                tablaPlaneacion.Rows.Add(filaTotal);
 
                 //cargar tabla 
                 for (int i = 0; i < conSOX; i++)
@@ -834,6 +894,10 @@ namespace ReporteImpresoras
                     tablaSOX.Rows.Add(filadn1);
                     //recorreLista++; 
                 }
+                filaTotal = tablaSOX.NewRow();
+                filaTotal[0] = "TOTAL:";
+                filaTotal[1] = totalSOX;
+                tablaSOX.Rows.Add(filaTotal);
 
 
                 fstream.Close();
@@ -909,7 +973,8 @@ namespace ReporteImpresoras
                 //añadimos los datos a la hoja General
                 hojaGeneral.Cells.ImportData(dt, 0, 0, importOptions1);
                 hojaGeneral.AutoFitColumns();
-                ListObject listObject = hojaGeneral.ListObjects[hojaGeneral.ListObjects.Add(0, 0, totalBNUsers, 5, true)];
+                //Dar formato de tabla a los resultados
+                ListObject listObject = hojaGeneral.ListObjects[hojaGeneral.ListObjects.Add(0, 0, totalBNUsers + 1, 5, true)];
                 listObject.TableStyleType = TableStyleType.TableStyleMedium10;
 
 
@@ -917,140 +982,140 @@ namespace ReporteImpresoras
 
                 hojaTotal.Cells.ImportData(totalesBN, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject2 = hojaTotal.ListObjects[hojaTotal.ListObjects.Add(0, 0, 11, 1, true)];
+                ListObject listObject2 = hojaTotal.ListObjects[hojaTotal.ListObjects.Add(0, 0, 12, 1, true)];
                 listObject2.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaTotal.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex = hojaTotal.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                int chartIndex = hojaTotal.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);//25, 15
                 Aspose.Cells.Charts.Chart chart = hojaTotal.Charts[chartIndex];
-                chart.SetChartDataRange("A1:B11", false);
+                chart.SetChartDataRange("A1:B12", false);
 
 
                 hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
+                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1 + 1, 1, true)];
                 listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaDN1.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 30, 20);
                 Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
-                String rango2 = "A1:B" + conDN1;
+                String rango2 = "A1:B" + (conDN1 + 1);
                 chart2.SetChartDataRange(rango2, false);
 
                 hojaDN2.Cells.ImportData(tablaDN2, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject4 = hojaDN2.ListObjects[hojaDN2.ListObjects.Add(0, 0, conDN2, 1, true)];
+                ListObject listObject4 = hojaDN2.ListObjects[hojaDN2.ListObjects.Add(0, 0, conDN2 + 1, 1, true)];
                 listObject4.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaDN2.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex3 = hojaDN2.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                int chartIndex3 = hojaDN2.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 30, 20);
                 Aspose.Cells.Charts.Chart chart3 = hojaDN2.Charts[chartIndex3];
-                String rango3 = "A1:B" + conDN2;
+                String rango3 = "A1:B" + (conDN2 + 1);
                 chart3.SetChartDataRange(rango3, false);
 
-                hojaTI.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                hojaTI.Cells.ImportData(tablaTI, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject5 = hojaTI.ListObjects[hojaTI.ListObjects.Add(0, 0, conTI, 1, true)];
+                ListObject listObject5 = hojaTI.ListObjects[hojaTI.ListObjects.Add(0, 0, conTI + 1, 1, true)];
                 listObject5.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaTI.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex5 = hojaTI.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                int chartIndex5 = hojaTI.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
                 Aspose.Cells.Charts.Chart chart5 = hojaTI.Charts[chartIndex5];
-                String rango4 = "A1:B" + conTI;
-                chart5.SetChartDataRange(rango2, false);
+                String rango4 = "A1:B" + (conTI + 1);
+                chart5.SetChartDataRange(rango4, false);
 
-                hojaRH.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                hojaRH.Cells.ImportData(tablaRH, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject6 = hojaRH.ListObjects[hojaRH.ListObjects.Add(0, 0, conRH, 1, true)];
+                ListObject listObject6 = hojaRH.ListObjects[hojaRH.ListObjects.Add(0, 0, conRH + 1, 1, true)];
                 listObject6.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaRH.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex6 = hojaRH.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                int chartIndex6 = hojaRH.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
                 Aspose.Cells.Charts.Chart chart6 = hojaRH.Charts[chartIndex6];
-                String rango6 = "A1:B" + conRH;
-                chart2.SetChartDataRange(rango6, false);
+                String rango6 = "A1:B" + (conRH + 1);
+                chart6.SetChartDataRange(rango6, false);
 
-                hojaAuditoria.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                hojaAuditoria.Cells.ImportData(tablaAuditoria, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject7 = hojaAuditoria.ListObjects[hojaAuditoria.ListObjects.Add(0, 0, conAudit, 1, true)];
+                ListObject listObject7 = hojaAuditoria.ListObjects[hojaAuditoria.ListObjects.Add(0, 0, conAudit + 1, 1, true)];
                 listObject7.TableStyleType = TableStyleType.TableStyleMedium10;
                 hojaAuditoria.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex7 = hojaAuditoria.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                int chartIndex7 = hojaAuditoria.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
                 Aspose.Cells.Charts.Chart chart7 = hojaAuditoria.Charts[chartIndex7];
-                String rango7 = "A1:B" + conAudit;
-                chart2.SetChartDataRange(rango7, false);
+                String rango7 = "A1:B" + (conAudit + 1);
+                chart7.SetChartDataRange(rango7, false);
 
-                /*hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                hojaComercio.Cells.ImportData(tablaComercio, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
-                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
-                hojaDN1.AutoFitColumns();
+                ListObject listObject8 = hojaComercio.ListObjects[hojaComercio.ListObjects.Add(0, 0, conComer + 1, 1, true)];
+                listObject8.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaComercio.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
-                String rango2 = "A1:B" + conDN1;
-                chart2.SetChartDataRange(rango2, false);
+                int chartIndex8 = hojaComercio.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart8 = hojaComercio.Charts[chartIndex8];
+                String rango8 = "A1:B" + (conComer + 1);
+                chart8.SetChartDataRange(rango8, false);
 
-                hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                hojaContraloria.Cells.ImportData(tablaContraloria, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
-                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
-                hojaDN1.AutoFitColumns();
+                ListObject listObject9 = hojaContraloria.ListObjects[hojaContraloria.ListObjects.Add(0, 0, conContra + 1, 1, true)];
+                listObject9.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaContraloria.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
-                String rango2 = "A1:B" + conDN1;
-                chart2.SetChartDataRange(rango2, false);
+                int chartIndex9 = hojaContraloria.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart9 = hojaContraloria.Charts[chartIndex9];
+                String rango9 = "A1:B" + (conContra + 1);
+                chart9.SetChartDataRange(rango9, false);
 
-                hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                hojaDirG.Cells.ImportData(tablaDirG, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
-                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
-                hojaDN1.AutoFitColumns();
+                ListObject listObject10 = hojaDirG.ListObjects[hojaDirG.ListObjects.Add(0, 0, conDir + 1, 1, true)];
+                listObject10.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaDirG.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
-                String rango2 = "A1:B" + conDN1;
-                chart2.SetChartDataRange(rango2, false);
+                int chartIndex10 = hojaDirG.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart10 = hojaDirG.Charts[chartIndex10];
+                String rango10 = "A1:B" + (conDir + 1);
+                chart10.SetChartDataRange(rango10, false);
 
-                hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                hojaLegal.Cells.ImportData(tablaLegal, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
-                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
-                hojaDN1.AutoFitColumns();
+                ListObject listObject11 = hojaLegal.ListObjects[hojaLegal.ListObjects.Add(0, 0, conLegal + 1, 1, true)];
+                listObject11.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaLegal.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
-                String rango2 = "A1:B" + conDN1;
-                chart2.SetChartDataRange(rango2, false);
+                int chartIndex11 = hojaLegal.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart11 = hojaLegal.Charts[chartIndex11];
+                String rango11 = "A1:B" + (conLegal + 1);
+                chart11.SetChartDataRange(rango11, false);
 
-                hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                hojaPlaneacion.Cells.ImportData(tablaPlaneacion, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
-                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
-                hojaDN1.AutoFitColumns();
+                ListObject listObject12 = hojaPlaneacion.ListObjects[hojaPlaneacion.ListObjects.Add(0, 0, conPlanea + 1, 1, true)];
+                listObject12.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaPlaneacion.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
-                String rango2 = "A1:B" + conDN1;
-                chart2.SetChartDataRange(rango2, false);
+                int chartIndex12 = hojaPlaneacion.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart12 = hojaPlaneacion.Charts[chartIndex12];
+                String rango12 = "A1:B" + (conPlanea + 1);
+                chart12.SetChartDataRange(rango12, false);
 
-                hojaDN1.Cells.ImportData(tablaDN1, 0, 0, importOptions1);
+                hojaSox.Cells.ImportData(tablaSOX, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
-                ListObject listObject3 = hojaDN1.ListObjects[hojaDN1.ListObjects.Add(0, 0, conDN1, 1, true)];
-                listObject3.TableStyleType = TableStyleType.TableStyleMedium10;
-                hojaDN1.AutoFitColumns();
+                ListObject listObject13 = hojaSox.ListObjects[hojaSox.ListObjects.Add(0, 0, conSOX + 1, 1, true)];
+                listObject13.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaSox.AutoFitColumns();
                 //agregar grafico de barras
-                int chartIndex2 = hojaDN1.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
-                Aspose.Cells.Charts.Chart chart2 = hojaDN1.Charts[chartIndex2];
-                String rango2 = "A1:B" + conDN1;
-                chart2.SetChartDataRange(rango2, false);*/
+                int chartIndex13 = hojaSox.Charts.Add(Aspose.Cells.Charts.ChartType.Bar, 1, 4, 25, 15);
+                Aspose.Cells.Charts.Chart chart13 = hojaSox.Charts[chartIndex13];
+                String rango13 = "A1:B" + (conSOX + 1);
+                chart13.SetChartDataRange(rango13, false);
 
 
 
 
-                string archivoP = @"C:\\Conversiones ReportesImp\\prueba22.xlsx";
+                string archivoP = @"C:\\Conversiones ReportesImp\\prueba28.xlsx";
                 libro1.Save(archivoP);
 
                 MessageBox.Show("Archivo Guardado correctamente");
