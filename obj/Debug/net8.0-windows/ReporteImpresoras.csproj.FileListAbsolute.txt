@@ -17,12 +17,6 @@ C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\Aspose.
 C:\Users\sgarcia\source\repos\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.csproj.AssemblyReference.cache
 C:\Users\sgarcia\source\repos\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.VentanaPrincipal.resources
 C:\Users\sgarcia\source\repos\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteI.7AEE941C.Up2Date
-C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\ClosedXML.dll
-C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\DocumentFormat.OpenXml.dll
-C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\ExcelNumberFormat.dll
-C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\Irony.dll
-C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\SixLabors.Fonts.dll
-C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\XLParser.dll
 C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
 C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\Google.Protobuf.dll
 C:\Users\sgarcia\source\repos\ReporteImpresoras\bin\Debug\net8.0-windows\K4os.Compression.LZ4.dll
