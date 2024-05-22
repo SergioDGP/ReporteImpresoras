@@ -38,18 +38,12 @@ C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\Report
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\ReporteImpresoras.pdb
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\Aspose.Cells.dll
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
-C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\ClosedXML.dll
-C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\DocumentFormat.OpenXml.dll
-C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\ExcelNumberFormat.dll
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\Google.Protobuf.dll
-C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\Irony.dll
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\K4os.Compression.LZ4.dll
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\K4os.Compression.LZ4.Streams.dll
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\K4os.Hash.xxHash.dll
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\MySql.Data.dll
-C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\SixLabors.Fonts.dll
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
-C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\XLParser.dll
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\ZstdSharp.dll
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\runtimes\win-x64\native\comerr64.dll
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\bin\Debug\net8.0-windows\runtimes\win-x64\native\gssapi64.dll
@@ -72,3 +66,5 @@ C:\Users\USER\Documents\GitHub\ReporteImpresoras\obj\Debug\net8.0-windows\Report
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\obj\Debug\net8.0-windows\ref\ReporteImpresoras.dll
 C:\Users\sgarcia\source\repos\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.Properties.Resources.resources
 C:\Users\sgarcia\source\repos\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.EditaUsuario.resources
+C:\Users\USER\Documents\GitHub\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.EditaUsuario.resources
+C:\Users\USER\Documents\GitHub\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.Properties.Resources.resources

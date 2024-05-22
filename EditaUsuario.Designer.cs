@@ -58,16 +58,18 @@
             pnlEdicion.Controls.Add(txtPuesto);
             pnlEdicion.Controls.Add(txtNombre);
             pnlEdicion.Controls.Add(txtCorreo);
-            pnlEdicion.Location = new Point(33, 24);
+            pnlEdicion.Location = new Point(23, 14);
+            pnlEdicion.Margin = new Padding(2);
             pnlEdicion.Name = "pnlEdicion";
-            pnlEdicion.Size = new Size(838, 538);
+            pnlEdicion.Size = new Size(588, 324);
             pnlEdicion.TabIndex = 0;
             // 
             // btnSalirEdicion
             // 
-            btnSalirEdicion.Location = new Point(685, 470);
+            btnSalirEdicion.Location = new Point(480, 282);
+            btnSalirEdicion.Margin = new Padding(2);
             btnSalirEdicion.Name = "btnSalirEdicion";
-            btnSalirEdicion.Size = new Size(112, 34);
+            btnSalirEdicion.Size = new Size(78, 20);
             btnSalirEdicion.TabIndex = 22;
             btnSalirEdicion.Text = "Cancelar";
             btnSalirEdicion.UseVisualStyleBackColor = true;
@@ -75,98 +77,118 @@
             // 
             // btnEdicionConfirm
             // 
-            btnEdicionConfirm.Location = new Point(405, 426);
+            btnEdicionConfirm.Location = new Point(268, 257);
+            btnEdicionConfirm.Margin = new Padding(2);
             btnEdicionConfirm.Name = "btnEdicionConfirm";
-            btnEdicionConfirm.Size = new Size(112, 34);
+            btnEdicionConfirm.Size = new Size(78, 25);
             btnEdicionConfirm.TabIndex = 21;
-            btnEdicionConfirm.Text = "Editar";
+            btnEdicionConfirm.Text = "Actualizar";
             btnEdicionConfirm.UseVisualStyleBackColor = true;
+            btnEdicionConfirm.Click += btnEdicionConfirm_Click;
             // 
             // lblEdicionTitulo
             // 
             lblEdicionTitulo.AutoSize = true;
             lblEdicionTitulo.Font = new Font("Segoe UI", 10F);
-            lblEdicionTitulo.Location = new Point(66, 55);
+            lblEdicionTitulo.Location = new Point(59, 33);
+            lblEdicionTitulo.Margin = new Padding(2, 0, 2, 0);
             lblEdicionTitulo.Name = "lblEdicionTitulo";
-            lblEdicionTitulo.Size = new Size(368, 28);
+            lblEdicionTitulo.Size = new Size(257, 19);
             lblEdicionTitulo.TabIndex = 20;
             lblEdicionTitulo.Text = "Selecciona los campos que deseas editar:";
             // 
             // checkID_Area
             // 
             checkID_Area.AutoSize = true;
-            checkID_Area.Location = new Point(66, 357);
+            checkID_Area.Location = new Point(59, 218);
+            checkID_Area.Margin = new Padding(2);
             checkID_Area.Name = "checkID_Area";
-            checkID_Area.Size = new Size(99, 29);
+            checkID_Area.Size = new Size(66, 19);
             checkID_Area.TabIndex = 19;
             checkID_Area.Text = "ID_Area";
             checkID_Area.UseVisualStyleBackColor = true;
+            checkID_Area.CheckedChanged += checkID_Area_CheckedChanged;
             // 
             // checkPuesto
             // 
             checkPuesto.AutoSize = true;
-            checkPuesto.Location = new Point(66, 276);
+            checkPuesto.Location = new Point(59, 170);
+            checkPuesto.Margin = new Padding(2);
             checkPuesto.Name = "checkPuesto";
-            checkPuesto.Size = new Size(96, 29);
+            checkPuesto.Size = new Size(65, 19);
             checkPuesto.TabIndex = 18;
             checkPuesto.Text = "Puesto:";
             checkPuesto.UseVisualStyleBackColor = true;
+            checkPuesto.CheckedChanged += checkPuesto_CheckedChanged;
             // 
             // checkNombre
             // 
             checkNombre.AutoSize = true;
-            checkNombre.Location = new Point(66, 202);
+            checkNombre.Location = new Point(59, 125);
+            checkNombre.Margin = new Padding(2);
             checkNombre.Name = "checkNombre";
-            checkNombre.Size = new Size(108, 29);
+            checkNombre.Size = new Size(73, 19);
             checkNombre.TabIndex = 17;
             checkNombre.Text = "Nombre:";
             checkNombre.UseVisualStyleBackColor = true;
+            checkNombre.CheckedChanged += checkNombre_CheckedChanged;
             // 
             // checkCorreo
             // 
             checkCorreo.AutoSize = true;
-            checkCorreo.Location = new Point(66, 130);
+            checkCorreo.Location = new Point(59, 82);
+            checkCorreo.Margin = new Padding(2);
             checkCorreo.Name = "checkCorreo";
-            checkCorreo.Size = new Size(96, 29);
+            checkCorreo.Size = new Size(65, 19);
             checkCorreo.TabIndex = 16;
             checkCorreo.Text = "Correo:";
             checkCorreo.UseVisualStyleBackColor = true;
+            checkCorreo.CheckedChanged += checkCorreo_CheckedChanged;
             // 
             // txtIDArea
             // 
-            txtIDArea.Location = new Point(210, 355);
+            txtIDArea.Enabled = false;
+            txtIDArea.Location = new Point(147, 213);
+            txtIDArea.Margin = new Padding(2);
             txtIDArea.Name = "txtIDArea";
-            txtIDArea.Size = new Size(150, 31);
+            txtIDArea.Size = new Size(106, 23);
             txtIDArea.TabIndex = 15;
             // 
             // txtPuesto
             // 
-            txtPuesto.Location = new Point(210, 276);
+            txtPuesto.Enabled = false;
+            txtPuesto.Location = new Point(147, 166);
+            txtPuesto.Margin = new Padding(2);
             txtPuesto.Name = "txtPuesto";
-            txtPuesto.Size = new Size(514, 31);
+            txtPuesto.Size = new Size(361, 23);
             txtPuesto.TabIndex = 14;
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(210, 202);
+            txtNombre.Enabled = false;
+            txtNombre.Location = new Point(147, 121);
+            txtNombre.Margin = new Padding(2);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(514, 31);
+            txtNombre.Size = new Size(361, 23);
             txtNombre.TabIndex = 13;
             // 
             // txtCorreo
             // 
-            txtCorreo.Location = new Point(210, 130);
+            txtCorreo.Enabled = false;
+            txtCorreo.Location = new Point(147, 78);
+            txtCorreo.Margin = new Padding(2);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(514, 31);
+            txtCorreo.Size = new Size(361, 23);
             txtCorreo.TabIndex = 12;
             // 
             // EditaUsuario
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(903, 601);
+            ClientSize = new Size(632, 361);
             Controls.Add(pnlEdicion);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(2);
             MaximizeBox = false;
             Name = "EditaUsuario";
             Opacity = 0.98D;

@@ -1934,10 +1934,14 @@ namespace ReporteImpresoras
             else if (filasSeleccionadas == 1)
             {
                 DataGridViewSelectedRowCollection row = dataGridView1.SelectedRows;
-                string pruebaFila = row[0].Cells[0].Value.ToString();
+
+                string correo = row[0].Cells[0].Value.ToString();
+                string nombre = row[0].Cells[1].Value.ToString();
+                string puesto = row[0].Cells[2].Value.ToString();
+                string id_area = row[0].Cells[3].Value.ToString();
 
 
-                EditaUsuario editScreed = new EditaUsuario();
+                EditaUsuario editScreed = new EditaUsuario(correo, nombre, puesto, id_area);
                 editScreed.ShowDialog();
             }
             else
@@ -1957,8 +1961,27 @@ namespace ReporteImpresoras
             }
             else if (filasSeleccionadas == 1)
             {
-                EditaUsuario editScreed = new EditaUsuario();
-                editScreed.ShowDialog();
+                //EditaUsuario editScreed = new EditaUsuario();
+                //editScreed.ShowDialog();
+                MySqlConnection sqlConexion;
+                sqlConexion = getConection();
+                try
+                {
+                    DataGridViewSelectedRowCollection row = dataGridView1.SelectedRows;
+                    string correo = row[0].Cells[0].Value.ToString();//Obtenemos el valor del correo en la fila seleccionada
+                    
+                    //Se aplica el delete en la base de datos
+                    sqlConexion.Open();
+                    string sqlCon = "delete from empleado where Correo = '"+ correo+ "';";
+                    MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);
+                    com.ExecuteReader();
+                    sqlConexion.Close();
+                }
+                catch (Exception)
+                {
+
+                    MessageBox.Show("No se pudo eliminar el registro, intente mas tarde", "ERROR");
+                }
             }
             else
             {
