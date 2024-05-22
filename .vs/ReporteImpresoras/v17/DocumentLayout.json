@@ -9,6 +9,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|c:\\users\\sgarcia\\source\\repos\\reporteimpresoras\\editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|c:\\users\\sgarcia\\source\\repos\\reporteimpresoras\\editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,20 +26,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs",
-              "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs [Design]",
-              "RelativeToolTip": "Form1.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-02T22:11:21.19Z",
-              "EditorCaption": " [Design]"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -40,10 +36,48 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAALkGAAAAAAAAAAAAACIHAAA1AAAA",
+              "ViewState": "AQIAAIYHAAAAAAAAAIAywJMHAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-24T17:21:15.824Z",
+              "IsPinned": true,
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EditaUsuario.cs",
+              "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs",
+              "RelativeDocumentMoniker": "EditaUsuario.cs",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs",
+              "RelativeToolTip": "EditaUsuario.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAMwBUAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-22T00:09:30.419Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EditaUsuario.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs",
+              "RelativeDocumentMoniker": "EditaUsuario.cs",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs [Dise\u00F1o]",
+              "RelativeToolTip": "EditaUsuario.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-21T23:55:07.188Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs [Dise\u00F1o]",
+              "RelativeToolTip": "Form1.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-02T22:11:21.19Z",
+              "EditorCaption": " [Dise\u00F1o]"
             }
           ]
         }

@@ -6,6 +6,7 @@ using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Math;
 using System;
 using System.Data;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Cell = Aspose.Cells.Cell;
 using Path = System.IO.Path;
@@ -97,12 +98,23 @@ namespace ReporteImpresoras
         int totalLegal = 0;
         int totalPlaneacion = 0;
         int totalSOX = 0;
+
+        //Tabla para mostrar los usuarios
+        DataTable Tablausuarios = null;
+
         public VentanaPrincipal()
         {
             InitializeComponent();
             cargaAnioMes();
-            //Resultados_Load();
-            //dataGridView1.DataSource = leerExcel();
+            Resultados_Load();
+            //cargaTablaUsuarios();
+            txtBusqueda.PlaceholderText = "Buscar Usuario";
+        }
+
+        private void cargaTablaUsuarios()
+        {
+            Tablausuarios = leerExcel();
+            dataGridView1.DataSource = Tablausuarios;
         }
 
         private void cargaAnioMes()
@@ -117,7 +129,7 @@ namespace ReporteImpresoras
                 cmbAnios.Items.Add(i.ToString());
                 contAnios++;
             }
-            if (intMes != 1) 
+            if (intMes != 1)
             {
                 cmbMeses.SelectedIndex = intMes - 2;
                 cmbAnios.SelectedIndex = contAnios;
@@ -125,7 +137,7 @@ namespace ReporteImpresoras
             else
             {
                 cmbMeses.SelectedIndex = 11;
-                cmbAnios.SelectedIndex = contAnios-1;
+                cmbAnios.SelectedIndex = contAnios - 1;
             }
 
 
@@ -214,7 +226,7 @@ namespace ReporteImpresoras
 
         private void btnGenerarRepor_Click(object sender, EventArgs e)
         {
-            GenerarExcel();        
+            GenerarExcel();
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -233,10 +245,11 @@ namespace ReporteImpresoras
 
                 sqlConexion.Open();
                 Console.WriteLine("ÉXITO");
-                string sqlCon = "select Correo, Nombre, Puesto, area_idarea as ID_Area from empleado;";
+                string sqlCon = "select e.Correo, e.Nombre, e.Puesto, e.area_idarea as ID_Area, a.nombre as Area  from empleado e, area a where e.Area_idArea = a.idArea;";
                 MySqlDataAdapter com = new MySqlDataAdapter(sqlCon, sqlConexion);// where Area_idarea = 3
                 com.Fill(tbl1);
                 dataGridView1.DataSource = tbl1;
+                Tablausuarios = tbl1;
                 sqlConexion.Close();
             }
             catch (System.Exception ex)
@@ -268,8 +281,8 @@ namespace ReporteImpresoras
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine("ERROR: "+ ex);
-                MessageBox.Show("No se logró hacer conexión a la base, inténtelo más tarde");    
+                Console.WriteLine("ERROR: " + ex);
+                MessageBox.Show("No se logró hacer conexión a la base, inténtelo más tarde");
             }
             return sqlConexion;
         }
@@ -294,7 +307,7 @@ namespace ReporteImpresoras
                 DataColumn column;
                 MySqlConnection sqlConexion;
                 sqlConexion = getConection();
-                totalBNUsers = 0;   
+                totalBNUsers = 0;
                 totalesBN = new DataTable();//Se inicializa la tabla totalBN
 
                 tablaDN1 = new DataTable();
@@ -404,9 +417,9 @@ namespace ReporteImpresoras
                         int mesSelec = (cmbMeses.SelectedIndex) + 1;//Se suma 1 ya que el index empieza a partir de 0
                         int proir = cmbAnios.SelectedIndex;
                         string anioSelec = Convert.ToString(cmbAnios.SelectedItem);
-                        
+
                         //filtramos solo las celdas con el mes y año especificado
-                        if (ws.Cells[i, 0].Value.ToString() != "Escanear a E-mail" && mesSelec == mes && anioSelec == año  && ConTotal != 0)//&& ws.Cells[i, 1].Value.ToString() == "raguilar"
+                        if (ws.Cells[i, 0].Value.ToString() != "Escanear a E-mail" && mesSelec == mes && anioSelec == año && ConTotal != 0)//&& ws.Cells[i, 1].Value.ToString() == "raguilar"
                         {
                             //Hacemos cunsulta del area de cada usuario para añadirlo a la tabla
                             string nombreUsuario = ws.Cells[i, 1].Value.ToString();
@@ -437,14 +450,14 @@ namespace ReporteImpresoras
 
                             int totalUsuario = 0;
                             //Se suman los totales de impresiones respecto a cada area para la hoja de totales para la hoja total
-                            if (area == "DN1") 
+                            if (area == "DN1")
                             {
                                 totalDN1 += ConTotal;
 
                                 //agregamos el total de por usuario
-                                if(!listaDN1.Contains(nombreUsuario1))
+                                if (!listaDN1.Contains(nombreUsuario1))
                                 {
-                                    listaDN1.Add(nombreUsuario1); 
+                                    listaDN1.Add(nombreUsuario1);
                                     ListaTotalDN1.Add(ConTotal);
                                 }
                                 else
@@ -626,10 +639,10 @@ namespace ReporteImpresoras
                             }
 
                         }
-                        
+
                     }
-                    
-                    
+
+
                 }
 
                 conDN1 = listaDN1.Count;
@@ -728,7 +741,7 @@ namespace ReporteImpresoras
                     filaTotal[1] = total;
                     TotalAreas += total;
 
-                    totalesBN.Rows.Add(filaTotal);  
+                    totalesBN.Rows.Add(filaTotal);
                 }
                 filaTotal = totalesBN.NewRow();
                 filaTotal[0] = "TOTAL:";
@@ -1037,7 +1050,7 @@ namespace ReporteImpresoras
                     String rango2 = "A1:B" + (conDN1 + 1);
                     chart2.SetChartDataRange(rango2, false);
                 }
-                
+
 
                 hojaDN2.Cells.ImportData(tablaDN2, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
@@ -1053,7 +1066,7 @@ namespace ReporteImpresoras
                     String rango3 = "A1:B" + (conDN2 + 1);
                     chart3.SetChartDataRange(rango3, false);
                 }
-                
+
 
                 hojaTI.Cells.ImportData(tablaTI, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
@@ -1069,7 +1082,7 @@ namespace ReporteImpresoras
                     String rango4 = "A1:B" + (conTI + 1);
                     chart5.SetChartDataRange(rango4, false);
                 }
-                
+
 
                 hojaRH.Cells.ImportData(tablaRH, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
@@ -1085,7 +1098,7 @@ namespace ReporteImpresoras
                     String rango6 = "A1:B" + (conRH + 1);
                     chart6.SetChartDataRange(rango6, false);
                 }
-                
+
 
                 hojaAuditoria.Cells.ImportData(tablaAuditoria, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
@@ -1101,7 +1114,7 @@ namespace ReporteImpresoras
                     String rango7 = "A1:B" + (conAudit + 1);
                     chart7.SetChartDataRange(rango7, false);
                 }
-                
+
 
                 hojaComercio.Cells.ImportData(tablaComercio, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
@@ -1117,7 +1130,7 @@ namespace ReporteImpresoras
                     String rango8 = "A1:B" + (conComer + 1);
                     chart8.SetChartDataRange(rango8, false);
                 }
-                
+
 
                 hojaContraloria.Cells.ImportData(tablaContraloria, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
@@ -1133,7 +1146,7 @@ namespace ReporteImpresoras
                     String rango9 = "A1:B" + (conContra + 1);
                     chart9.SetChartDataRange(rango9, false);
                 }
-                
+
 
                 hojaDirG.Cells.ImportData(tablaDirG, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
@@ -1149,7 +1162,7 @@ namespace ReporteImpresoras
                     String rango10 = "A1:B" + (conDir + 1);
                     chart10.SetChartDataRange(rango10, false);
                 }
-                
+
 
                 hojaLegal.Cells.ImportData(tablaLegal, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
@@ -1165,7 +1178,7 @@ namespace ReporteImpresoras
                     String rango11 = "A1:B" + (conLegal + 1);
                     chart11.SetChartDataRange(rango11, false);
                 }
-                
+
 
                 hojaPlaneacion.Cells.ImportData(tablaPlaneacion, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
@@ -1230,414 +1243,7 @@ namespace ReporteImpresoras
 
                 throw;
             }
-            /*try
-            {
-                mesdb = (String)jComboBox1.getSelectedItem();
-                mes = (String)jComboBox1.getSelectedItem();
-                int aniodb = Integer.parseInt((String)jSpinner1.getValue());
-                String rutaArchivo = ruta + "\\Reporte de Impresión BlancoNegro - " + mesdb + " " + aniodb + ".xlsx";
-                XSSFWorkbook libro = new XSSFWorkbook();
-                XSSFSheet hoja1 = libro.createSheet("General");
-                Connection con = null;
-                Boolean i1 = false;
-                Boolean i2 = false;
-                Boolean i3 = false;
-                Boolean i4 = false;
-                Boolean i5 = false;
-                String sURL = "jdbc:mysql://172.25.115.133:3306/oma";
-                con = (Connection)DriverManager.getConnection(sURL, "ti", "MSOMti2019");
-                int longitud1 = data1.length + (data2.length - 1) + (data3.length - 1);
-                int longitud2 = (data2.length - 1) + (data3.length - 1);
-                int longitud3 = (data3.length - 1);
-                int longitud4 = data1.length;
-                int longitud5 = data1.length + (data2.length - 1);
-                String datosgenerales[][] = new String[longitud1 + 5][6];
-                PreparedStatement st = con.prepareStatement("SELECT nombre FROM area");
-                ResultSet rst = st.executeQuery();
-                while (rst.next())
-                {
-                    String name = rst.getString("nombre");
-                    areasbn.add(new Area(name, 0));
-                }
-                for (int i = 0; i < longitud4; i++)
-                {
-                    if (i == 0)
-                    {
-                        datosgenerales[i][0] = data1[i][0];
-                        datosgenerales[i][1] = data1[i][1];
-                        datosgenerales[i][2] = "Direccion";
-                        datosgenerales[i][3] = data1[i][2];
-                        datosgenerales[i][4] = data1[i][3];
-                        datosgenerales[i][5] = data1[i][4];
-                    }
-                    else
-                    {
-                        PreparedStatement stmt = con.prepareStatement("SELECT area_idarea FROM empleado WHERE correo like '"
-                                + data1[i][1] + "%'");
-                        ResultSet rs = stmt.executeQuery();
-                        int idarea = 0;
-                        while (rs.next())
-                        {
-                            idarea = rs.getInt("area_idarea");
-                        }
-                        stmt = con.prepareStatement("SELECT nombre FROM area WHERE idarea =  " + idarea);
-                        rs = stmt.executeQuery();
-                        String nombre = "";
-                        while (rs.next())
-                        {
-                            nombre = rs.getString("nombre");
-                            datosgenerales[i][0] = data1[i][0];
-                            datosgenerales[i][1] = data1[i][1];
-                            datosgenerales[i][2] = nombre;
-                            datosgenerales[i][3] = data1[i][2];
-                            datosgenerales[i][4] = data1[i][3];
-                            datosgenerales[i][5] = data1[i][4];
-                            Area aux = areasbn.get(idarea - 1);
-                            aux.setImpcobn(aux.getImpcobn() + Integer.parseInt(data1[i][3]));
-                            ArrayList<Empleado> emp = aux.getEmp();
-                            boolean repetido = false;
-                            Empleado em = new Empleado(data1[i][1], Integer.parseInt(data1[i][3]));
-                            for (int j = 0; j < emp.size(); j++)
-                            {
-                                Empleado auxi = emp.get(j);
-                                if (em.getNombre().equals(auxi.getNombre()))
-                                {
-                                    auxi.setImpbn(auxi.getImpbn() + em.getImpbn());
-                                    emp.set(j, auxi);
-                                    repetido = true;
-                                }
-                            }
-                            if (repetido == false)
-                            {
-                                emp.add(em);
-                            }
-                            aux.setEmp(emp);
-                            areasbn.set(idarea - 1, aux);
-                        }
-                    }
-                }
-                for (int i = 1; i < data2.length; i++)
-                {
-                    PreparedStatement stmt = con.prepareStatement("SELECT area_idarea FROM empleado WHERE correo like '"
-                            + data2[i][1] + "%'");
-                    ResultSet rs = stmt.executeQuery();
-                    int idarea = 0;
-                    while (rs.next())
-                    {
-                        idarea = rs.getInt("area_idarea");
-                    }
-                    stmt = con.prepareStatement("SELECT nombre FROM area WHERE idarea =  " + idarea);
-                    rs = stmt.executeQuery();
-                    String nombre = "";
-                    while (rs.next())
-                    {
-                        nombre = rs.getString("nombre");
-                        datosgenerales[longitud4 - 1 + i][0] = data2[i][0];
-                        datosgenerales[longitud4 - 1 + i][1] = data2[i][1];
-                        datosgenerales[longitud4 - 1 + i][2] = nombre;
-                        datosgenerales[longitud4 - 1 + i][3] = data2[i][2];
-                        datosgenerales[longitud4 - 1 + i][4] = data2[i][3];
-                        datosgenerales[longitud4 - 1 + i][5] = data2[i][4];
-                        Area aux = areasbn.get(idarea - 1);
-                        aux.setImpcobn(aux.getImpcobn() + Integer.parseInt(data2[i][3]));
-                        ArrayList<Empleado> emp = aux.getEmp();
-                        boolean repetido = false;
-                        Empleado em = new Empleado(data2[i][1], Integer.parseInt(data2[i][3]));
-                        for (int j = 0; j < emp.size(); j++)
-                        {
-                            Empleado auxi = emp.get(j);
-                            if (em.getNombre().equals(auxi.getNombre()))
-                            {
-                                auxi.setImpbn(auxi.getImpbn() + em.getImpbn());
-                                emp.set(j, auxi);
-                                repetido = true;
-                            }
-                        }
-                        if (repetido == false)
-                        {
-                            emp.add(em);
-                        }
-                        aux.setEmp(emp);
-                        areasbn.set(idarea - 1, aux);
-                    }
-                }
-                for (int i = 1; i < data3.length; i++)
-                {
-                    PreparedStatement stmt = con.prepareStatement("SELECT area_idarea FROM empleado WHERE correo like '"
-                            + data3[i][1] + "%'");
-                    ResultSet rs = stmt.executeQuery();
-                    int idarea = 0;
-                    while (rs.next())
-                    {
-                        idarea = rs.getInt("area_idarea");
-                    }
-                    stmt = con.prepareStatement("SELECT nombre FROM area WHERE idarea =  " + idarea);
-                    rs = stmt.executeQuery();
-                    String nombre = "";
-                    while (rs.next())
-                    {
-                        nombre = rs.getString("nombre");
-                        datosgenerales[longitud5 - 1 + i][0] = data3[i][0];
-                        datosgenerales[longitud5 - 1 + i][1] = data3[i][1];
-                        datosgenerales[longitud5 - 1 + i][2] = nombre;
-                        datosgenerales[longitud5 - 1 + i][3] = data3[i][2];
-                        datosgenerales[longitud5 - 1 + i][4] = data3[i][3];
-                        datosgenerales[longitud5 - 1 + i][5] = data3[i][4];
-                        Area aux = areasbn.get(idarea - 1);
-                        aux.setImpcobn(aux.getImpcobn() + Integer.parseInt(data3[i][3]));
-                        ArrayList<Empleado> emp = aux.getEmp();
-                        boolean repetido = false;
-                        Empleado em = new Empleado(data3[i][1], Integer.parseInt(data3[i][3]));
-                        for (int j = 0; j < emp.size(); j++)
-                        {
-                            Empleado auxi = emp.get(j);
-                            if (em.getNombre().equals(auxi.getNombre()))
-                            {
-                                auxi.setImpbn(auxi.getImpbn() + em.getImpbn());
-                                emp.set(j, auxi);
-                                repetido = true;
-                            }
-                        }
-                        if (repetido == false)
-                        {
-                            emp.add(em);
-                        }
-                        aux.setEmp(emp);
-                        areasbn.set(idarea - 1, aux);
-                    }
-                }
-                int v1 = (int)jSpinner2.getValue();
-                int v2 = (int)jSpinner3.getValue();
-                int v3 = (int)jSpinner4.getValue();
-                int v4 = (int)jSpinner5.getValue();
-                int v5 = (int)jSpinner6.getValue();
-                System.out.println(v1 + "," + v2 + "," + v3 + "," + v4 + "," + v5);
-                datosgenerales[longitud1][0] = "Imprimir";
-                datosgenerales[longitud1][1] = "lrosas";
-                datosgenerales[longitud1][2] = "CONTRALORIA";
-                datosgenerales[longitud1][3] = mes;
-                datosgenerales[longitud1][4] = String.valueOf((int)jSpinner2.getValue());
-                datosgenerales[longitud1][5] = "Impresora Contraloria 1";
-                datosgenerales[longitud1 + 1][0] = "Imprimir";
-                datosgenerales[longitud1 + 1][1] = "aarguelles";
-                datosgenerales[longitud1 + 1][2] = "CONTRALORIA";
-                datosgenerales[longitud1 + 1][3] = mes;
-                datosgenerales[longitud1 + 1][4] = String.valueOf((int)jSpinner3.getValue());
-                datosgenerales[longitud1 + 1][5] = "Impresora Contraloria 2";
-                datosgenerales[longitud1 + 2][0] = "Imprimir";
-                datosgenerales[longitud1 + 2][1] = "cguzman";
-                datosgenerales[longitud1 + 2][2] = "RH";
-                datosgenerales[longitud1 + 2][3] = mes;
-                datosgenerales[longitud1 + 2][4] = String.valueOf((int)jSpinner4.getValue());
-                datosgenerales[longitud1 + 2][5] = "Impresora Recursos Humanos";
-                datosgenerales[longitud1 + 3][0] = "Imprimir";
-                datosgenerales[longitud1 + 3][1] = "gcampos";
-                datosgenerales[longitud1 + 3][2] = "DIR. GRAL.";
-                datosgenerales[longitud1 + 3][3] = mes;
-                datosgenerales[longitud1 + 3][4] = String.valueOf((int)jSpinner5.getValue());
-                datosgenerales[longitud1 + 3][5] = "Impresora DireccionGeneral";
-                datosgenerales[longitud1 + 4][0] = "Imprimir";
-                datosgenerales[longitud1 + 4][1] = "mpantoja";
-                datosgenerales[longitud1 + 4][2] = "AUDITORIA";
-                datosgenerales[longitud1 + 4][3] = mes;
-                datosgenerales[longitud1 + 4][4] = String.valueOf((int)jSpinner6.getValue());
-                datosgenerales[longitud1 + 4][5] = "Impresora Auditoria";
-                for (int i = 0; i < datosgenerales.length; i++)
-                {
-                    XSSFRow row = hoja1.createRow(i);//se crea las filas
-                    for (int j = 0; j < 6; j++)
-                    {
-                        XSSFCell cell = row.createCell(j);//se crea las celdas para la contenido, junto con la posición
-                        cell.setCellValue(datosgenerales[i][j]); //se añade el contenido
-                    }
-                }
-                File file;
-                file = new File(rutaArchivo);
-                FileOutputStream fileOuS = new FileOutputStream(file);
-                for (int j = 0; j < areasbn.size(); j++)
-                {
-                    ArrayList<Empleado> auxiliar = areasbn.get(j).getEmp();
-                    String conte[][] = new String[auxiliar.size()][1];
-                    Area areaux = areasbn.get(j);
-                    for (int i = 0; i < auxiliar.size(); i++)
-                    {
-                        conte[i][0] = auxiliar.get(i).getNombre();
-                        if (conte[i][0].equals("lrosas"))
-                        {
-                            int suma = auxiliar.get(i).getImpbn() + (int)jSpinner2.getValue();
-                            auxiliar.get(i).setImpbn(suma);
-                            i1 = true;
-                            areaux.setEmp(auxiliar);
-                            areaux.setImpcobn(areaux.getImpcobn() + v1);
-                        }
-                        if (conte[i][0].equals("aarguelles"))
-                        {
-                            System.out.println("arguelles encontrado");
-                            int suma = auxiliar.get(i).getImpbn() + (int)jSpinner3.getValue();
-                            auxiliar.get(i).setImpbn(suma);
-                            i2 = true;
-                            areaux.setEmp(auxiliar);
-                            areaux.setImpcobn(areaux.getImpcobn() + v2);
-                        }
-                        if (conte[i][0].equals("cguzman"))
-                        {
-                            int suma = auxiliar.get(i).getImpbn() + (int)jSpinner4.getValue();
-                            auxiliar.get(i).setImpbn(suma);
-                            i3 = true;
-                            areaux.setEmp(auxiliar);
-                            areaux.setImpcobn(areaux.getImpcobn() + v3);
-                        }
-                        if (conte[i][0].equals("gcampos"))
-                        {
-                            int suma = auxiliar.get(i).getImpbn() + (int)jSpinner5.getValue();
-                            auxiliar.get(i).setImpbn(suma);
-                            i4 = true;
-                            areaux.setEmp(auxiliar);
-                            areaux.setImpcobn(areaux.getImpcobn() + v4);
-                        }
-                        if (conte[i][0].equals("mpantoja"))
-                        {
-                            int suma = auxiliar.get(i).getImpbn() + (int)jSpinner6.getValue();
-                            auxiliar.get(i).setImpbn(suma);
-                            i5 = true;
-                            areaux.setEmp(auxiliar);
-                            areaux.setImpcobn(areaux.getImpcobn() + v5);
-                        }
-                    }
-                    if (i1 == false && j == 6)
-                    {
-                        System.out.println("j " + j);
-                        Empleado em = new Empleado("lrosas", (int)jSpinner2.getValue());
-                        auxiliar.add(em);
-                        i1 = true;
-                        areaux.setEmp(auxiliar);
-                        areaux.setImpcobn(areaux.getImpcobn() + v1);
-                    }
-                    if (i2 == false && j == 6)
-                    {
-                        Empleado em = new Empleado("aarguelles", (int)jSpinner3.getValue());
-                        auxiliar.add(em);
-                        i2 = true;
-                        areaux.setEmp(auxiliar);
-                        areaux.setImpcobn(areaux.getImpcobn() + v2);
-                    }
-                    if (i3 == false && j == 3)
-                    {
-                        Empleado em = new Empleado("cguzman", (int)jSpinner4.getValue());
-                        auxiliar.add(em);
-                        i3 = true;
-                        areaux.setEmp(auxiliar);
-                        areaux.setImpcobn(areaux.getImpcobn() + v3);
-                    }
-                    if (i4 == false && j == 7)
-                    {
-                        Empleado em = new Empleado("gcampos", (int)jSpinner5.getValue());
-                        auxiliar.add(em);
-                        i4 = true;
-                        areaux.setEmp(auxiliar);
-                        areaux.setImpcobn(areaux.getImpcobn() + v4);
-                    }
-                    if (i5 == false && j == 4)
-                    {
-                        Empleado em = new Empleado("mpantoja", (int)jSpinner6.getValue());
-                        auxiliar.add(em);
-                        i5 = true;
-                        areaux.setEmp(auxiliar);
-                        areaux.setImpcobn(areaux.getImpcobn() + v5);
-                    }
-                    areasbn.set(j, areaux);
-                }
-                XSSFSheet hoja = libro.createSheet("Total");
-                String contenid[][] = new String[15][2];
-                String contegraf[][] = new String[12][2];
-                java.util.Date fecha = new java.util.Date();
-                contenid[0][0] = "Este manual se genero:";
-                contenid[0][1] = String.valueOf(fecha);
-                contenid[1][0] = "Area";
-                contenid[1][1] = "Total Blanco/Negro";
-                int impbn = 0;
-                int impindependiente = (int)jSpinner2.getValue() + (int)jSpinner3.getValue() + (int)jSpinner4.getValue()
-                        + (int)jSpinner5.getValue() + (int)jSpinner6.getValue();
-                for (int i = 2; i < 14; i++)
-                {
-                    contenid[i][0] = areasbn.get(i - 2).getNombre();
-                    impbn += areasbn.get(i - 2).getImpcobn();
-                    contenid[i][1] = String.valueOf(areasbn.get(i - 2).getImpcobn());
-                    contegraf[i - 2][0] = contenid[i][0];
-                    contegraf[i - 2][1] = contenid[i][1];
-                }
-                contenid[14][0] = "Total general";
-                contenid[14][1] = String.valueOf(impbn + impindependiente);
-                for (int i = 0; i < contenid.length; i++)
-                {
-                    XSSFRow row = hoja.createRow(i);//se crea las filas
-                    for (int j = 0; j < 2; j++)
-                    {
-                        XSSFCell cell = row.createCell(j);//se crea las celdas para la contenido, junto con la posición
-                        cell.setCellValue(contenid[i][j]); //se añade el contenido
-                    }
-                }
-                final BufferedImage buffer1 = generarGraficaBNTotal(contegraf).createBufferedImage(1200, 800);
-                ByteArrayOutputStream img_bytes1 = new ByteArrayOutputStream();
-                ImageIO.write(buffer1, "png", img_bytes1);
-                img_bytes1.flush();
-                XSSFClientAnchor anchor1 = new XSSFClientAnchor(0, 0, 0, 0, (short)6, 0, (short)21, 20);
-                int index1 = libro.addPicture(img_bytes1.toByteArray(), XSSFWorkbook.PICTURE_TYPE_PNG);
-                XSSFSheet sheet1 = libro.getSheet("Total");
-                XSSFDrawing patriarch1 = sheet1.createDrawingPatriarch();
-                patriarch1.createPicture(anchor1, index1);
-                for (int i = 0; i < areasbn.size(); i++)
-                {
-                    XSSFSheet hojaarea = libro.createSheet(areasbn.get(i).getNombre());
-                    ArrayList<Empleado> auxiliar = areasbn.get(i).getEmp();
-                    String conte[][] = new String[auxiliar.size() + 2][2];
-                    String contegrafa[][] = new String[auxiliar.size()][2];
-                    conte[0][0] = "Area";
-                    conte[0][1] = "Total B/N";
-                    for (int j = 1; j < auxiliar.size() + 1; j++)
-                    {
-                        conte[j][0] = auxiliar.get(j - 1).getNombre();
-                        conte[j][1] = String.valueOf(auxiliar.get(j - 1).getImpbn());
-                        contegrafa[j - 1][0] = conte[j][0];
-                        contegrafa[j - 1][1] = conte[j][1];
-                    }
-                    conte[auxiliar.size() + 1][0] = "Total general";
-                    conte[auxiliar.size() + 1][1] = String.valueOf(areasbn.get(i).getImpcobn());
-                    for (int k = 0; k < conte.length; k++)
-                    {
-                        XSSFRow row = hojaarea.createRow(k);//se crea las filas
-                        for (int j = 0; j < 2; j++)
-                        {
-                            XSSFCell cell = row.createCell(j);//se crea las celdas para la contenido, junto con la posición
-                            cell.setCellValue(conte[k][j]); //se añade el contenido
-                        }
-                    }
-                    final BufferedImage buffer = generarGraficaContenidoBN(contegrafa).createBufferedImage(1200, 800);
-                    ByteArrayOutputStream img_bytes = new ByteArrayOutputStream();
-                    ImageIO.write(buffer, "png", img_bytes);
-                    img_bytes.flush();
-                    XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 0, 0, (short)6, 0, (short)20, 20);
-                    int index = libro.addPicture(img_bytes.toByteArray(), XSSFWorkbook.PICTURE_TYPE_PNG);
-                    XSSFSheet sheet = libro.getSheet(areasbn.get(i).getNombre());
-                    XSSFDrawing patriarch = sheet.createDrawingPatriarch();
-                    patriarch.createPicture(anchor, index);
-                }
-                if (file.exists())
-                {// si el archivo existe se elimina
-                    file.delete();
-                    System.out.println("Archivo eliminado");
-                }
-                libro.write(fileOuS);
-                fileOuS.flush();
-                fileOuS.close();
-                JOptionPane.showMessageDialog(null, "Archivo Reporte BN Creado");
-                System.out.println("Archivo ReporteBN Creado");
-            }
-            catch (Exception e)
-            {
 
-                e.printStackTrace();
-            }*/
         }
 
         public DataTable leerExcelColor()
@@ -1724,7 +1330,7 @@ namespace ReporteImpresoras
                 totalPlaneacion = 0;
                 totalSOX = 0;
 
-                List<int> listaColumnasValidas = new List<int>();  
+                List<int> listaColumnasValidas = new List<int>();
 
                 for (int i = 0; i < rows; i++)
                 {
@@ -2316,6 +1922,115 @@ namespace ReporteImpresoras
             }
 
             return dt;
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            int filasSeleccionadas = dataGridView1.SelectedRows.Count;
+            if (filasSeleccionadas == 0)
+            {
+                MessageBox.Show("Debe Seleccionar primero una fila");
+            }
+            else if (filasSeleccionadas == 1)
+            {
+                DataGridViewSelectedRowCollection row = dataGridView1.SelectedRows;
+                string pruebaFila = row[0].Cells[0].Value.ToString();
+
+
+                EditaUsuario editScreed = new EditaUsuario();
+                editScreed.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Solo debe seleccionar una fila");
+            }
+
+            
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            int filasSeleccionadas = dataGridView1.SelectedRows.Count;
+            if (filasSeleccionadas == 0)
+            {
+                MessageBox.Show("Debe Seleccionar primero una fila");
+            }
+            else if (filasSeleccionadas == 1)
+            {
+                EditaUsuario editScreed = new EditaUsuario();
+                editScreed.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Solo debe seleccionar una fila");
+            }
+        }
+
+        private void BusquedaUsuario()
+        {
+            DataTable tablaBusqueda = new DataTable();
+            DataRow fila;
+
+            tablaBusqueda.Columns.Add("Correo", typeof(string));
+            tablaBusqueda.Columns.Add("Nombre", typeof(string));
+            tablaBusqueda.Columns.Add("Puesto", typeof(string));
+            tablaBusqueda.Columns.Add("ID_Area", typeof(Int32));
+            tablaBusqueda.Columns.Add("Area", typeof(string));
+
+            int contFilas = 0;
+
+            foreach (DataRow rows in Tablausuarios.Rows)
+            {
+                //obtenemos el valor de la entrada de busqueda y el valor de cada una de las columnas en la fila recorrida
+                string strEntrada = txtBusqueda.Text.ToUpper();
+                string columna1 = rows[0].ToString().ToUpper();
+                string columna2 = rows[1].ToString().ToUpper();
+                string columna3 = rows[2].ToString().ToUpper();
+                string columna4 = rows[3].ToString().ToUpper();
+                string columna5 = rows[4].ToString().ToUpper();
+
+                //validamos que alguna columna contenga datos de la entrada de busqueda
+                bool a = columna1.Contains(strEntrada);
+                bool b = columna2.Contains(strEntrada);
+                bool c = columna3.Contains(strEntrada);
+                bool d = columna4.Contains(strEntrada);
+                bool e = columna5.Contains(strEntrada);
+
+
+                if (a || b || c || d || e)
+                {
+                    //Se agrega la fila a la nueva tabla de busqueda en caso de que contenga la entrada de busqueda
+                    fila = tablaBusqueda.NewRow();
+                    int contCols = 0;
+                    foreach (DataColumn col in Tablausuarios.Columns)
+                    {
+                        fila[contCols] = rows[col];
+                        contCols++;
+                    }
+
+                    tablaBusqueda.Rows.Add(fila);
+
+                }
+                contFilas++;
+            }
+            dataGridView1.DataSource = tablaBusqueda;
+        }
+
+        private void picBusqueda_Click(object sender, EventArgs e)
+        {
+            BusquedaUsuario();
+        }
+
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            if(!txtBusqueda.Equals(""))
+            {
+                BusquedaUsuario();
+            }
+            else
+            {
+                Resultados_Load();
+            }
         }
     }
 }

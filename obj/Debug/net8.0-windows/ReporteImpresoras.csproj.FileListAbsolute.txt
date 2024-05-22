@@ -70,3 +70,5 @@ C:\Users\USER\Documents\GitHub\ReporteImpresoras\obj\Debug\net8.0-windows\refint
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.pdb
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.genruntimeconfig.cache
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\obj\Debug\net8.0-windows\ref\ReporteImpresoras.dll
+C:\Users\sgarcia\source\repos\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.Properties.Resources.resources
+C:\Users\sgarcia\source\repos\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.EditaUsuario.resources
