@@ -18,6 +18,7 @@ namespace ReporteImpresoras
         string strNombre;
         string strPuesto;
         string strID_area;
+        public Boolean validaActualizacion;
 
 
         public EditaUsuario(string correo, string nombre, string puesto, string id_area)
@@ -98,6 +99,7 @@ namespace ReporteImpresoras
 
         private void btnEdicionConfirm_Click(object sender, EventArgs e)
         {
+            validaActualizacion = false;
             if(txtCorreo.Text != strCorreo
                 || txtNombre.Text != strNombre
                 || txtPuesto.Text != strPuesto
@@ -106,7 +108,18 @@ namespace ReporteImpresoras
                 var dialogResult = MessageBox.Show("Se actualizarán los datos del usuario: " + strCorreo, "Actualizar", MessageBoxButtons.OKCancel);
                 if (dialogResult == DialogResult.OK)
                 {
-                    MessageBox.Show("OK Clicked");
+                    try
+                    {
+                        AplicarActualizacion();
+                        MessageBox.Show("Actualización aplicada correctamente");
+                        validaActualizacion = true;
+                        this.Close();   
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("No se pudo aplicar la actualización, intentelo más tarde");
+                    }
+
                 }
             }
             else
@@ -121,19 +134,19 @@ namespace ReporteImpresoras
             MySqlConnection sqlConexion = null;
             try
             {
+                int ID_Area = Convert.ToInt32(txtIDArea.Text);
                 sqlConexion = new MySqlConnection(strConection);
 
                 sqlConexion.Open();
                 Console.WriteLine("ÉXITO");
-                string sqlCon = "select e.Correo, e.Nombre, e.Puesto, e.area_idarea as ID_Area, a.nombre as Area  from empleado e, area a where e.Area_idArea = a.idArea;";
-                MySqlDataAdapter com = new MySqlDataAdapter(sqlCon, sqlConexion);// where Area_idarea = 3
-
+                string sqlCon = "UPDATE empleado SET Nombre = '" + txtNombre.Text + "', Puesto = '" + txtPuesto.Text +"', Area_idArea = "+ ID_Area +"  WHERE (Correo = '"+ strCorreo +"');";
+                MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);// where Area_idarea = 3
+                var apl = com.ExecuteNonQuery();
                 sqlConexion.Close();
             }
             catch (System.Exception ex)
             {
                 Console.WriteLine("ERROR: " + ex);
-                MessageBox.Show("No se logró hacer la actualización, inténtelo más tarde");
             }
         }
     }

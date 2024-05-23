@@ -226,7 +226,14 @@ namespace ReporteImpresoras
 
         private void btnGenerarRepor_Click(object sender, EventArgs e)
         {
-            GenerarExcel();
+            if (txtRutaBN.Text == null || txtRutaBN.Text == "")
+            {
+                MessageBox.Show("Primero debes seleccionar una ruta para generar el reporte");
+            }
+            else
+            {
+                GenerarExcel();
+            }
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -289,7 +296,7 @@ namespace ReporteImpresoras
 
         public DataTable leerExcel()
         {
-            string rutaprueba = @"C:\Conversiones ReportesImp\ReporteImpB&N_20240513_1750.xlsx";//ReporteImpB&N_20240513_1750.xlsx";
+            string rutaprueba = rutaExcelByN;//ReporteImpB&N_20240513_1750.xlsx";
             DataTable dt = new DataTable();
             try
             {
@@ -1212,7 +1219,7 @@ namespace ReporteImpresoras
                 }
 
 
-                string archivoP = @"C:\\Conversiones ReportesImp\\prueba31.xlsx";
+                string archivoP = @"C:\\Conversiones ReportesImp\\prueba32.xlsx";
                 libro1.Save(archivoP);
 
                 MessageBox.Show("Archivo Guardado correctamente");
@@ -1943,13 +1950,17 @@ namespace ReporteImpresoras
 
                 EditaUsuario editScreed = new EditaUsuario(correo, nombre, puesto, id_area);
                 editScreed.ShowDialog();
+                if (editScreed.validaActualizacion)
+                {
+                    Resultados_Load();
+                }
             }
             else
             {
                 MessageBox.Show("Solo debe seleccionar una fila");
             }
 
-            
+
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -1961,27 +1972,32 @@ namespace ReporteImpresoras
             }
             else if (filasSeleccionadas == 1)
             {
-                //EditaUsuario editScreed = new EditaUsuario();
-                //editScreed.ShowDialog();
-                MySqlConnection sqlConexion;
-                sqlConexion = getConection();
-                try
+                DataGridViewSelectedRowCollection row = dataGridView1.SelectedRows;
+                string correo = row[0].Cells[0].Value.ToString();//Obtenemos el valor del correo en la fila seleccionada
+                var dialogResult = MessageBox.Show("Seguro que deseas eliminar al usuario: " + correo, "Eliminar", MessageBoxButtons.OKCancel);
+                if (dialogResult == DialogResult.OK)
                 {
-                    DataGridViewSelectedRowCollection row = dataGridView1.SelectedRows;
-                    string correo = row[0].Cells[0].Value.ToString();//Obtenemos el valor del correo en la fila seleccionada
-                    
-                    //Se aplica el delete en la base de datos
-                    sqlConexion.Open();
-                    string sqlCon = "delete from empleado where Correo = '"+ correo+ "';";
-                    MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);
-                    com.ExecuteReader();
-                    sqlConexion.Close();
-                }
-                catch (Exception)
-                {
+                    MySqlConnection sqlConexion;
+                    sqlConexion = getConection();
+                    try
+                    {
+                        //Se aplica el delete en la base de datos
+                        sqlConexion.Open();
+                        string sqlCon = "delete from empleado where Correo = '" + correo + "';";
+                        MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);
+                        com.ExecuteNonQuery();
+                        sqlConexion.Close();
 
-                    MessageBox.Show("No se pudo eliminar el registro, intente mas tarde", "ERROR");
+                        MessageBox.Show("Usuario Eliminado Correctamente");
+                        Resultados_Load();
+                    }
+                    catch (Exception)
+                    {
+
+                        MessageBox.Show("No se pudo eliminar el registro, intente mas tarde", "ERROR");
+                    }
                 }
+
             }
             else
             {
@@ -2046,13 +2062,53 @@ namespace ReporteImpresoras
 
         private void txtBusqueda_TextChanged(object sender, EventArgs e)
         {
-            if(!txtBusqueda.Equals(""))
+            if (!txtBusqueda.Equals(""))
             {
                 BusquedaUsuario();
             }
             else
             {
                 Resultados_Load();
+            }
+        }
+
+        private void btnRegistro_Click(object sender, EventArgs e)
+        {
+            if (!txtCorreo.Equals("") && !txtNombre.Equals("") && !txtPuesto.Equals("") && !txtIDArea.Equals(""))
+            {
+                int id_area = Convert.ToInt32(txtIDArea.Text);
+                var dialogResult = MessageBox.Show("Se dará de alta al usuario: " + txtCorreo.Text, "Registro", MessageBoxButtons.OKCancel);
+                if (dialogResult == DialogResult.OK)
+                {
+                    MySqlConnection sqlConexion;
+                    sqlConexion = getConection();
+                    try
+                    {
+                        //Se aplica el delete en la base de datos
+                        sqlConexion.Open();
+                        string sqlCon = "insert into empleado (Correo, Nombre, Puesto, Area_idArea)" +
+                            " values ('"+txtCorreo.Text+"','"+txtNombre.Text+"','"+txtPuesto.Text+"',"+id_area+");";
+                        MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);
+                        com.ExecuteNonQuery();
+                        sqlConexion.Close();
+
+                        MessageBox.Show("Usuario Registrado Correctamente");
+                        Resultados_Load();
+                        txtCorreo.Text = "";
+                        txtNombre.Text = "";
+                        txtPuesto.Text = "";
+                        txtIDArea.Text = "";
+                    }
+                    catch (Exception)
+                    {
+
+                        MessageBox.Show("No se pudo eliminar el registro, intente mas tarde", "ERROR");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Todos los campos son abligatorios");
             }
         }
     }
