@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditaUsuario));
             pnlEdicion = new Panel();
+            comboAreasEdit = new ComboBox();
             btnSalirEdicion = new Button();
             btnEdicionConfirm = new Button();
             lblEdicionTitulo = new Label();
@@ -37,7 +38,6 @@
             checkPuesto = new CheckBox();
             checkNombre = new CheckBox();
             checkCorreo = new CheckBox();
-            txtIDArea = new TextBox();
             txtPuesto = new TextBox();
             txtNombre = new TextBox();
             txtCorreo = new TextBox();
@@ -47,6 +47,7 @@
             // pnlEdicion
             // 
             pnlEdicion.BorderStyle = BorderStyle.Fixed3D;
+            pnlEdicion.Controls.Add(comboAreasEdit);
             pnlEdicion.Controls.Add(btnSalirEdicion);
             pnlEdicion.Controls.Add(btnEdicionConfirm);
             pnlEdicion.Controls.Add(lblEdicionTitulo);
@@ -54,22 +55,29 @@
             pnlEdicion.Controls.Add(checkPuesto);
             pnlEdicion.Controls.Add(checkNombre);
             pnlEdicion.Controls.Add(checkCorreo);
-            pnlEdicion.Controls.Add(txtIDArea);
             pnlEdicion.Controls.Add(txtPuesto);
             pnlEdicion.Controls.Add(txtNombre);
             pnlEdicion.Controls.Add(txtCorreo);
-            pnlEdicion.Location = new Point(23, 14);
-            pnlEdicion.Margin = new Padding(2);
+            pnlEdicion.Location = new Point(33, 23);
             pnlEdicion.Name = "pnlEdicion";
-            pnlEdicion.Size = new Size(588, 324);
+            pnlEdicion.Size = new Size(838, 537);
             pnlEdicion.TabIndex = 0;
+            // 
+            // comboAreasEdit
+            // 
+            comboAreasEdit.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboAreasEdit.FormattingEnabled = true;
+            comboAreasEdit.Items.AddRange(new object[] { "1 (DN1)", "2 (DN2)", "3 (TI)", "4 (RH)", "5 (AUDITORIA)", "6 (COMERCIO)", "7 (CONTRALORIA)", "8 (DIR. GRAL.)", "10 (LEGAL)", "11 (PLANEACION)", "12 (SOX)" });
+            comboAreasEdit.Location = new Point(210, 357);
+            comboAreasEdit.Name = "comboAreasEdit";
+            comboAreasEdit.Size = new Size(261, 33);
+            comboAreasEdit.TabIndex = 23;
             // 
             // btnSalirEdicion
             // 
-            btnSalirEdicion.Location = new Point(480, 282);
-            btnSalirEdicion.Margin = new Padding(2);
+            btnSalirEdicion.Location = new Point(686, 470);
             btnSalirEdicion.Name = "btnSalirEdicion";
-            btnSalirEdicion.Size = new Size(78, 20);
+            btnSalirEdicion.Size = new Size(111, 33);
             btnSalirEdicion.TabIndex = 22;
             btnSalirEdicion.Text = "Cancelar";
             btnSalirEdicion.UseVisualStyleBackColor = true;
@@ -77,10 +85,9 @@
             // 
             // btnEdicionConfirm
             // 
-            btnEdicionConfirm.Location = new Point(268, 257);
-            btnEdicionConfirm.Margin = new Padding(2);
+            btnEdicionConfirm.Location = new Point(383, 428);
             btnEdicionConfirm.Name = "btnEdicionConfirm";
-            btnEdicionConfirm.Size = new Size(78, 25);
+            btnEdicionConfirm.Size = new Size(111, 42);
             btnEdicionConfirm.TabIndex = 21;
             btnEdicionConfirm.Text = "Actualizar";
             btnEdicionConfirm.UseVisualStyleBackColor = true;
@@ -90,20 +97,18 @@
             // 
             lblEdicionTitulo.AutoSize = true;
             lblEdicionTitulo.Font = new Font("Segoe UI", 10F);
-            lblEdicionTitulo.Location = new Point(59, 33);
-            lblEdicionTitulo.Margin = new Padding(2, 0, 2, 0);
+            lblEdicionTitulo.Location = new Point(84, 55);
             lblEdicionTitulo.Name = "lblEdicionTitulo";
-            lblEdicionTitulo.Size = new Size(257, 19);
+            lblEdicionTitulo.Size = new Size(368, 28);
             lblEdicionTitulo.TabIndex = 20;
             lblEdicionTitulo.Text = "Selecciona los campos que deseas editar:";
             // 
             // checkID_Area
             // 
             checkID_Area.AutoSize = true;
-            checkID_Area.Location = new Point(59, 218);
-            checkID_Area.Margin = new Padding(2);
+            checkID_Area.Location = new Point(84, 357);
             checkID_Area.Name = "checkID_Area";
-            checkID_Area.Size = new Size(66, 19);
+            checkID_Area.Size = new Size(99, 29);
             checkID_Area.TabIndex = 19;
             checkID_Area.Text = "ID_Area";
             checkID_Area.UseVisualStyleBackColor = true;
@@ -112,10 +117,9 @@
             // checkPuesto
             // 
             checkPuesto.AutoSize = true;
-            checkPuesto.Location = new Point(59, 170);
-            checkPuesto.Margin = new Padding(2);
+            checkPuesto.Location = new Point(84, 279);
             checkPuesto.Name = "checkPuesto";
-            checkPuesto.Size = new Size(65, 19);
+            checkPuesto.Size = new Size(96, 29);
             checkPuesto.TabIndex = 18;
             checkPuesto.Text = "Puesto:";
             checkPuesto.UseVisualStyleBackColor = true;
@@ -124,10 +128,9 @@
             // checkNombre
             // 
             checkNombre.AutoSize = true;
-            checkNombre.Location = new Point(59, 125);
-            checkNombre.Margin = new Padding(2);
+            checkNombre.Location = new Point(84, 204);
             checkNombre.Name = "checkNombre";
-            checkNombre.Size = new Size(73, 19);
+            checkNombre.Size = new Size(108, 29);
             checkNombre.TabIndex = 17;
             checkNombre.Text = "Nombre:";
             checkNombre.UseVisualStyleBackColor = true;
@@ -136,59 +139,46 @@
             // checkCorreo
             // 
             checkCorreo.AutoSize = true;
-            checkCorreo.Location = new Point(59, 82);
-            checkCorreo.Margin = new Padding(2);
+            checkCorreo.Location = new Point(84, 132);
             checkCorreo.Name = "checkCorreo";
-            checkCorreo.Size = new Size(65, 19);
+            checkCorreo.Size = new Size(96, 29);
             checkCorreo.TabIndex = 16;
             checkCorreo.Text = "Correo:";
             checkCorreo.UseVisualStyleBackColor = true;
             checkCorreo.CheckedChanged += checkCorreo_CheckedChanged;
             // 
-            // txtIDArea
-            // 
-            txtIDArea.Enabled = false;
-            txtIDArea.Location = new Point(147, 213);
-            txtIDArea.Margin = new Padding(2);
-            txtIDArea.Name = "txtIDArea";
-            txtIDArea.Size = new Size(106, 23);
-            txtIDArea.TabIndex = 15;
-            // 
             // txtPuesto
             // 
             txtPuesto.Enabled = false;
-            txtPuesto.Location = new Point(147, 166);
-            txtPuesto.Margin = new Padding(2);
+            txtPuesto.Location = new Point(210, 277);
             txtPuesto.Name = "txtPuesto";
-            txtPuesto.Size = new Size(361, 23);
+            txtPuesto.Size = new Size(514, 31);
             txtPuesto.TabIndex = 14;
             // 
             // txtNombre
             // 
             txtNombre.Enabled = false;
-            txtNombre.Location = new Point(147, 121);
-            txtNombre.Margin = new Padding(2);
+            txtNombre.Location = new Point(210, 202);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(361, 23);
+            txtNombre.Size = new Size(514, 31);
             txtNombre.TabIndex = 13;
             // 
             // txtCorreo
             // 
             txtCorreo.Enabled = false;
-            txtCorreo.Location = new Point(147, 78);
-            txtCorreo.Margin = new Padding(2);
+            txtCorreo.Location = new Point(210, 130);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(361, 23);
+            txtCorreo.Size = new Size(514, 31);
             txtCorreo.TabIndex = 12;
             // 
             // EditaUsuario
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(632, 361);
+            BackColor = SystemColors.GradientInactiveCaption;
+            ClientSize = new Size(903, 602);
             Controls.Add(pnlEdicion);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(2);
             MaximizeBox = false;
             Name = "EditaUsuario";
             Opacity = 0.98D;
@@ -202,7 +192,6 @@
         #endregion
 
         private Panel pnlEdicion;
-        private TextBox txtIDArea;
         private TextBox txtPuesto;
         private TextBox txtNombre;
         private TextBox txtCorreo;
@@ -213,5 +202,6 @@
         private CheckBox checkCorreo;
         private Button btnSalirEdicion;
         private Button btnEdicionConfirm;
+        private ComboBox comboAreasEdit;
     }
 }

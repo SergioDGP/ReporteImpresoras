@@ -2077,12 +2077,11 @@ namespace ReporteImpresoras
         {
             string correo = txtCorreo.Text;
 
-            if (!txtCorreo.Text.Equals("") && !txtNombre.Text.Equals("") && !txtPuesto.Text.Equals("") && !txtIDArea.Text.Equals(""))
+            if (!txtCorreo.Text.Equals("") && !txtNombre.Text.Equals("") && !txtPuesto.Text.Equals(""))
             {
-                string name = comboAreas.Text;
-                char first = name[0];
+                string cmbarea = comboAreas.Text;
+                string id_area = cmbarea.Substring(0, 1);
 
-                int id_area = Convert.ToInt32(txtIDArea.Text);
                 var dialogResult = MessageBox.Show("Se dará de alta al usuario: " + txtCorreo.Text, "Registro", MessageBoxButtons.OKCancel);
                 if (dialogResult == DialogResult.OK)
                 {
@@ -2103,7 +2102,7 @@ namespace ReporteImpresoras
                         txtCorreo.Text = "";
                         txtNombre.Text = "";
                         txtPuesto.Text = "";
-                        txtIDArea.Text = "";
+                        comboAreas.SelectedIndex = 0;
                     }
                     catch (Exception)
                     {

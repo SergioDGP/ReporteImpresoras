@@ -25,6 +25,22 @@ namespace ReporteImpresoras
         {
             InitializeComponent();
             CargaDatos(correo, nombre, puesto, id_area);
+            cargarCombo(id_area);
+        }
+
+        private void cargarCombo(string id)
+        {
+            int area = Convert.ToInt32(id);
+
+            if (area > 8) 
+            {
+                comboAreasEdit.SelectedIndex = area - 2;
+            }
+            else
+            {
+                comboAreasEdit.SelectedIndex = area - 1;
+            }
+            
         }
 
         private void btnSalirEdicion_Click(object sender, EventArgs e)
@@ -42,7 +58,7 @@ namespace ReporteImpresoras
             txtCorreo.Text = correo;
             txtNombre.Text = nombre;
             txtPuesto.Text = puesto;
-            txtIDArea.Text = id_area;
+            comboAreasEdit.Text = id_area;//////////
         }
 
         private void checkCorreo_CheckedChanged(object sender, EventArgs e)
@@ -88,29 +104,33 @@ namespace ReporteImpresoras
         {
             if (checkID_Area.Checked)
             {
-                txtIDArea.Enabled = true;
+                comboAreasEdit.Enabled = true;
             }
             else
             {
-                txtIDArea.Text = strID_area;
-                txtIDArea.Enabled = false;
+                comboAreasEdit.Text = strID_area;//////////////
+                comboAreasEdit.Enabled = false;////////
             }
         }
 
         private void btnEdicionConfirm_Click(object sender, EventArgs e)
         {
+            string cmbarea = comboAreasEdit.Text;//tomamos el valor del combo
+            string id_area = cmbarea.Substring(0, 1);//Tomamos solo el primer caracter del combobox es decir solo el numero del ID
+            int ID_Area = Convert.ToInt32(id_area);
+
             validaActualizacion = false;
             if(txtCorreo.Text != strCorreo
                 || txtNombre.Text != strNombre
                 || txtPuesto.Text != strPuesto
-                || txtIDArea.Text != strID_area)
+                || ID_Area != Convert.ToInt32(strID_area))
             {
                 var dialogResult = MessageBox.Show("Se actualizarán los datos del usuario: " + strCorreo, "Actualizar", MessageBoxButtons.OKCancel);
                 if (dialogResult == DialogResult.OK)
                 {
                     try
                     {
-                        AplicarActualizacion();
+                        AplicarActualizacion(ID_Area);
                         MessageBox.Show("Actualización aplicada correctamente");
                         validaActualizacion = true;
                         this.Close();   
@@ -124,22 +144,22 @@ namespace ReporteImpresoras
             }
             else
             {
-                MessageBox.Show("Debe editar al menos actualizar uno de los campos para poder aplicar la actualización");
+                MessageBox.Show("Debe editar al menos uno de los campos para poder aplicar la actualización");
             }
         }
 
-        private void AplicarActualizacion()
+        private void AplicarActualizacion(int id_area)
         {
             string strConection = "datasource=172.25.115.134 ; port=3306; username=root; password=n0m3l0; database=oma;";
             MySqlConnection sqlConexion = null;
             try
             {
-                int ID_Area = Convert.ToInt32(txtIDArea.Text);
+                
                 sqlConexion = new MySqlConnection(strConection);
 
                 sqlConexion.Open();
                 Console.WriteLine("ÉXITO");
-                string sqlCon = "UPDATE empleado SET Nombre = '" + txtNombre.Text + "', Puesto = '" + txtPuesto.Text +"', Area_idArea = "+ ID_Area +"  WHERE (Correo = '"+ strCorreo +"');";
+                string sqlCon = "UPDATE empleado SET Nombre = '" + txtNombre.Text + "', Puesto = '" + txtPuesto.Text +"', Area_idArea = "+ id_area +"  WHERE (Correo = '"+ strCorreo +"');";
                 MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);// where Area_idarea = 3
                 var apl = com.ExecuteNonQuery();
                 sqlConexion.Close();

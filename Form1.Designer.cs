@@ -58,7 +58,6 @@
             panelRegistro = new Panel();
             comboAreas = new ComboBox();
             btnRegistro = new Button();
-            txtIDArea = new TextBox();
             txtPuesto = new TextBox();
             txtNombre = new TextBox();
             txtCorreo = new TextBox();
@@ -343,7 +342,6 @@
             panelRegistro.BorderStyle = BorderStyle.Fixed3D;
             panelRegistro.Controls.Add(comboAreas);
             panelRegistro.Controls.Add(btnRegistro);
-            panelRegistro.Controls.Add(txtIDArea);
             panelRegistro.Controls.Add(txtPuesto);
             panelRegistro.Controls.Add(txtNombre);
             panelRegistro.Controls.Add(txtCorreo);
@@ -375,13 +373,6 @@
             btnRegistro.Text = "Registrar";
             btnRegistro.UseVisualStyleBackColor = true;
             btnRegistro.Click += btnRegistro_Click;
-            // 
-            // txtIDArea
-            // 
-            txtIDArea.Location = new Point(554, 423);
-            txtIDArea.Name = "txtIDArea";
-            txtIDArea.Size = new Size(150, 31);
-            txtIDArea.TabIndex = 7;
             // 
             // txtPuesto
             // 
@@ -469,7 +460,7 @@
             // 
             picBusqueda.BackColor = SystemColors.Window;
             picBusqueda.Image = Properties.Resources.busqueda;
-            picBusqueda.Location = new Point(570, 55);
+            picBusqueda.Location = new Point(570, 54);
             picBusqueda.Name = "picBusqueda";
             picBusqueda.Size = new Size(25, 27);
             picBusqueda.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -569,7 +560,6 @@
         private Label lblIDArea;
         private Label lblPuesto;
         private Button btnRegistro;
-        private TextBox txtIDArea;
         private TextBox txtPuesto;
         private TextBox txtNombre;
         private TextBox txtCorreo;
