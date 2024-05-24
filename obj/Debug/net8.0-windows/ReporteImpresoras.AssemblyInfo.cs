@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ReporteImpresoras")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a41b5afb4805bc30f1e05ddbc40267f710a6db7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bfb122b778f60975ff1fc30da2a8ed7741d1d013")]
 [assembly: System.Reflection.AssemblyProductAttribute("ReporteImpresoras")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ReporteImpresoras")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -109,6 +109,7 @@ namespace ReporteImpresoras
             Resultados_Load();
             //cargaTablaUsuarios();
             txtBusqueda.PlaceholderText = "Buscar Usuario";
+            comboAreas.SelectedIndex = 0;   
         }
 
         private void cargaTablaUsuarios()
@@ -2074,8 +2075,13 @@ namespace ReporteImpresoras
 
         private void btnRegistro_Click(object sender, EventArgs e)
         {
-            if (!txtCorreo.Equals("") && !txtNombre.Equals("") && !txtPuesto.Equals("") && !txtIDArea.Equals(""))
+            string correo = txtCorreo.Text;
+
+            if (!txtCorreo.Text.Equals("") && !txtNombre.Text.Equals("") && !txtPuesto.Text.Equals("") && !txtIDArea.Text.Equals(""))
             {
+                string name = comboAreas.Text;
+                char first = name[0];
+
                 int id_area = Convert.ToInt32(txtIDArea.Text);
                 var dialogResult = MessageBox.Show("Se dará de alta al usuario: " + txtCorreo.Text, "Registro", MessageBoxButtons.OKCancel);
                 if (dialogResult == DialogResult.OK)
@@ -2108,7 +2114,7 @@ namespace ReporteImpresoras
             }
             else
             {
-                MessageBox.Show("Todos los campos son abligatorios");
+                MessageBox.Show("Todos los campos son obligatorios");
             }
         }
     }
