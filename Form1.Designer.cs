@@ -39,14 +39,14 @@
             cmbAnios = new ComboBox();
             btnSalir = new Button();
             btnSlcColorAnt = new Button();
-            textBox1 = new TextBox();
+            txtColorAnterior = new TextBox();
             lblByN = new Label();
             lblColor = new Label();
             notifyIcon1 = new NotifyIcon(components);
             label1 = new Label();
             label2 = new Label();
             btnSelecColor = new Button();
-            textBox2 = new TextBox();
+            txtColorActual = new TextBox();
             panel1 = new Panel();
             panel3 = new Panel();
             dataGridView1 = new DataGridView();
@@ -86,17 +86,19 @@
             // 
             // txtRutaBN
             // 
-            txtRutaBN.Location = new Point(24, 105);
+            txtRutaBN.Location = new Point(17, 63);
+            txtRutaBN.Margin = new Padding(2);
             txtRutaBN.Name = "txtRutaBN";
             txtRutaBN.ReadOnly = true;
-            txtRutaBN.Size = new Size(625, 31);
+            txtRutaBN.Size = new Size(439, 23);
             txtRutaBN.TabIndex = 0;
             // 
             // btnSelecBN
             // 
-            btnSelecBN.Location = new Point(690, 100);
+            btnSelecBN.Location = new Point(483, 60);
+            btnSelecBN.Margin = new Padding(2);
             btnSelecBN.Name = "btnSelecBN";
-            btnSelecBN.Size = new Size(187, 42);
+            btnSelecBN.Size = new Size(131, 25);
             btnSelecBN.TabIndex = 2;
             btnSelecBN.Text = "Seleccionar Archivo";
             btnSelecBN.UseVisualStyleBackColor = true;
@@ -104,9 +106,10 @@
             // 
             // btnGenerarRepor
             // 
-            btnGenerarRepor.Location = new Point(491, 722);
+            btnGenerarRepor.Location = new Point(344, 433);
+            btnGenerarRepor.Margin = new Padding(2);
             btnGenerarRepor.Name = "btnGenerarRepor";
-            btnGenerarRepor.Size = new Size(196, 45);
+            btnGenerarRepor.Size = new Size(137, 27);
             btnGenerarRepor.TabIndex = 3;
             btnGenerarRepor.Text = "Generar Reporte(s)";
             btnGenerarRepor.UseVisualStyleBackColor = true;
@@ -117,26 +120,29 @@
             cmbMeses.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbMeses.FormattingEnabled = true;
             cmbMeses.Items.AddRange(new object[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio ", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" });
-            cmbMeses.Location = new Point(154, 47);
+            cmbMeses.Location = new Point(108, 28);
+            cmbMeses.Margin = new Padding(2);
             cmbMeses.Name = "cmbMeses";
-            cmbMeses.Size = new Size(153, 33);
+            cmbMeses.Size = new Size(108, 23);
             cmbMeses.TabIndex = 4;
             // 
             // lblMes
             // 
             lblMes.AutoSize = true;
-            lblMes.Location = new Point(100, 51);
+            lblMes.Location = new Point(70, 31);
+            lblMes.Margin = new Padding(2, 0, 2, 0);
             lblMes.Name = "lblMes";
-            lblMes.Size = new Size(49, 25);
+            lblMes.Size = new Size(32, 15);
             lblMes.TabIndex = 5;
             lblMes.Text = "Mes:";
             // 
             // lblAnio
             // 
             lblAnio.AutoSize = true;
-            lblAnio.Location = new Point(360, 51);
+            lblAnio.Location = new Point(252, 31);
+            lblAnio.Margin = new Padding(2, 0, 2, 0);
             lblAnio.Name = "lblAnio";
-            lblAnio.Size = new Size(45, 25);
+            lblAnio.Size = new Size(29, 15);
             lblAnio.TabIndex = 6;
             lblAnio.Text = "Año";
             // 
@@ -144,16 +150,18 @@
             // 
             cmbAnios.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbAnios.FormattingEnabled = true;
-            cmbAnios.Location = new Point(412, 47);
+            cmbAnios.Location = new Point(288, 28);
+            cmbAnios.Margin = new Padding(2);
             cmbAnios.Name = "cmbAnios";
-            cmbAnios.Size = new Size(133, 33);
+            cmbAnios.Size = new Size(94, 23);
             cmbAnios.TabIndex = 7;
             // 
             // btnSalir
             // 
-            btnSalir.Location = new Point(900, 783);
+            btnSalir.Location = new Point(630, 470);
+            btnSalir.Margin = new Padding(2);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(111, 33);
+            btnSalir.Size = new Size(78, 20);
             btnSalir.TabIndex = 8;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = true;
@@ -161,28 +169,31 @@
             // 
             // btnSlcColorAnt
             // 
-            btnSlcColorAnt.Location = new Point(691, 132);
+            btnSlcColorAnt.Location = new Point(484, 79);
+            btnSlcColorAnt.Margin = new Padding(2);
             btnSlcColorAnt.Name = "btnSlcColorAnt";
-            btnSlcColorAnt.Size = new Size(187, 42);
+            btnSlcColorAnt.Size = new Size(131, 25);
             btnSlcColorAnt.TabIndex = 10;
             btnSlcColorAnt.Text = "Seleccionar Archivo";
             btnSlcColorAnt.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txtColorAnterior
             // 
-            textBox1.Location = new Point(26, 137);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(625, 31);
-            textBox1.TabIndex = 9;
+            txtColorAnterior.Location = new Point(18, 82);
+            txtColorAnterior.Margin = new Padding(2);
+            txtColorAnterior.Name = "txtColorAnterior";
+            txtColorAnterior.ReadOnly = true;
+            txtColorAnterior.Size = new Size(439, 23);
+            txtColorAnterior.TabIndex = 9;
             // 
             // lblByN
             // 
             lblByN.AutoSize = true;
             lblByN.Font = new Font("Segoe UI", 12F);
-            lblByN.Location = new Point(27, 35);
+            lblByN.Location = new Point(19, 21);
+            lblByN.Margin = new Padding(2, 0, 2, 0);
             lblByN.Name = "lblByN";
-            lblByN.Size = new Size(268, 32);
+            lblByN.Size = new Size(175, 21);
             lblByN.TabIndex = 12;
             lblByN.Text = "Reporte Blanco y Negro";
             // 
@@ -190,9 +201,10 @@
             // 
             lblColor.AutoSize = true;
             lblColor.Font = new Font("Segoe UI", 12F);
-            lblColor.Location = new Point(29, 35);
+            lblColor.Location = new Point(20, 21);
+            lblColor.Margin = new Padding(2, 0, 2, 0);
             lblColor.Name = "lblColor";
-            lblColor.Size = new Size(161, 32);
+            lblColor.Size = new Size(107, 21);
             lblColor.TabIndex = 13;
             lblColor.Text = "Reporte Color";
             // 
@@ -204,37 +216,42 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(29, 212);
+            label1.Location = new Point(20, 127);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(103, 25);
+            label1.Size = new Size(69, 15);
             label1.TabIndex = 14;
             label1.Text = "Mes Actual:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(29, 97);
+            label2.Location = new Point(20, 58);
+            label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(118, 25);
+            label2.Size = new Size(78, 15);
             label2.TabIndex = 15;
             label2.Text = "Mes Anterior:";
             // 
             // btnSelecColor
             // 
-            btnSelecColor.Location = new Point(694, 247);
+            btnSelecColor.Location = new Point(486, 148);
+            btnSelecColor.Margin = new Padding(2);
             btnSelecColor.Name = "btnSelecColor";
-            btnSelecColor.Size = new Size(187, 42);
+            btnSelecColor.Size = new Size(131, 25);
             btnSelecColor.TabIndex = 17;
             btnSelecColor.Text = "Seleccionar Archivo";
             btnSelecColor.UseVisualStyleBackColor = true;
+            btnSelecColor.Click += btnSelecColor_Click;
             // 
-            // textBox2
+            // txtColorActual
             // 
-            textBox2.Location = new Point(29, 252);
-            textBox2.Name = "textBox2";
-            textBox2.ReadOnly = true;
-            textBox2.Size = new Size(625, 31);
-            textBox2.TabIndex = 16;
+            txtColorActual.Location = new Point(20, 151);
+            txtColorActual.Margin = new Padding(2);
+            txtColorActual.Name = "txtColorActual";
+            txtColorActual.ReadOnly = true;
+            txtColorActual.Size = new Size(439, 23);
+            txtColorActual.TabIndex = 16;
             // 
             // panel1
             // 
@@ -242,24 +259,26 @@
             panel1.Controls.Add(btnSelecBN);
             panel1.Controls.Add(txtRutaBN);
             panel1.Controls.Add(lblByN);
-            panel1.Location = new Point(103, 157);
+            panel1.Location = new Point(72, 94);
+            panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(910, 174);
+            panel1.Size = new Size(638, 106);
             panel1.TabIndex = 18;
             // 
             // panel3
             // 
             panel3.BorderStyle = BorderStyle.Fixed3D;
-            panel3.Controls.Add(textBox1);
+            panel3.Controls.Add(txtColorAnterior);
             panel3.Controls.Add(btnSlcColorAnt);
             panel3.Controls.Add(btnSelecColor);
             panel3.Controls.Add(lblColor);
-            panel3.Controls.Add(textBox2);
+            panel3.Controls.Add(txtColorActual);
             panel3.Controls.Add(label1);
             panel3.Controls.Add(label2);
-            panel3.Location = new Point(103, 368);
+            panel3.Location = new Point(72, 221);
+            panel3.Margin = new Padding(2);
             panel3.Name = "panel3";
-            panel3.Size = new Size(910, 319);
+            panel3.Size = new Size(638, 193);
             panel3.TabIndex = 19;
             // 
             // dataGridView1
@@ -267,11 +286,12 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(127, 111);
+            dataGridView1.Location = new Point(89, 67);
+            dataGridView1.Margin = new Padding(2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(856, 714);
+            dataGridView1.Size = new Size(599, 428);
             dataGridView1.TabIndex = 20;
             // 
             // tabControl1
@@ -279,10 +299,11 @@
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
-            tabControl1.Location = new Point(-4, 12);
+            tabControl1.Location = new Point(-3, 7);
+            tabControl1.Margin = new Padding(2);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1113, 902);
+            tabControl1.Size = new Size(779, 541);
             tabControl1.TabIndex = 21;
             // 
             // tabPage1
@@ -297,19 +318,21 @@
             tabPage1.Controls.Add(lblMes);
             tabPage1.Controls.Add(lblAnio);
             tabPage1.Controls.Add(btnSalir);
-            tabPage1.Location = new Point(4, 34);
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Margin = new Padding(2);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1105, 864);
+            tabPage1.Padding = new Padding(2);
+            tabPage1.Size = new Size(771, 513);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Reportes";
             // 
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.Moore_large;
-            pictureBox1.Location = new Point(885, 47);
+            pictureBox1.Location = new Point(620, 28);
+            pictureBox1.Margin = new Padding(2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(128, 37);
+            pictureBox1.Size = new Size(90, 22);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 20;
             pictureBox1.TabStop = false;
@@ -320,19 +343,21 @@
             tabPage2.Controls.Add(pictureBox2);
             tabPage2.Controls.Add(panelRegistro);
             tabPage2.Controls.Add(lblRegistroTitle);
-            tabPage2.Location = new Point(4, 34);
+            tabPage2.Location = new Point(4, 24);
+            tabPage2.Margin = new Padding(2);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1105, 864);
+            tabPage2.Padding = new Padding(2);
+            tabPage2.Size = new Size(771, 513);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Registro";
             // 
             // pictureBox2
             // 
             pictureBox2.Image = Properties.Resources.Moore_large;
-            pictureBox2.Location = new Point(885, 47);
+            pictureBox2.Location = new Point(620, 28);
+            pictureBox2.Margin = new Padding(2);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(128, 37);
+            pictureBox2.Size = new Size(90, 22);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 21;
             pictureBox2.TabStop = false;
@@ -349,9 +374,10 @@
             panelRegistro.Controls.Add(lblPuesto);
             panelRegistro.Controls.Add(lblNombre);
             panelRegistro.Controls.Add(lblCorreo);
-            panelRegistro.Location = new Point(81, 170);
+            panelRegistro.Location = new Point(57, 102);
+            panelRegistro.Margin = new Padding(2);
             panelRegistro.Name = "panelRegistro";
-            panelRegistro.Size = new Size(950, 630);
+            panelRegistro.Size = new Size(666, 380);
             panelRegistro.TabIndex = 0;
             // 
             // comboAreas
@@ -359,16 +385,18 @@
             comboAreas.DropDownStyle = ComboBoxStyle.DropDownList;
             comboAreas.FormattingEnabled = true;
             comboAreas.Items.AddRange(new object[] { "1 (DN1)", "2 (DN2)", "3 (TI)", "4 (RH)", "5 (AUDITORIA)", "6 (COMERCIO)", "7 (CONTRALORIA)", "8 (DIR. GRAL.)", "10 (LEGAL)", "11 (PLANEACION)", "12 (SOX)" });
-            comboAreas.Location = new Point(258, 421);
+            comboAreas.Location = new Point(181, 253);
+            comboAreas.Margin = new Padding(2);
             comboAreas.Name = "comboAreas";
-            comboAreas.Size = new Size(261, 33);
+            comboAreas.Size = new Size(184, 23);
             comboAreas.TabIndex = 10;
             // 
             // btnRegistro
             // 
-            btnRegistro.Location = new Point(443, 533);
+            btnRegistro.Location = new Point(310, 320);
+            btnRegistro.Margin = new Padding(2);
             btnRegistro.Name = "btnRegistro";
-            btnRegistro.Size = new Size(111, 33);
+            btnRegistro.Size = new Size(78, 20);
             btnRegistro.TabIndex = 8;
             btnRegistro.Text = "Registrar";
             btnRegistro.UseVisualStyleBackColor = true;
@@ -376,58 +404,65 @@
             // 
             // txtPuesto
             // 
-            txtPuesto.Location = new Point(258, 304);
+            txtPuesto.Location = new Point(181, 182);
+            txtPuesto.Margin = new Padding(2);
             txtPuesto.Name = "txtPuesto";
-            txtPuesto.Size = new Size(563, 31);
+            txtPuesto.Size = new Size(395, 23);
             txtPuesto.TabIndex = 6;
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(258, 189);
+            txtNombre.Location = new Point(181, 113);
+            txtNombre.Margin = new Padding(2);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(563, 31);
+            txtNombre.Size = new Size(395, 23);
             txtNombre.TabIndex = 5;
             // 
             // txtCorreo
             // 
-            txtCorreo.Location = new Point(258, 69);
+            txtCorreo.Location = new Point(181, 41);
+            txtCorreo.Margin = new Padding(2);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(563, 31);
+            txtCorreo.Size = new Size(395, 23);
             txtCorreo.TabIndex = 4;
             // 
             // lblIDArea
             // 
             lblIDArea.AutoSize = true;
-            lblIDArea.Location = new Point(113, 424);
+            lblIDArea.Location = new Point(79, 254);
+            lblIDArea.Margin = new Padding(2, 0, 2, 0);
             lblIDArea.Name = "lblIDArea";
-            lblIDArea.Size = new Size(100, 25);
+            lblIDArea.Size = new Size(64, 15);
             lblIDArea.TabIndex = 3;
             lblIDArea.Text = "ID de Área:";
             // 
             // lblPuesto
             // 
             lblPuesto.AutoSize = true;
-            lblPuesto.Location = new Point(113, 304);
+            lblPuesto.Location = new Point(79, 182);
+            lblPuesto.Margin = new Padding(2, 0, 2, 0);
             lblPuesto.Name = "lblPuesto";
-            lblPuesto.Size = new Size(70, 25);
+            lblPuesto.Size = new Size(46, 15);
             lblPuesto.TabIndex = 2;
             lblPuesto.Text = "Puesto:";
             // 
             // lblNombre
             // 
             lblNombre.AutoSize = true;
-            lblNombre.Location = new Point(113, 189);
+            lblNombre.Location = new Point(79, 113);
+            lblNombre.Margin = new Padding(2, 0, 2, 0);
             lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(82, 25);
+            lblNombre.Size = new Size(54, 15);
             lblNombre.TabIndex = 1;
             lblNombre.Text = "Nombre:";
             // 
             // lblCorreo
             // 
             lblCorreo.AutoSize = true;
-            lblCorreo.Location = new Point(113, 69);
+            lblCorreo.Location = new Point(79, 41);
+            lblCorreo.Margin = new Padding(2, 0, 2, 0);
             lblCorreo.Name = "lblCorreo";
-            lblCorreo.Size = new Size(70, 25);
+            lblCorreo.Size = new Size(46, 15);
             lblCorreo.TabIndex = 0;
             lblCorreo.Text = "Correo:";
             // 
@@ -435,9 +470,10 @@
             // 
             lblRegistroTitle.AutoSize = true;
             lblRegistroTitle.Font = new Font("Segoe UI", 13F);
-            lblRegistroTitle.Location = new Point(81, 48);
+            lblRegistroTitle.Location = new Point(57, 29);
+            lblRegistroTitle.Margin = new Padding(2, 0, 2, 0);
             lblRegistroTitle.Name = "lblRegistroTitle";
-            lblRegistroTitle.Size = new Size(184, 36);
+            lblRegistroTitle.Size = new Size(129, 25);
             lblRegistroTitle.TabIndex = 9;
             lblRegistroTitle.Text = "Nuevo Usuario";
             // 
@@ -449,10 +485,11 @@
             tabPage3.Controls.Add(btnEliminar);
             tabPage3.Controls.Add(btnEditar);
             tabPage3.Controls.Add(dataGridView1);
-            tabPage3.Location = new Point(4, 34);
+            tabPage3.Location = new Point(4, 24);
+            tabPage3.Margin = new Padding(2);
             tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(1105, 864);
+            tabPage3.Padding = new Padding(2);
+            tabPage3.Size = new Size(771, 513);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Usuarios";
             // 
@@ -460,9 +497,10 @@
             // 
             picBusqueda.BackColor = SystemColors.Window;
             picBusqueda.Image = Properties.Resources.busqueda;
-            picBusqueda.Location = new Point(570, 54);
+            picBusqueda.Location = new Point(399, 32);
+            picBusqueda.Margin = new Padding(2);
             picBusqueda.Name = "picBusqueda";
-            picBusqueda.Size = new Size(25, 27);
+            picBusqueda.Size = new Size(18, 16);
             picBusqueda.SizeMode = PictureBoxSizeMode.StretchImage;
             picBusqueda.TabIndex = 24;
             picBusqueda.TabStop = false;
@@ -470,17 +508,19 @@
             // 
             // txtBusqueda
             // 
-            txtBusqueda.Location = new Point(127, 52);
+            txtBusqueda.Location = new Point(89, 31);
+            txtBusqueda.Margin = new Padding(2);
             txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.Size = new Size(473, 31);
+            txtBusqueda.Size = new Size(332, 23);
             txtBusqueda.TabIndex = 23;
             txtBusqueda.TextChanged += txtBusqueda_TextChanged;
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(871, 55);
+            btnEliminar.Location = new Point(610, 33);
+            btnEliminar.Margin = new Padding(2);
             btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(111, 33);
+            btnEliminar.Size = new Size(78, 20);
             btnEliminar.TabIndex = 22;
             btnEliminar.Text = "Eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
@@ -488,9 +528,10 @@
             // 
             // btnEditar
             // 
-            btnEditar.Location = new Point(739, 55);
+            btnEditar.Location = new Point(517, 33);
+            btnEditar.Margin = new Padding(2);
             btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(111, 33);
+            btnEditar.Size = new Size(78, 20);
             btnEditar.TabIndex = 21;
             btnEditar.Text = "Editar";
             btnEditar.UseVisualStyleBackColor = true;
@@ -498,12 +539,13 @@
             // 
             // VentanaPrincipal
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(1107, 913);
+            ClientSize = new Size(775, 542);
             Controls.Add(tabControl1);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(2);
             MaximizeBox = false;
             Name = "VentanaPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
@@ -539,14 +581,14 @@
         private ComboBox cmbAnios;
         private Button btnSalir;
         private Button btnSlcColorAnt;
-        private TextBox textBox1;
+        private TextBox txtColorAnterior;
         private Label lblByN;
         private Label lblColor;
         private NotifyIcon notifyIcon1;
         private Label label1;
         private Label label2;
         private Button btnSelecColor;
-        private TextBox textBox2;
+        private TextBox txtColorActual;
         private Panel panel1;
         private Panel panel3;
         private DataGridView dataGridView1;

@@ -8,9 +8,11 @@ using System;
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using Cell = Aspose.Cells.Cell;
 using Path = System.IO.Path;
 using Row = Aspose.Cells.Row;
+using String = System.String;
 using TableStyleType = Aspose.Cells.Tables.TableStyleType;
 using Workbook = Aspose.Cells.Workbook;
 using Worksheet = Aspose.Cells.Worksheet;
@@ -20,6 +22,7 @@ namespace ReporteImpresoras
     public partial class VentanaPrincipal : Form
     {
         public string rutaExcelByN;
+        public string rutaExcelColorActual;
         int totalBNUsers = 0;
 
         //Tablas que guardan los registros a mostrar en las hojas de excel
@@ -109,7 +112,7 @@ namespace ReporteImpresoras
             Resultados_Load();
             //cargaTablaUsuarios();
             txtBusqueda.PlaceholderText = "Buscar Usuario";
-            comboAreas.SelectedIndex = 0;   
+            comboAreas.SelectedIndex = 0;
         }
 
         private void cargaTablaUsuarios()
@@ -389,7 +392,7 @@ namespace ReporteImpresoras
                         foreach (Cell c in ws.Cells.Rows[i])
                         {
                             //Se añade las nuevas columnas con los titulos del excel leido
-                            String ColumnName = (string)c.Value;
+                            System.String ColumnName = (string)c.Value;
                             if (contCols != 3)
                             {
                                 dt.Columns.Add(ColumnName, typeof(string));
@@ -1256,7 +1259,7 @@ namespace ReporteImpresoras
 
         public DataTable leerExcelColor()
         {
-            string rutaprueba = @"C:\Conversiones ReportesImp\color abril.xlsx";//ReporteImpB&N_20240513_1750.xlsx";
+            string rutaprueba = rutaExcelColorActual;//ReporteImpB&N_20240513_1750.xlsx";
             DataTable dt = new DataTable();
             try
             {
@@ -1987,7 +1990,6 @@ namespace ReporteImpresoras
                         string sqlCon = "delete from empleado where Correo = '" + correo + "';";
                         MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);
                         com.ExecuteNonQuery();
-                        sqlConexion.Close();
 
                         MessageBox.Show("Usuario Eliminado Correctamente");
                         Resultados_Load();
@@ -1997,6 +1999,7 @@ namespace ReporteImpresoras
 
                         MessageBox.Show("No se pudo eliminar el registro, intente mas tarde", "ERROR");
                     }
+                    sqlConexion.Close();
                 }
 
             }
@@ -2092,10 +2095,9 @@ namespace ReporteImpresoras
                         //Se aplica el delete en la base de datos
                         sqlConexion.Open();
                         string sqlCon = "insert into empleado (Correo, Nombre, Puesto, Area_idArea)" +
-                            " values ('"+txtCorreo.Text+"','"+txtNombre.Text+"','"+txtPuesto.Text+"',"+id_area+");";
+                            " values ('" + txtCorreo.Text + "','" + txtNombre.Text + "','" + txtPuesto.Text + "'," + id_area + ");";
                         MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);
                         com.ExecuteNonQuery();
-                        sqlConexion.Close();
 
                         MessageBox.Show("Usuario Registrado Correctamente");
                         Resultados_Load();
@@ -2106,9 +2108,9 @@ namespace ReporteImpresoras
                     }
                     catch (Exception)
                     {
-
-                        MessageBox.Show("No se pudo eliminar el registro, intente mas tarde", "ERROR");
+                        MessageBox.Show("No se pudo hacer el registro, el usuario con ese correo ya existe", "ERROR");
                     }
+                    sqlConexion.Close();
                 }
             }
             else
@@ -2116,5 +2118,22 @@ namespace ReporteImpresoras
                 MessageBox.Show("Todos los campos son obligatorios");
             }
         }
+
+        private void btnSelecColor_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog file1 = new OpenFileDialog();
+            file1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+
+            //Seleccionar reporte csv o excel
+            if (file1.ShowDialog() == DialogResult.OK)
+            {
+                rutaExcelColorActual = file1.FileName;
+                
+                }
+                txtColorActual.Text = rutaExcelColorActual;
+
+                //leerExcel();
+            }
+        }
     }
-}
+

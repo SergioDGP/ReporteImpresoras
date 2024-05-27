@@ -18,6 +18,7 @@ namespace ReporteImpresoras
         string strNombre;
         string strPuesto;
         string strID_area;
+        int indexArea;
         public Boolean validaActualizacion;
 
 
@@ -34,13 +35,18 @@ namespace ReporteImpresoras
 
             if (area > 8) 
             {
+                //seleccionamos el index del area del usuario, si es mauor de 8 se restan 2 ya que se elimino el area 8
                 comboAreasEdit.SelectedIndex = area - 2;
+
             }
             else
             {
                 comboAreasEdit.SelectedIndex = area - 1;
             }
-            
+
+            //guardamos el index inicial del area
+            indexArea = comboAreasEdit.SelectedIndex;
+
         }
 
         private void btnSalirEdicion_Click(object sender, EventArgs e)
@@ -58,7 +64,7 @@ namespace ReporteImpresoras
             txtCorreo.Text = correo;
             txtNombre.Text = nombre;
             txtPuesto.Text = puesto;
-            comboAreasEdit.Text = id_area;//////////
+            //comboAreasEdit.Text = id_area;//////////
         }
 
         private void checkCorreo_CheckedChanged(object sender, EventArgs e)
@@ -108,7 +114,8 @@ namespace ReporteImpresoras
             }
             else
             {
-                comboAreasEdit.Text = strID_area;//////////////
+                //si se desmarca la opcion de area el combo se vuelve a posicionar en el index inicial 
+                comboAreasEdit.SelectedIndex = indexArea;
                 comboAreasEdit.Enabled = false;////////
             }
         }
@@ -117,8 +124,9 @@ namespace ReporteImpresoras
         {
             string cmbarea = comboAreasEdit.Text;//tomamos el valor del combo
             string id_area = cmbarea.Substring(0, 1);//Tomamos solo el primer caracter del combobox es decir solo el numero del ID
-            int ID_Area = Convert.ToInt32(id_area);
+            int ID_Area = Convert.ToInt32(id_area);//lo convertimos a int para hacer la consulta
 
+            //validamos que al menos uno de los campos halla cambiado para hacer la actualizacion
             validaActualizacion = false;
             if(txtCorreo.Text != strCorreo
                 || txtNombre.Text != strNombre
@@ -152,22 +160,20 @@ namespace ReporteImpresoras
         {
             string strConection = "datasource=172.25.115.134 ; port=3306; username=root; password=n0m3l0; database=oma;";
             MySqlConnection sqlConexion = null;
+            sqlConexion = new MySqlConnection(strConection);
             try
             {
-                
-                sqlConexion = new MySqlConnection(strConection);
-
                 sqlConexion.Open();
                 Console.WriteLine("ÉXITO");
                 string sqlCon = "UPDATE empleado SET Nombre = '" + txtNombre.Text + "', Puesto = '" + txtPuesto.Text +"', Area_idArea = "+ id_area +"  WHERE (Correo = '"+ strCorreo +"');";
                 MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);// where Area_idarea = 3
                 var apl = com.ExecuteNonQuery();
-                sqlConexion.Close();
             }
             catch (System.Exception ex)
             {
                 Console.WriteLine("ERROR: " + ex);
             }
+            sqlConexion.Close();
         }
     }
 }
