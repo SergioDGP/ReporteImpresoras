@@ -68,3 +68,4 @@ C:\Users\sgarcia\source\repos\ReporteImpresoras\obj\Debug\net8.0-windows\Reporte
 C:\Users\sgarcia\source\repos\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.EditaUsuario.resources
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.EditaUsuario.resources
 C:\Users\USER\Documents\GitHub\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.Properties.Resources.resources
+C:\Users\sgarcia\source\repos\ReporteImpresoras\obj\Debug\net8.0-windows\ReporteImpresoras.VentanaCarga.resources

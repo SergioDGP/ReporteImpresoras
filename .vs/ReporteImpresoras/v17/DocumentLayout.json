@@ -1,22 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\",
+  "WorkspaceRootPath": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|c:\\users\\user\\documents\\github\\reporteimpresoras\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|c:\\users\\sgarcia\\source\\repos\\reporteimpresoras\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|c:\\users\\sgarcia\\source\\repos\\reporteimpresoras\\ventanacarga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:ventanacarga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|c:\\users\\sgarcia\\source\\repos\\reporteimpresoras\\ventanacarga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:ventanacarga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -32,11 +40,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Form1.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\Form1.cs",
+              "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\Form1.cs",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAAOUEAAAAAAAAAAAuwO0EAAA1AAAA",
+              "ViewState": "AQIAAAkJAAAAAAAAAAD4vxoJAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-24T17:21:15.824Z",
               "IsPinned": true,
@@ -45,23 +53,48 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "VentanaCarga.cs",
+              "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\VentanaCarga.cs",
+              "RelativeDocumentMoniker": "VentanaCarga.cs",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\VentanaCarga.cs",
+              "RelativeToolTip": "VentanaCarga.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-27T21:32:40.586Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "VentanaCarga.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\VentanaCarga.cs",
+              "RelativeDocumentMoniker": "VentanaCarga.cs",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\VentanaCarga.cs [Dise\u00F1o]",
+              "RelativeToolTip": "VentanaCarga.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-27T19:31:00.855Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "EditaUsuario.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\EditaUsuario.cs",
+              "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs",
               "RelativeDocumentMoniker": "EditaUsuario.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\EditaUsuario.cs",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs",
               "RelativeToolTip": "EditaUsuario.cs",
-              "ViewState": "AQIAAJsAAAAAAAAAAAAcwK8AAAAgAAAA",
+              "ViewState": "AQIAAI0AAAAAAAAAAAAIwK8AAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-22T00:09:30.419Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "EditaUsuario.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\EditaUsuario.cs",
+              "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs",
               "RelativeDocumentMoniker": "EditaUsuario.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\EditaUsuario.cs [Dise\u00F1o]",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs [Dise\u00F1o]",
               "RelativeToolTip": "EditaUsuario.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-21T23:55:07.188Z",
@@ -71,9 +104,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Form1.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\Form1.cs",
+              "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\GitHub\\ReporteImpresoras\\Form1.cs [Dise\u00F1o]",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs [Dise\u00F1o]",
               "RelativeToolTip": "Form1.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-02T22:11:21.19Z",

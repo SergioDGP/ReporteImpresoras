@@ -8,7 +8,10 @@ using System;
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Application = System.Windows.Forms.Application;
 using Cell = Aspose.Cells.Cell;
 using Path = System.IO.Path;
 using Row = Aspose.Cells.Row;
@@ -23,7 +26,10 @@ namespace ReporteImpresoras
     {
         public string rutaExcelByN;
         public string rutaExcelColorActual;
+        public string rutaExcelColorAnterior;
         int totalBNUsers = 0;
+
+        public string RutaArchivosGenerados;
 
         //Tablas que guardan los registros a mostrar en las hojas de excel
         DataTable tablaDN1 = null;
@@ -147,17 +153,19 @@ namespace ReporteImpresoras
 
         }//RH, contraloria, Direccion general (Nombre de las impresoras independientes)
 
-        private void btnSelecBN_Click(object sender, EventArgs e)
+        private async void btnSelecBN_Click(object sender, EventArgs e)
         {
             DateTime date1;
             string date2;
             string rutaCSV_Ex;
             OpenFileDialog file1 = new OpenFileDialog();
             file1.Filter = "CSV files (*.csv)|*.csv|Excel Files|*.xls;*.xlsx;*.xlsm";
+            //VentanaCarga vCarga = new VentanaCarga();   
 
             //Seleccionar reporte csv o excel
             if (file1.ShowDialog() == DialogResult.OK)
             {
+                //vCarga.Show();
                 rutaCSV_Ex = file1.FileName;
                 string ext = Path.GetExtension(rutaCSV_Ex);
 
@@ -220,6 +228,7 @@ namespace ReporteImpresoras
 
 
                     rutaExcelByN = rutaConversion;
+                    //vCarga.Close();
 
                 }
                 txtRutaBN.Text = rutaExcelByN;
@@ -230,13 +239,27 @@ namespace ReporteImpresoras
 
         private void btnGenerarRepor_Click(object sender, EventArgs e)
         {
+            VentanaCarga vCarga = new VentanaCarga();
             if (txtRutaBN.Text == null || txtRutaBN.Text == "")
             {
                 MessageBox.Show("Primero debes seleccionar una ruta para generar el reporte");
             }
             else
             {
-                GenerarExcel();
+                FolderBrowserDialog folderDlgCompartida = new FolderBrowserDialog();
+                if (folderDlgCompartida.ShowDialog() == DialogResult.OK)
+                {
+                    RutaArchivosGenerados = folderDlgCompartida.SelectedPath;
+
+                    /*vCarga.Show();
+                    Task otask = new Task(GenerarExcel);//
+                    otask.Start();
+                    await otask;//
+                    vCarga.Close();*/
+
+                    GenerarExcel();
+                }
+
             }
         }
 
@@ -1222,8 +1245,11 @@ namespace ReporteImpresoras
                     chart13.SetChartDataRange(rango13, false);
                 }
 
-
-                string archivoP = @"C:\\Conversiones ReportesImp\\prueba32.xlsx";
+                //Guardamos los archivos generados
+                DateTime date1 = DateTime.Now;
+                String date2 = date1.ToString("yyyyMMdd_HHmm");
+                string archivoP = RutaArchivosGenerados + @"\Reporte_B&N_" + date2 + ".xlsx";
+                //string archivoP = @"C:\\Conversiones ReportesImp\\prueba32.xlsx";
                 libro1.Save(archivoP);
 
                 MessageBox.Show("Archivo Guardado correctamente");
@@ -1363,10 +1389,13 @@ namespace ReporteImpresoras
                                 if (contCols != 0)
                                 {
                                     dt.Columns.Add(ColumnName, typeof(Int32));
+                                    listaColumnasValidas.Add(contCols);
+
                                 }
                                 else
                                 {
                                     dt.Columns.Add(ColumnName, typeof(string));
+                                    listaColumnasValidas.Add(contCols);
                                 }
                             }
 
@@ -1381,8 +1410,10 @@ namespace ReporteImpresoras
                     }
                     else
                     {
+                        string nombreUsuario1 = ws.Cells[i, 1].Value.ToString();
+                        int ConTotal = 0;
                         //Obtenemos la celda de hojas imprimidas para validar que no este en 0
-                        int ConTotal = Convert.ToInt32(ws.Cells[i, 3].Value);
+                        /*int ConTotal = Convert.ToInt32(ws.Cells[i, 3].Value);
                         string nombreUsuario1 = ws.Cells[i, 1].Value.ToString();
 
                         //Obtenemos el año y mes de cada fila recorrida
@@ -1395,10 +1426,16 @@ namespace ReporteImpresoras
                         //obtenemos el valor del mes y año seleccionados
                         int mesSelec = (cmbMeses.SelectedIndex) + 1;//Se suma 1 ya que el index empieza a partir de 0
                         int proir = cmbAnios.SelectedIndex;
-                        string anioSelec = Convert.ToString(cmbAnios.SelectedItem);
+                        string anioSelec = Convert.ToString(cmbAnios.SelectedItem);*/
 
-                        //filtramos solo las celdas con el mes y año especificado
-                        if (ws.Cells[i, 0].Value.ToString() != "Escanear a E-mail" && mesSelec == mes && anioSelec == año && ConTotal != 0)//&& ws.Cells[i, 1].Value.ToString() == "raguilar"
+                        int a = Convert.ToInt32(ws.Cells[i, 5].Value);
+                        int b = Convert.ToInt32(ws.Cells[i, 7].Value);
+                        int c = Convert.ToInt32(ws.Cells[i, 8].Value);
+                        int d = Convert.ToInt32(ws.Cells[i, 17].Value);
+
+
+                        //validamos que las columnas no esten en 0 antes de agregarlas
+                        if (a != 0 || b != 0 || c != 0 || d != 0)
                         {
                             //Hacemos cunsulta del area de cada usuario para añadirlo a la tabla
                             string nombreUsuario = ws.Cells[i, 1].Value.ToString();
@@ -1415,12 +1452,30 @@ namespace ReporteImpresoras
                             //Creacion de fila por cada registro y lo añadimos a la tabla dt
                             row = dt.NewRow();
                             contCols = 0;
+                            int columnasAgregadas = 0;
+
                             //Se añade cada columna a la fila
-                            foreach (Cell c in ws.Cells.Rows[i])
+                            foreach (Cell e in ws.Cells.Rows[i])
                             {
-                                row[contCols] = c.Value;
+                                //Se añade las nuevas columnas con los titulos del excel leido y se valida que contengas los campos requeridos
+                                //String ColumnName = Convert.ToString(c.Value);
+                                if (listaColumnasValidas.Contains(contCols) && contCols != 0)
+                                {
+                                    int col1 = Convert.ToInt32(ws.Cells[i, contCols].Value);
+                                    row[columnasAgregadas] = col1;
+                                    columnasAgregadas++;
+                                }
+                                else if (listaColumnasValidas.Contains(contCols) && contCols == 0)
+                                {
+                                    string col1 = ws.Cells[i, contCols].Value.ToString();
+                                    row[columnasAgregadas] = col1;
+                                    columnasAgregadas++;
+                                }
+
                                 contCols++;
                             }
+
+
                             row[5] = area;//Se agrega el area del usuario en la columna 5
                             dt.Rows.Add(row);
                             totalBNUsers++;
@@ -1935,6 +1990,127 @@ namespace ReporteImpresoras
             return dt;
         }
 
+        public DataTable leerExcelColorAnterior()
+        {
+            string rutaprueba = rutaExcelColorAnterior;//ReporteImpB&N_20240513_1750.xlsx";
+            DataTable dt = new DataTable();
+            try
+            {
+                //Abrimos el archivo de excel que se genero desde la impresora b&n
+                FileStream fstream = new FileStream(rutaprueba, FileMode.Open);
+                Workbook wb = new Workbook(fstream);
+                Worksheet ws = wb.Worksheets[0];//worksheet.Cells[i, j].Value
+
+                int rows = ws.Cells.MaxDataRow;
+                int cols = ws.Cells.MaxDataColumn;
+                int contCols = 0;
+
+                //var 
+                DataRow row;
+                DataColumn column;
+                totalBNUsers = 0;
+                totalesBN = new DataTable();//Se inicializa la tabla totalBN
+
+                List<int> listaColumnasValidas = new List<int>();
+
+                for (int i = 0; i < rows; i++)
+                {
+                    if (i == 0)
+                    {
+                        //row = dt.NewRow();
+                        contCols = 0;
+                        foreach (Cell c in ws.Cells.Rows[i])
+                        {
+                            //Se añade las nuevas columnas con los titulos del excel leido y se valida que contengas los campos requeridos
+                            String ColumnName = (string)c.Value;
+
+                            if (ColumnName.Equals("Nombre de usuario")
+                            || ColumnName.Equals("Copiar + Imprimir_Total_Negro")
+                            || ColumnName.Equals("Copiar + Imprimir_Total_A todo color")
+                            || ColumnName.Equals("Copiar + Imprimir_Tamaño grande_A todo color")
+                            || ColumnName.Equals("Copiar + Imprimir_Impresión 2 caras"))
+                            {
+                                if (contCols != 0)
+                                {
+                                    dt.Columns.Add(ColumnName, typeof(Int32));
+                                    listaColumnasValidas.Add(contCols);
+
+                                }
+                                else
+                                {
+                                    dt.Columns.Add(ColumnName, typeof(string));
+                                    listaColumnasValidas.Add(contCols);
+                                }
+                            }
+
+
+                            contCols++;
+                        }
+                    }
+                    else
+                    {
+                        string nombreUsuario1 = ws.Cells[i, 1].Value.ToString();
+                        int ConTotal = 0;
+
+                        int a = Convert.ToInt32(ws.Cells[i, 5].Value);
+                        int b = Convert.ToInt32(ws.Cells[i, 7].Value);
+                        int c = Convert.ToInt32(ws.Cells[i, 8].Value);
+                        int d = Convert.ToInt32(ws.Cells[i, 17].Value);
+
+
+                        //validamos que las columnas no esten en 0 antes de agregarlas
+                        if (a != 0 || b != 0 || c != 0 || d != 0)
+                        {
+                            //Hacemos cunsulta del area de cada usuario para añadirlo a la tabla
+                            string nombreUsuario = ws.Cells[i, 1].Value.ToString();
+
+                            //Creacion de fila por cada registro y lo añadimos a la tabla dt
+                            row = dt.NewRow();
+                            contCols = 0;
+                            int columnasAgregadas = 0;
+
+                            //Se añade cada columna a la fila
+                            foreach (Cell e in ws.Cells.Rows[i])
+                            {
+                                //Se añade las nuevas columnas con los titulos del excel leido y se valida que contengas los campos requeridos
+                                //String ColumnName = Convert.ToString(c.Value);
+                                if (listaColumnasValidas.Contains(contCols) && contCols != 0)
+                                {
+                                    int col1 = Convert.ToInt32(ws.Cells[i, contCols].Value);
+                                    row[columnasAgregadas] = col1;
+                                    columnasAgregadas++;
+                                }
+                                else if (listaColumnasValidas.Contains(contCols) && contCols == 0)
+                                {
+                                    string col1 = ws.Cells[i, contCols].Value.ToString();
+                                    row[columnasAgregadas] = col1;
+                                    columnasAgregadas++;
+                                }
+
+                                contCols++;
+                            }
+                            dt.Rows.Add(row);
+
+
+                        }
+
+                    }
+
+
+                }
+
+                fstream.Close();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return dt;
+        }
+
         private void btnEditar_Click(object sender, EventArgs e)
         {
             int filasSeleccionadas = dataGridView1.SelectedRows.Count;
@@ -2121,6 +2297,7 @@ namespace ReporteImpresoras
 
         private void btnSelecColor_Click(object sender, EventArgs e)
         {
+            DataTable dt = new DataTable();
             OpenFileDialog file1 = new OpenFileDialog();
             file1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
 
@@ -2128,12 +2305,66 @@ namespace ReporteImpresoras
             if (file1.ShowDialog() == DialogResult.OK)
             {
                 rutaExcelColorActual = file1.FileName;
-                
-                }
-                txtColorActual.Text = rutaExcelColorActual;
 
-                //leerExcel();
+            }
+            txtColorActual.Text = rutaExcelColorActual;
+
+            dt = leerExcelColor();
+            Console.WriteLine("prueba");
+        }
+
+        private void btnSlcColorAnt_Click(object sender, EventArgs e)
+        {
+            DataTable dt = new DataTable();
+            OpenFileDialog file1 = new OpenFileDialog();
+            file1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+
+            //Seleccionar reporte csv o excel
+            if (file1.ShowDialog() == DialogResult.OK)
+            {
+                rutaExcelColorAnterior = file1.FileName;
+
+            }
+            txtColorAnterior.Text = rutaExcelColorAnterior;
+
+            dt = leerExcelColorAnterior();
+            Console.WriteLine("prueba");
+
+        }
+
+        //Validar que solo se escriban numeros en los text de impresoras independientes
+
+        private void txtContraloria_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
+            {
+                //MessageBox.Show("Solo se permiten números", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+                return;
             }
         }
+
+        private void txtDirGral_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
+            {
+                //MessageBox.Show("Solo se permiten números", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+                return;
+            }
+        }
+
+        private void txtRH_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
+            {
+                //MessageBox.Show("Solo se permiten números", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+                return;
+            }
+        }
+
+        
     }
+}
 
