@@ -30,6 +30,8 @@ namespace ReporteImpresoras
         int totalBNUsers = 0;
 
         public string RutaArchivosGenerados;
+        DataTable tablaColorActual = null;
+        DataTable tablaColorAnterior = null;
 
         //Tablas que guardan los registros a mostrar en las hojas de excel
         DataTable tablaDN1 = null;
@@ -1369,6 +1371,8 @@ namespace ReporteImpresoras
 
                 List<int> listaColumnasValidas = new List<int>();
 
+                int sumarFilaAnterior = 0;
+
                 for (int i = 0; i < rows; i++)
                 {
                     if (i == 0)
@@ -1412,75 +1416,107 @@ namespace ReporteImpresoras
                     {
                         string nombreUsuario1 = ws.Cells[i, 1].Value.ToString();
                         int ConTotal = 0;
-                        //Obtenemos la celda de hojas imprimidas para validar que no este en 0
-                        /*int ConTotal = Convert.ToInt32(ws.Cells[i, 3].Value);
-                        string nombreUsuario1 = ws.Cells[i, 1].Value.ToString();
-
-                        //Obtenemos el año y mes de cada fila recorrida
-                        string strFecha = ws.Cells[i, 2].Value.ToString();
-                        string año = strFecha.Substring(0, 4);
-                        //el artur estuvo aqui xd
-                        int mes = Convert.ToInt32(strFecha.Substring(5, 2));
-                        int hora = Convert.ToInt32(strFecha.Substring(11, 2));
-
-                        //obtenemos el valor del mes y año seleccionados
-                        int mesSelec = (cmbMeses.SelectedIndex) + 1;//Se suma 1 ya que el index empieza a partir de 0
-                        int proir = cmbAnios.SelectedIndex;
-                        string anioSelec = Convert.ToString(cmbAnios.SelectedItem);*/
 
                         int a = Convert.ToInt32(ws.Cells[i, 5].Value);
                         int b = Convert.ToInt32(ws.Cells[i, 7].Value);
                         int c = Convert.ToInt32(ws.Cells[i, 8].Value);
                         int d = Convert.ToInt32(ws.Cells[i, 17].Value);
 
-
-                        //validamos que las columnas no esten en 0 antes de agregarlas
-                        if (a != 0 || b != 0 || c != 0 || d != 0)
+                        //Hacemos cunsulta del area de cada usuario para añadirlo a la tabla
+                        string nombreUsuario = ws.Cells[i, 1].Value.ToString();
+                        sqlConexion.Open();
+                        string sqlCon = "select a.nombre from empleado e, area a where e.Area_idArea = a.idArea and e.correo like '" + nombreUsuario + "%';";
+                        MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);
+                        var reader = com.ExecuteReader();
+                        string area = "";
+                        while (reader.Read())
                         {
-                            //Hacemos cunsulta del area de cada usuario para añadirlo a la tabla
-                            string nombreUsuario = ws.Cells[i, 1].Value.ToString();
-                            sqlConexion.Open();
-                            string sqlCon = "select a.nombre from empleado e, area a where e.Area_idArea = a.idArea and e.correo like '" + nombreUsuario + "%';";
-                            MySqlCommand com = new MySqlCommand(sqlCon, sqlConexion);
-                            var reader = com.ExecuteReader();
-                            string area = "";
-                            while (reader.Read())
+                            area = reader["nombre"].ToString();
+                        }//
+
+                        //Creacion de fila por cada registro y lo añadimos a la tabla dt
+                        row = dt.NewRow();
+                        contCols = 0;
+                        int columnasAgregadas = 0;
+
+                        string colNombre = ws.Cells[i, 0].Value.ToString();//se obtiene la celda con el nombre del usuario
+
+                        //Se añade cada columna a la fila
+                        List<int> valoresResta = new List<int>();
+
+                        //recorremos la tabla del mes anterior para guardar las celdas y restarlas al mes actual
+                        int columnasResta = 0;
+                        int contarFilaAnterior = 0;
+                        foreach (DataRow row1 in tablaColorAnterior.Rows)
+                        {
+                            //string nombre = row1[i,0].ToString();//Revisar la seleccion de
+                            string nombre = tablaColorAnterior.Rows[contarFilaAnterior][0].ToString();//Revisar la seleccion de
+                                                                                                      //string nombre = tablaColorAnterior.Rows[contarFilaAnterior][0].ToString();
+
+                            if (nombre == colNombre)
                             {
-                                area = reader["nombre"].ToString();
-                            }//
+                                foreach (DataColumn colResta in tablaColorAnterior.Columns)
+                                {
+                                    if (columnasResta != 0)
+                                    {
+                                        int resta = Convert.ToInt32(row1[columnasResta]);
+                                        valoresResta.Add(resta);
 
-                            //Creacion de fila por cada registro y lo añadimos a la tabla dt
-                            row = dt.NewRow();
-                            contCols = 0;
-                            int columnasAgregadas = 0;
+                                    }
+                                    columnasResta++;
+                                }
 
-                            //Se añade cada columna a la fila
-                            foreach (Cell e in ws.Cells.Rows[i])
+                            }
+                            contarFilaAnterior++;
+                        }
+
+
+                        foreach (Cell e in ws.Cells.Rows[i])
+                        {
+
+                            //Se añade las nuevas columnas con los titulos del excel leido y se valida que contengas los campos requeridos
+
+                            if (listaColumnasValidas.Contains(contCols) && contCols != 0)
                             {
-                                //Se añade las nuevas columnas con los titulos del excel leido y se valida que contengas los campos requeridos
-                                //String ColumnName = Convert.ToString(c.Value);
-                                if (listaColumnasValidas.Contains(contCols) && contCols != 0)
-                                {
-                                    int col1 = Convert.ToInt32(ws.Cells[i, contCols].Value);
-                                    row[columnasAgregadas] = col1;
-                                    columnasAgregadas++;
-                                }
-                                else if (listaColumnasValidas.Contains(contCols) && contCols == 0)
-                                {
-                                    string col1 = ws.Cells[i, contCols].Value.ToString();
-                                    row[columnasAgregadas] = col1;
-                                    columnasAgregadas++;
-                                }
+                                int col1 = Convert.ToInt32(ws.Cells[i, contCols].Value);
+                                int index = columnasAgregadas - 1;
 
-                                contCols++;
+                                //Validamos que el usuario tenga registros del mes pasado para restar al actual, de lo contrario solo se agrega normal
+                                if (valoresResta.Count > 0)
+                                {
+                                    //Se resta 
+                                    int totalResta = col1 - valoresResta[index];
+                                    row[columnasAgregadas] = totalResta;
+                                }
+                                else
+                                {
+                                    row[columnasAgregadas] = col1;
+                                }
+                                columnasAgregadas++;
+                            }
+                            else if (listaColumnasValidas.Contains(contCols) && contCols == 0)
+                            {
+                                row[columnasAgregadas] = colNombre;
+                                columnasAgregadas++;
                             }
 
+                            contCols++;
+                        }
 
-                            row[5] = area;//Se agrega el area del usuario en la columna 5
+
+                        sqlConexion.Close();//Se cierra la conexion a mysql
+
+                        row[5] = area;//Se agrega el area del usuario en la columna 5
+
+                        int total1 = (Int32)row[1];
+                        int total2 = (Int32)row[2];
+                        int total3 = (Int32)row[3];
+                        int total4 = (Int32)row[4];
+
+                        if (total1 != 0 || total2 != 0 || total3 != 0 || total4 != 0)
+                        {
                             dt.Rows.Add(row);
                             totalBNUsers++;
-                            sqlConexion.Close();//Se cierra la conexion a mysql
-
 
                             int totalUsuario = 0;
                             //Se suman los totales de impresiones respecto a cada area para la hoja de totales para la hoja total
@@ -1671,7 +1707,6 @@ namespace ReporteImpresoras
                                     listatotalSOX[index] = suma + ConTotal;
                                 }
                             }
-
                         }
 
                     }
@@ -2305,17 +2340,14 @@ namespace ReporteImpresoras
             if (file1.ShowDialog() == DialogResult.OK)
             {
                 rutaExcelColorActual = file1.FileName;
+                txtColorActual.Text = rutaExcelColorActual;
+                tablaColorActual = leerExcelColor();
 
             }
-            txtColorActual.Text = rutaExcelColorActual;
-
-            dt = leerExcelColor();
-            Console.WriteLine("prueba");
         }
 
         private void btnSlcColorAnt_Click(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
             OpenFileDialog file1 = new OpenFileDialog();
             file1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
 
@@ -2323,12 +2355,9 @@ namespace ReporteImpresoras
             if (file1.ShowDialog() == DialogResult.OK)
             {
                 rutaExcelColorAnterior = file1.FileName;
-
+                txtColorAnterior.Text = rutaExcelColorAnterior;
+                tablaColorAnterior = leerExcelColorAnterior();
             }
-            txtColorAnterior.Text = rutaExcelColorAnterior;
-
-            dt = leerExcelColorAnterior();
-            Console.WriteLine("prueba");
 
         }
 
