@@ -439,7 +439,7 @@
             panelRegistro.Controls.Add(lblCorreo);
             panelRegistro.Location = new Point(81, 170);
             panelRegistro.Name = "panelRegistro";
-            panelRegistro.Size = new Size(950, 631);
+            panelRegistro.Size = new Size(950, 535);
             panelRegistro.TabIndex = 0;
             // 
             // comboAreas
@@ -447,14 +447,14 @@
             comboAreas.DropDownStyle = ComboBoxStyle.DropDownList;
             comboAreas.FormattingEnabled = true;
             comboAreas.Items.AddRange(new object[] { "1 (DN1)", "2 (DN2)", "3 (TI)", "4 (RH)", "5 (AUDITORIA)", "6 (COMERCIO)", "7 (CONTRALORIA)", "8 (DIR. GRAL.)", "10 (LEGAL)", "11 (PLANEACION)", "12 (SOX)" });
-            comboAreas.Location = new Point(259, 422);
+            comboAreas.Location = new Point(259, 326);
             comboAreas.Name = "comboAreas";
             comboAreas.Size = new Size(261, 33);
             comboAreas.TabIndex = 10;
             // 
             // btnRegistro
             // 
-            btnRegistro.Location = new Point(443, 533);
+            btnRegistro.Location = new Point(437, 420);
             btnRegistro.Name = "btnRegistro";
             btnRegistro.Size = new Size(111, 33);
             btnRegistro.TabIndex = 8;
@@ -464,14 +464,14 @@
             // 
             // txtPuesto
             // 
-            txtPuesto.Location = new Point(259, 303);
+            txtPuesto.Location = new Point(259, 235);
             txtPuesto.Name = "txtPuesto";
             txtPuesto.Size = new Size(563, 31);
             txtPuesto.TabIndex = 6;
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(259, 188);
+            txtNombre.Location = new Point(259, 149);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(563, 31);
             txtNombre.TabIndex = 5;
@@ -486,7 +486,7 @@
             // lblIDArea
             // 
             lblIDArea.AutoSize = true;
-            lblIDArea.Location = new Point(113, 423);
+            lblIDArea.Location = new Point(113, 327);
             lblIDArea.Name = "lblIDArea";
             lblIDArea.Size = new Size(100, 25);
             lblIDArea.TabIndex = 3;
@@ -495,7 +495,7 @@
             // lblPuesto
             // 
             lblPuesto.AutoSize = true;
-            lblPuesto.Location = new Point(113, 303);
+            lblPuesto.Location = new Point(113, 235);
             lblPuesto.Name = "lblPuesto";
             lblPuesto.Size = new Size(70, 25);
             lblPuesto.TabIndex = 2;
@@ -504,7 +504,7 @@
             // lblNombre
             // 
             lblNombre.AutoSize = true;
-            lblNombre.Location = new Point(113, 188);
+            lblNombre.Location = new Point(113, 149);
             lblNombre.Name = "lblNombre";
             lblNombre.Size = new Size(82, 25);
             lblNombre.TabIndex = 1;
