@@ -320,32 +320,49 @@ namespace ReporteImpresoras
         private void btnGenerarRepor_Click(object sender, EventArgs e)
         {
             VentanaCarga vCarga = new VentanaCarga();
-            if (txtRutaBN.Text == null || txtRutaBN.Text == "")
+
+            //Se valida que este seleccionado al menos uno de los reportes para generar el excel
+            if (txtRutaBN.Text.Equals("") && txtColorActual.Text.Equals("") && txtColorActual.Text.Equals(""))
             {
-                //MessageBox.Show("Primero debes seleccionar una ruta para generar el reporte");
+                MessageBox.Show("Necesita seleccionar al menos uno de los archivos para generar un reporte");
             }
             else
             {
-                FolderBrowserDialog folderDlgCompartida = new FolderBrowserDialog();
-                if (folderDlgCompartida.ShowDialog() == DialogResult.OK)
+                //Se valida que este seleccionado el archivo para b&N
+                if (!txtRutaBN.Text.Equals(""))
                 {
-                    RutaArchivosGenerados = folderDlgCompartida.SelectedPath;
+                    FolderBrowserDialog folderDlgCompartida = new FolderBrowserDialog();
+                    if (folderDlgCompartida.ShowDialog() == DialogResult.OK)
+                    {
+                        RutaArchivosGenerados = folderDlgCompartida.SelectedPath;
 
-                    /*vCarga.Show();
-                    Task otask = new Task(GenerarExcel);//
-                    otask.Start();
-                    await otask;//
-                    vCarga.Close();*/
+                        /*vCarga.Show();
+                        Task otask = new Task(GenerarExcel);//
+                        otask.Start();
+                        await otask;//
+                        vCarga.Close();*/
 
-                    GenerarReporteByN();
-                    //GeneralExcelColor();
+                        GenerarReporteByN();
+                    }
                 }
-            }
-            FolderBrowserDialog folderDlgCompartida2 = new FolderBrowserDialog();
-            if (folderDlgCompartida2.ShowDialog() == DialogResult.OK)
-            {
-                RutaArchivosGenerados = folderDlgCompartida2.SelectedPath;
-                GeneralExcelColor();
+
+                //Se valida que esten seleccionados los archivos de mes anterior y actual
+                if (!txtColorActual.Text.Equals("") || !txtColorActual.Text.Equals(""))
+                {
+                    if (txtColorActual.Text.Equals("") || txtColorActual.Text.Equals(""))
+                    {
+                        MessageBox.Show("Se necesita el reporta del mes anterior y el actual para generar el reporte de color");
+                    }
+                    else if (!txtColorActual.Text.Equals("") || !txtColorActual.Text.Equals(""))
+                    {
+                        FolderBrowserDialog folderDlgCompartida2 = new FolderBrowserDialog();
+                        if (folderDlgCompartida2.ShowDialog() == DialogResult.OK)
+                        {
+                            RutaArchivosGenerados = folderDlgCompartida2.SelectedPath;
+                            GeneralExcelColor();
+                        }
+                    }
+                }
             }
         }
 
@@ -1975,7 +1992,7 @@ namespace ReporteImpresoras
                                 totalDN1 += totalBN;
                                 totalColorDN1 += totalColor;
                                 totalGrandeDN1 += totalGrande;
-                                totalDobleDN1 += totalDoble;   
+                                totalDobleDN1 += totalDoble;
 
                                 //agregamos el total de por usuario
                                 if (!listaDN1.Contains(nombreUsuario1))
@@ -2562,7 +2579,7 @@ namespace ReporteImpresoras
                     int total2 = listatotalColorComer[i];
                     int total3 = listatotalGrandeComer[i];
                     int total4 = listatotalDobleComer[i];
-                    
+
                     filadn1 = tablaComercio.NewRow();
                     filadn1[0] = nombre;
                     filadn1[1] = total;
@@ -3096,7 +3113,41 @@ namespace ReporteImpresoras
             }
         }
 
-        
+        private void btnEliminarBN_Click(object sender, EventArgs e)
+        {
+            if (txtRutaBN.Text.Equals(""))
+            {
+                MessageBox.Show("Aun no se selecciona el archivo");
+            }
+            else
+            {
+                txtRutaBN.Text = "";
+            }
+        }
+
+        private void btnEliminarColAct_Click(object sender, EventArgs e)
+        {
+            if (txtColorActual.Text.Equals(""))
+            {
+                MessageBox.Show("Aun no se selecciona el archivo");
+            }
+            else
+            {
+                txtColorActual.Text = "";
+            }
+        }
+
+        private void btnEliminarColAnt_Click(object sender, EventArgs e)
+        {
+            if (txtColorAnterior.Text.Equals(""))
+            {
+                MessageBox.Show("Aun no se selecciona el archivo");
+            }
+            else
+            {
+                txtColorAnterior.Text = "";
+            }
+        }
     }
 }
 

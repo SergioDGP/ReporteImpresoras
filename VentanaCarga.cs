@@ -15,7 +15,7 @@ namespace ReporteImpresoras
         public VentanaCarga()
         {
             InitializeComponent();
-            lblCarga.Text = "Prueba";
+            //lblCarga.Text = "Prueba";
         }
     }
 }
