@@ -123,7 +123,7 @@ namespace ReporteImpresoras
         private void btnEdicionConfirm_Click(object sender, EventArgs e)
         {
             string cmbarea = comboAreasEdit.Text;//tomamos el valor del combo
-            string id_area = cmbarea.Substring(0, 1);//Tomamos solo el primer caracter del combobox es decir solo el numero del ID
+            string id_area = cmbarea.Substring(0, 2);//Tomamos solo el primer caracter del combobox es decir solo el numero del ID
             int ID_Area = Convert.ToInt32(id_area);//lo convertimos a int para hacer la consulta
 
             //validamos que al menos uno de los campos halla cambiado para hacer la actualizacion

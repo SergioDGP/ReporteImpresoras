@@ -7,6 +7,7 @@ using Org.BouncyCastle.Math;
 using System;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -231,90 +232,113 @@ namespace ReporteImpresoras
             }
 
 
-        }//RH, contraloria, Direccion general (Nombre de las impresoras independientes)
+        }
+
+        public void tarea1()
+        {
+            Thread.Sleep(3000);
+        }
+
+        public async void ConvertirCsvAExcel()
+        {
+            try
+            {
+                DateTime date1;
+                string date2;
+                string rutaCSV_Ex;
+                OpenFileDialog file1 = new OpenFileDialog();
+                file1.Filter = "CSV files (*.csv)|*.csv|Excel Files|*.xls;*.xlsx;*.xlsm";
+                //VentanaCarga vCarga = new VentanaCarga();   
+
+                //Seleccionar reporte csv o excel
+                if (file1.ShowDialog() == DialogResult.OK)
+                {
+                    //vCarga.Show();
+                    rutaCSV_Ex = file1.FileName;
+                    string ext = Path.GetExtension(rutaCSV_Ex);
+
+                    if (ext == ".csv")
+                    {
+                        VentanaCarga ventanaCarga = new VentanaCarga();
+                        ventanaCarga.Show();
+                        var ctask = new Task(()=>
+                        {
+                            //Crear la ruta donde se convierten los archivos csv a excel
+                            string path = @"C:\Conversiones ReportesImp";
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+                            //Convertir archivos csv a excel y guardarlos en la ruta creada
+                            var wb = new Workbook(rutaCSV_Ex);
+
+
+                            Worksheet sheet1 = wb.Worksheets[0];
+
+                            //int index = wb.Worksheets.Add();
+                            //Aspose.Cells.Worksheet sheet2 = wb.Worksheets[index];
+                            //sheet2.Name = "Reporte";
+                            int cols = sheet1.Cells.MaxDataColumn;
+                            int inrRows = sheet1.Cells.MaxDataRow;
+                            int contadorColumnas = 0;
+
+                            Row row = sheet1.Cells.Rows[0];
+
+                            foreach (Cell c in sheet1.Cells.Rows[0])
+                            {
+                                //int rows = sheet1.Cells.MaxDataColumn;
+                                int columnIndex = c.Column;
+                                string prue = c.StringValue;
+                                /*Console.WriteLine("Columna "+ contadorColumnas+ ": " +prue);
+                                if (c.StringValue == "ID trabajo cuenta")
+                                {
+                                    Console.WriteLine("Si encuentra la columna");
+                                }*/
+                                if (c.StringValue == "Modo Trabajo" || c.StringValue == "Nombre Usuario" || c.StringValue == "Fecha y Hora de Comienzo" || c.StringValue == "Con. Total de Blanco y Negro" || c.StringValue == "Nombre Archivo")
+                                {
+
+                                    sheet1.Cells.CopyColumn(sheet1.Cells, columnIndex, contadorColumnas);
+
+                                    contadorColumnas++;
+                                }
+
+                            }
+                            sheet1.Cells.DeleteColumns(5, cols, true);
+                            sheet1.AutoFitColumns(0, contadorColumnas);
+
+
+                            date1 = DateTime.Now;
+                            date2 = date1.ToString("yyyyMMdd_HHmm");
+                            string rutaConversion = @"C:\Conversiones ReportesImp\ReporteImpB&N_" + date2 + ".xlsx";
+                            wb.Save(rutaConversion);
+
+
+                            rutaExcelByN = rutaConversion;
+                            //vCarga.Close();
+                        });
+                        ctask.Start();
+                        await ctask;
+                        ventanaCarga.Close();
+
+                    }
+                    txtRutaBN.Text = rutaExcelByN;
+
+                    //leerExcel();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("No se pudo leer el archivo", "Error");
+            }
+            //picCargaBN.Enabled = false;
+            //picCargaBN.Visible = false;
+
+        }
 
         private async void btnSelecBN_Click(object sender, EventArgs e)
         {
-            DateTime date1;
-            string date2;
-            string rutaCSV_Ex;
-            OpenFileDialog file1 = new OpenFileDialog();
-            file1.Filter = "CSV files (*.csv)|*.csv|Excel Files|*.xls;*.xlsx;*.xlsm";
-            //VentanaCarga vCarga = new VentanaCarga();   
-
-            //Seleccionar reporte csv o excel
-            if (file1.ShowDialog() == DialogResult.OK)
-            {
-                //vCarga.Show();
-                rutaCSV_Ex = file1.FileName;
-                string ext = Path.GetExtension(rutaCSV_Ex);
-
-                if (ext == ".csv")
-                {
-                    //Crear la ruta donde se convierten los archivos csv a excel
-                    string path = @"C:\Conversiones ReportesImp";
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    //Convertir archivos csv a excel y guardarlos en la ruta creada
-                    var wb = new Workbook(rutaCSV_Ex);
-
-
-                    Worksheet sheet1 = wb.Worksheets[0];
-
-                    //int index = wb.Worksheets.Add();
-                    //Aspose.Cells.Worksheet sheet2 = wb.Worksheets[index];
-                    //sheet2.Name = "Reporte";
-                    int cols = sheet1.Cells.MaxDataColumn;
-                    int inrRows = sheet1.Cells.MaxDataRow;
-                    int contadorColumnas = 0;
-
-                    Row row = sheet1.Cells.Rows[0];
-
-                    foreach (Cell c in sheet1.Cells.Rows[0])
-                    {
-                        //int rows = sheet1.Cells.MaxDataColumn;
-                        int columnIndex = c.Column;
-                        string prue = c.StringValue;
-                        /*Console.WriteLine("Columna "+ contadorColumnas+ ": " +prue);
-                        if (c.StringValue == "ID trabajo cuenta")
-                        {
-                            Console.WriteLine("Si encuentra la columna");
-                        }*/
-                        if (c.StringValue == "Modo Trabajo" || c.StringValue == "Nombre Usuario" || c.StringValue == "Fecha y Hora de Comienzo" || c.StringValue == "Con. Total de Blanco y Negro" || c.StringValue == "Nombre Archivo")
-                        {
-
-                            sheet1.Cells.CopyColumn(sheet1.Cells, columnIndex, contadorColumnas);
-
-                            contadorColumnas++;
-                        }
-
-                    }
-                    sheet1.Cells.DeleteColumns(5, cols, true);
-                    sheet1.AutoFitColumns(0, contadorColumnas);
-
-
-                    date1 = DateTime.Now;
-                    date2 = date1.ToString("yyyyMMdd_HHmm");
-                    string rutaConversion = @"C:\Conversiones ReportesImp\ReporteImpB&N_" + date2 + ".xlsx";
-                    wb.Save(rutaConversion);
-
-                    //string rutaConversion2 = @"C:\Conversiones ReportesImp\ReporteImp_" + date2 + "_COPIA.xlsx";
-                    //wb2.Save(rutaConversion);
-                    //sheet.Cells.DeleteColumn(0);
-                    //sheet.Cells.DeleteColumn(0);
-                    //wb.Worksheets.RemoveAt(1);
-
-
-                    rutaExcelByN = rutaConversion;
-                    //vCarga.Close();
-
-                }
-                txtRutaBN.Text = rutaExcelByN;
-
-                //leerExcel();
-            }
+            ConvertirCsvAExcel();
         }
 
         private void btnGenerarRepor_Click(object sender, EventArgs e)
@@ -322,12 +346,17 @@ namespace ReporteImpresoras
             VentanaCarga vCarga = new VentanaCarga();
 
             //Se valida que este seleccionado al menos uno de los reportes para generar el excel
-            if (txtRutaBN.Text.Equals("") && txtColorActual.Text.Equals("") && txtColorActual.Text.Equals(""))
+            if (txtRutaBN.Text.Equals("") && txtColorActual.Text.Equals("") && txtColorAnterior.Text.Equals(""))
             {
                 MessageBox.Show("Necesita seleccionar al menos uno de los archivos para generar un reporte");
             }
             else
             {
+                if (!txtRutaBN.Text.Equals("") && !txtColorActual.Text.Equals("") && !txtColorAnterior.Text.Equals(""))
+                {
+                    MessageBox.Show("Selecciona primero la ruta a guardar para el archivo blanco y negro y posteriormente para la de color");
+                }
+
                 //Se valida que este seleccionado el archivo para b&N
                 if (!txtRutaBN.Text.Equals(""))
                 {
@@ -347,13 +376,13 @@ namespace ReporteImpresoras
                 }
 
                 //Se valida que esten seleccionados los archivos de mes anterior y actual
-                if (!txtColorActual.Text.Equals("") || !txtColorActual.Text.Equals(""))
+                if (!txtColorActual.Text.Equals("") || !txtColorAnterior.Text.Equals(""))
                 {
-                    if (txtColorActual.Text.Equals("") || txtColorActual.Text.Equals(""))
+                    if (txtColorActual.Text.Equals("") || txtColorAnterior.Text.Equals(""))
                     {
-                        MessageBox.Show("Se necesita el reporta del mes anterior y el actual para generar el reporte de color");
+                        MessageBox.Show("Se necesita el reporte del mes anterior y el actual para generar el reporte de color");
                     }
-                    else if (!txtColorActual.Text.Equals("") || !txtColorActual.Text.Equals(""))
+                    else if (!txtColorActual.Text.Equals("") || !txtColorAnterior.Text.Equals(""))
                     {
                         FolderBrowserDialog folderDlgCompartida2 = new FolderBrowserDialog();
                         if (folderDlgCompartida2.ShowDialog() == DialogResult.OK)
@@ -509,7 +538,7 @@ namespace ReporteImpresoras
                 totalSOX = 0;
 
 
-                for (int i = 0; i < rows; i++)
+                for (int i = 0; i <= rows; i++)
                 {
                     if (i == 0)
                     {
@@ -1366,11 +1395,11 @@ namespace ReporteImpresoras
                 //Guardamos los archivos generados
                 DateTime date1 = DateTime.Now;
                 String date2 = date1.ToString("yyyyMMdd_HHmm");
-                string archivoP = RutaArchivosGenerados + @"\Reporte_B&N_" + date2 + ".xlsx";
+                string archivoP = RutaArchivosGenerados + @"\Reporte de Impresion B&N - " + cmbMeses.Text + " " +cmbAnios.Text + ".xlsx";
                 //string archivoP = @"C:\\Conversiones ReportesImp\\prueba32.xlsx";
                 libro1.Save(archivoP);
 
-                MessageBox.Show("Archivo Guardado correctamente");
+                MessageBox.Show("Reporte Blanco y Negro Guardado correctamente");
 
                 //Eliminar hoja de evaluacion
                 /*FileStream fstream = new FileStream(archivoP, FileMode.Open);
@@ -1428,6 +1457,8 @@ namespace ReporteImpresoras
                 Worksheet hojaLegal = libro1.Worksheets.Add("LEGAL");
                 Worksheet hojaPlaneacion = libro1.Worksheets.Add("PLANEACION");
                 Worksheet hojaSox = libro1.Worksheets.Add("SOX");
+
+                Worksheet hojaIndependientes = libro1.Worksheets.Add("Independientes");
                 /*Worksheet hojaDN1 = libro1.Worksheets.Add("DN1");
                 Worksheet hojaDN2 = libro1.Worksheets.Add("DN2");
                 Worksheet hojaTI = libro1.Worksheets.Add("TI");
@@ -1447,13 +1478,56 @@ namespace ReporteImpresoras
                 ListObject listObject = hojaGeneral.ListObjects[hojaGeneral.ListObjects.Add(0, 0, totalBNUsers + 1, 5, true)];
                 listObject.TableStyleType = TableStyleType.TableStyleMedium10;
 
+                //generamos variables para guardar los totales de las impesoras independientes
+                int ImpRH = 0;
+                int ImpDirG = 0;
+                int ImpContra = 0;
+
+                //Validamos que los txt de impresoras independientes no esten vacios para agregarles el valor
+                if (!txtRH.Text.Equals(""))
+                {
+                    ImpRH = Convert.ToInt32(txtRH.Text);
+                }
+                if (!txtDirGral.Text.Equals(""))
+                {
+                    ImpDirG = Convert.ToInt32(txtDirGral.Text);
+                }
+                if (!txtContraloria.Text.Equals(""))
+                {
+                    ImpContra = Convert.ToInt32(txtContraloria.Text);
+                }
+                //Insertamos los datos de las impresoras independientes
+                hojaIndependientes.Cells[0, 0].Value = "IMPRESORA";
+                hojaIndependientes.Cells[0, 1].Value = "TOTAL";
+                hojaIndependientes.Cells[1, 0].Value = "RH";
+                hojaIndependientes.Cells[2, 0].Value = "Dir. Gral.";
+                hojaIndependientes.Cells[3, 0].Value = "Contraloria";
+                hojaIndependientes.Cells[1, 1].Value = ImpRH;
+                hojaIndependientes.Cells[2, 1].Value = ImpDirG;
+                hojaIndependientes.Cells[3, 1].Value = ImpContra;
+                //dar formato de tabla a Independientes
+                ListObject listObject14 = hojaIndependientes.ListObjects[hojaIndependientes.ListObjects.Add(0, 0, 3, 1, true)];
+                listObject14.TableStyleType = TableStyleType.TableStyleMedium10;
+                hojaIndependientes.AutoFitColumns();
+                //agregar grafico de barras
+                int chartIndex14 = hojaIndependientes.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 6, 25, 20);//25, 15
+                Aspose.Cells.Charts.Chart chart14 = hojaIndependientes.Charts[chartIndex14];
+                chart14.SetChartDataRange("A1:B4", true);
+
+                //validamos que los datos no estan en 0 para generar la grafica
+                /*if (ImpRH != 0 || ImpDirG != 0 || ImpContra != 0)
+                {
+                    //agregar grafico de barras
+                    int chartIndex14 = hojaIndependientes.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 1, 6, 25, 20);//25, 15
+                    Aspose.Cells.Charts.Chart chart14 = hojaIndependientes.Charts[chartIndex14];
+                    chart14.SetChartDataRange("A1:B4", true);
+                }*/
+
 
                 hojaTotal.Cells.ImportData(totalesBN, 0, 0, importOptions1);
                 //dar formato de tabla a los totales
                 ListObject listObject2 = hojaTotal.ListObjects[hojaTotal.ListObjects.Add(0, 0, 12, 4, true)];
                 listObject2.TableStyleType = TableStyleType.TableStyleMedium10;
-                //hojaTotal.Cells[1, 17].Value = "Prueba 1";
-
                 hojaTotal.AutoFitColumns();
                 //validamos que haya registros en el área para crear la gráfica de barras en el excel
                 if (totalBNUsers != 0)
@@ -1642,11 +1716,11 @@ namespace ReporteImpresoras
                 //Guardamos los archivos generados
                 DateTime date1 = DateTime.Now;
                 String date2 = date1.ToString("yyyyMMdd_HHmm");
-                string archivoP = RutaArchivosGenerados + @"\Reporte_Color_" + date2 + ".xlsx";
+                string archivoP = RutaArchivosGenerados + @"\Reporte de Impresion Color - " + cmbMeses.Text + " " + cmbAnios.Text + ".xlsx";
                 //string archivoP = @"C:\\Conversiones ReportesImp\\prueba32.xlsx";
                 libro1.Save(archivoP);
 
-                MessageBox.Show("Archivo Guardado correctamente");
+                MessageBox.Show("Reporte de Color Guardado correctamente");
 
                 //Eliminar hoja de evaluacion
                 /*FileStream fstream = new FileStream(archivoP, FileMode.Open);
@@ -1840,7 +1914,7 @@ namespace ReporteImpresoras
 
                 int sumarFilaAnterior = 0;
 
-                for (int i = 0; i < rows; i++)
+                for (int i = 0; i <= rows; i++)
                 {
                     if (i == 0)
                     {
@@ -2769,7 +2843,7 @@ namespace ReporteImpresoras
 
                 List<int> listaColumnasValidas = new List<int>();
 
-                for (int i = 0; i < rows; i++)
+                for (int i = 0; i <= rows; i++)
                 {
                     if (i == 0)
                     {
@@ -3015,7 +3089,7 @@ namespace ReporteImpresoras
             if (!txtCorreo.Text.Equals("") && !txtNombre.Text.Equals("") && !txtPuesto.Text.Equals(""))
             {
                 string cmbarea = comboAreas.Text;
-                string id_area = cmbarea.Substring(0, 1);
+                string id_area = cmbarea.Substring(0, 2);
 
                 var dialogResult = MessageBox.Show("Se dará de alta al usuario: " + txtCorreo.Text, "Registro", MessageBoxButtons.OKCancel);
                 if (dialogResult == DialogResult.OK)

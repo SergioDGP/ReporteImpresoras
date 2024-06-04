@@ -1,0 +1,12 @@
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\ReporteImpresoras.pdb
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\D3DCompiler_47_cor3.dll
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\PenImc_cor3.dll
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\PresentationNative_cor3.dll
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\vcruntime140_cor3.dll
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\wpfgfx_cor3.dll
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\comerr64.dll
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\gssapi64.dll
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\k5sprt64.dll
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\krb5_64.dll
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\krbcc64.dll
+C:\Users\sgarcia\Downloads\ReporteImpresoras package\ReporteImpresoras.exe

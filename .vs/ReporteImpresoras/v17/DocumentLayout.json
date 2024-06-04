@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\reporteimpresoras.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:reporteimpresoras.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
@@ -19,12 +23,12 @@
       "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\ventanacarga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:ventanacarga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:editausuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\ventanacarga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{198C63E8-3EC8-429D-94F8-1975F2176DD0}|ReporteImpresoras.csproj|solutionrelative:ventanacarga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -44,7 +48,7 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAAE4BAAAAAAAAAAAowGsBAAAVAAAA",
+              "ViewState": "AQIAAE4BAAAAAAAAAAAcwFEBAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-24T17:21:15.824Z",
               "IsPinned": true,
@@ -52,7 +56,18 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "ReporteImpresoras",
+              "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\ReporteImpresoras.csproj",
+              "RelativeDocumentMoniker": "ReporteImpresoras.csproj",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\ReporteImpresoras.csproj",
+              "RelativeToolTip": "ReporteImpresoras.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-06-03T21:48:53.352Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "VentanaCarga.cs",
               "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\VentanaCarga.cs",
               "RelativeDocumentMoniker": "VentanaCarga.cs",
@@ -64,7 +79,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "VentanaCarga.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\VentanaCarga.cs",
               "RelativeDocumentMoniker": "VentanaCarga.cs",
@@ -75,30 +90,30 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "EditaUsuario.cs",
               "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs",
               "RelativeDocumentMoniker": "EditaUsuario.cs",
               "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs",
               "RelativeToolTip": "EditaUsuario.cs",
-              "ViewState": "AQIAAI0AAAAAAAAAAAAIwK8AAAAgAAAA",
+              "ViewState": "AQIAABkAAAAAAAAAAAAEwH0AAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-22T00:09:30.419Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "EditaUsuario.cs [Design]",
+              "Title": "EditaUsuario.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs",
               "RelativeDocumentMoniker": "EditaUsuario.cs",
-              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs [Design]",
-              "RelativeToolTip": "EditaUsuario.cs [Design]",
+              "ToolTip": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\EditaUsuario.cs [Dise\u00F1o]",
+              "RelativeToolTip": "EditaUsuario.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-21T23:55:07.188Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Form1.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\sgarcia\\source\\repos\\ReporteImpresoras\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
