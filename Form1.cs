@@ -6,6 +6,8 @@ using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Math;
 using System;
 using System.Data;
+using System.Media;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
@@ -25,6 +27,8 @@ namespace ReporteImpresoras
 {
     public partial class VentanaPrincipal : Form
     {
+        private SoundPlayer Player = new SoundPlayer();
+
         public string rutaExcelByN;
         public string rutaExcelColorActual;
         public string rutaExcelColorAnterior;
@@ -200,6 +204,7 @@ namespace ReporteImpresoras
             //cargaTablaUsuarios();
             txtBusqueda.PlaceholderText = "Buscar Usuario";
             comboAreas.SelectedIndex = 0;
+            startSound();
         }
 
         private void cargaTablaUsuarios()
@@ -261,7 +266,7 @@ namespace ReporteImpresoras
                     {
                         VentanaCarga ventanaCarga = new VentanaCarga();
                         ventanaCarga.Show();
-                        var ctask = new Task(()=>
+                        var ctask = new Task(() =>
                         {
                             //Crear la ruta donde se convierten los archivos csv a excel
                             string path = @"C:\Conversiones ReportesImp";
@@ -1395,7 +1400,7 @@ namespace ReporteImpresoras
                 //Guardamos los archivos generados
                 DateTime date1 = DateTime.Now;
                 String date2 = date1.ToString("yyyyMMdd_HHmm");
-                string archivoP = RutaArchivosGenerados + @"\Reporte de Impresion B&N - " + cmbMeses.Text + " " +cmbAnios.Text + ".xlsx";
+                string archivoP = RutaArchivosGenerados + @"\Reporte de Impresion B&N - " + cmbMeses.Text + " " + cmbAnios.Text + ".xlsx";
                 //string archivoP = @"C:\\Conversiones ReportesImp\\prueba32.xlsx";
                 libro1.Save(archivoP);
 
@@ -3221,6 +3226,28 @@ namespace ReporteImpresoras
             {
                 txtColorAnterior.Text = "";
             }
+        }
+
+        private void startSound()
+        {
+            this.Player.SoundLocation = @"C:\Media\reporteador.wav";
+            this.Player.PlayLooping();
+        }
+
+        private void picMute_Click(object sender, EventArgs e)
+        {
+            this.Player.SoundLocation = @"C:\Media\reporteador.wav";
+            this.Player.PlayLooping();
+            picUnMute.Visible = true;
+            picMute.Visible = false;
+        }
+
+        private void picUnMute_Click(object sender, EventArgs e)
+        {
+            this.Player.SoundLocation = @"C:\Media\reporteador.wav";
+            this.Player.Stop();
+            picUnMute.Visible = false;
+            picMute.Visible = true;
         }
     }
 }
